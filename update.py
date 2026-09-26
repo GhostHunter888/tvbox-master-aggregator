@@ -391,7 +391,7 @@ def main():
     VALID_SITE_PROPS = [
         "key", "name", "type", "api", "searchable", "quickSearch", "filterable",
         "ext", "jar", "playerType", "click", "style", "playUrl", "timeout",
-        "categories", "ua", "epg", "logo", "header", "indexs", "changeable",
+        "categories", "classes", "ua", "epg", "logo", "header", "indexs", "changeable",
         "recordable", "vipUrl", "flag", "parse", "jx", "url"
     ]
 
@@ -420,9 +420,35 @@ def main():
 
         clean_sites.append(c_site)
 
-    # 3. 仅在第一个站点添加综合默认分类，供首页顶部加载全量菜单
-    if clean_sites and "categories" not in clean_sites[0]:
-        clean_sites[0]["categories"] = COMPREHENSIVE_CATEGORIES
+    # 修复：TVBox/FongMi 等客户端识别首页分类时，
+    # 要求的标准格式是一个包含 {"type_name": "...", "type_id": "..."} 的对象数组 (classes 字段)
+    # 之前传入一个简单的字符串数组会直接导致客户端解析失败报错或无法渲染分类菜单！
+    STD_CLASSES = [
+        {"type_name": "电影", "type_id": "1"},
+        {"type_name": "电视剧", "type_id": "2"},
+        {"type_name": "国产剧", "type_id": "13"},
+        {"type_name": "少儿", "type_id": "6"},
+        {"type_name": "动漫", "type_id": "4"},
+        {"type_name": "韩剧", "type_id": "15"},
+        {"type_name": "美剧", "type_id": "16"},
+        {"type_name": "日剧", "type_id": "17"},
+        {"type_name": "港剧", "type_id": "14"},
+        {"type_name": "台剧", "type_id": "18"},
+        {"type_name": "泰剧", "type_id": "19"},
+        {"type_name": "海外剧", "type_id": "20"},
+        {"type_name": "综艺", "type_id": "3"},
+        {"type_name": "纪录片", "type_id": "21"},
+        {"type_name": "短剧", "type_id": "22"},
+        {"type_name": "体育", "type_id": "23"},
+        {"type_name": "音乐", "type_id": "24"},
+        {"type_name": "解说", "type_id": "25"},
+        {"type_name": "游戏", "type_id": "26"},
+        {"type_name": "戏曲", "type_id": "27"}
+    ]
+
+    # 将标准分类格式赋给列表的第一个兜底站点，确保主页分类菜单完美显示
+    if clean_sites and "classes" not in clean_sites[0]:
+        clean_sites[0]["classes"] = STD_CLASSES
 
     # =======================================================================
     # 动态抓取合并全局配置项 (lives, parses, rules, flags, ads, wallpaper, warning)
