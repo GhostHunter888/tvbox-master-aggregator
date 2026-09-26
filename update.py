@@ -11,7 +11,6 @@ import urllib.parse
 import urllib.request
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
-# 强制开启 Python 实时无缓冲日志输出
 sys.stdout.reconfigure(line_buffering=True) if hasattr(sys.stdout, 'reconfigure') else None
 
 WORK_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -39,7 +38,16 @@ def fetch_text(url, timeout=12):
         print(f"      [FETCH] 请求: {url}")
         req = urllib.request.Request(url, headers=HEADERS)
         with urllib.request.urlopen(req, timeout=timeout, context=SSL_CTX) as resp:
-            content = resp.read().decode("utf-8", errors="ignore")
+            # 修改：支持尝试多种解码方式，避免遇到类似饭太硬内部乱码时抛出异常
+            raw_data = resp.read()
+            try:
+                content = raw_data.decode("utf-8")
+            except UnicodeDecodeError:
+                try:
+                    content = raw_data.decode("gbk", errors="ignore")
+                except:
+                    content = raw_data.decode("utf-8", errors="ignore")
+
             print(f"      [FETCH] 成功获取: {url} (长度: {len(content)} bytes)")
             return content
     except Exception as e:
@@ -89,7 +97,10 @@ UPSTREAM_REPO_ENDPOINTS = [
     "https://raw.githubusercontent.com/25175/tvbox-dc/master/dc_full.json",
     "https://raw.githubusercontent.com/25175/tvbox-dc/master/sources_pool.json",
     "https://raw.githubusercontent.com/25175/ziyuanzhan/master/docs/data/sources.json",
-    "https://raw.githubusercontent.com/25175/ziyuanzhan/master/docs/data/latest.json"
+    "https://raw.githubusercontent.com/25175/ziyuanzhan/master/docs/data/latest.json",
+    # 你新补充的仓库 (支持丰富的 js 资源站配置)
+    "https://raw.githubusercontent.com/songlees355-wq/okay/main/config.json",
+    "https://raw.githubusercontent.com/songlees355-wq/okay/main/tvbox.json"
 ]
 
 def sync_upstream_generated_data():
@@ -109,10 +120,18 @@ def sync_upstream_generated_data():
                         is_black, kw = is_blacklisted(name)
                         is_black_api, kw_api = is_blacklisted(str(api))
                         if is_black or is_black_api:
-                            print(f"      [过滤] 拦截违规站点 (JSON List): 名称='{name}' API='{api}' 命中敏感词: {kw or kw_api}")
+                            print(f"      [过滤] 拦截违规站点: 名称='{name}' 命中: {kw or kw_api}")
                             continue
-                        print(f"      [提取] 解析到站点: {name}")
-                        raw_sites.append({"name": name, "api": str(api), "type": item.get("type", 1)})
+
+                        # 重要：不要过滤带有 ext 或 jar 的爬虫类型接口！(type=3 等)
+                        # 确保 js 和 jar 的专属源(如 FongMi)完整保留
+                        site_config = {"name": name, "api": str(api), "type": item.get("type", 1)}
+                        if "ext" in item: site_config["ext"] = item["ext"]
+                        if "jar" in item: site_config["jar"] = item["jar"]
+                        if "searchable" in item: site_config["searchable"] = item["searchable"]
+
+                        raw_sites.append(site_config)
+
         elif isinstance(data, dict):
             spider = data.get("spider", "")
             if spider and ("github" in spider.lower() or "jsdelivr" in spider.lower()):
@@ -121,12 +140,16 @@ def sync_upstream_generated_data():
                 api = s.get("api")
                 name = s.get("name", "未命名")
                 if api:
+                    # 拦截乱码源（包含无法显示的 UTF 占位符）
+                    if '' in name or '' in str(api):
+                        continue
+
                     is_black, kw = is_blacklisted(name)
                     is_black_api, kw_api = is_blacklisted(str(api))
                     if is_black or is_black_api:
-                        print(f"      [过滤] 拦截违规站点 (JSON Dict): 名称='{name}' API='{api}' 命中敏感词: {kw or kw_api}")
+                        print(f"      [过滤] 拦截违规站点: 名称='{name}' 命中: {kw or kw_api}")
                         continue
-                    print(f"      [提取] 解析到站点: {name}")
+
                     raw_sites.append(s)
             raw_lives.extend(data.get("lives") or [])
             raw_parses.extend(data.get("parses") or [])
@@ -147,11 +170,9 @@ def sync_web_sources():
             is_black, kw = is_blacklisted(name)
             is_black_api, kw_api = is_blacklisted(raw_url)
             if is_black or is_black_api:
-                print(f"      [过滤] 拦截违规站点 (zzzypro): 名称='{name}' 命中敏感词: {kw or kw_api}")
                 continue
 
             api_url = f"{'https://' if not raw_url.startswith('http') else ''}{raw_url}/api.php/provide/vod/"
-            print(f"      [提取] 解析到网页采集站: {name}")
             web_sites.append({"name": name, "api": api_url, "type": 1})
 
     clbug_html = fetch_text("https://tvbox.clbug.com/user.php")
@@ -164,7 +185,6 @@ def sync_web_sources():
             is_black, kw = is_blacklisted(name)
             is_black_api, kw_api = is_blacklisted(url)
             if is_black or is_black_api:
-                print(f"      [过滤] 拦截违规站点 (clbug): 名称='{name}' 命中敏感词: {kw or kw_api}")
                 continue
 
             if url.endswith(".json") or "json" in url:
@@ -177,9 +197,7 @@ def sync_web_sources():
                             is_b1, k1 = is_blacklisted(s_name)
                             is_b2, k2 = is_blacklisted(str(s_api))
                             if is_b1 or is_b2:
-                                print(f"      [过滤] 拦截违规站点 (clbug子JSON): 名称='{s_name}' 命中敏感词: {k1 or k2}")
                                 continue
-                            print(f"      [提取] 解析到网页 JSON 子站点: {s_name}")
                             web_sites.append(s)
 
     print(f"  └─ 网页动态解析完成，合计获取到 {len(web_sites)} 个新站源\n")
@@ -187,6 +205,17 @@ def sync_web_sources():
 
 def check_api_alive(site):
     api = site.get("api", "")
+    stype = site.get("type", 1)
+
+    # 核心修改：如果是带有 JS/JAR/EXT 依赖的专属爬虫站点 (Type=3) 或 特殊嗅探源
+    # 我们放弃对它进行原生的 MacCMS (?ac=list) 测速！
+    # 因为 JS/JAR 源不支持这种标准 HTTP 测试，强行测试必定报 404/500 导致被误杀！
+    # 策略：直接将这些优质专属爬虫源保留，并赋予最高极速权限进入最后名单
+    if stype == 3 or "ext" in site or "jar" in site or "js" in str(site.get("name", "")).lower():
+        site["_cost"] = 10  # 给予极低耗时标记，保证优质源进入并排在前面
+        print(f"      [免检-直通] 高级爬虫源保留: {site['name']}")
+        return site
+
     test_url = str(api).rstrip("/") + ("&ac=list" if "?" in str(api) else "?ac=list")
     try:
         req = urllib.request.Request(test_url, headers=HEADERS)
@@ -198,7 +227,7 @@ def check_api_alive(site):
                 print(f"      [测速-通过] {site['name']} ({cost}ms)")
                 return site
     except Exception as e:
-        print(f"      [测速-失败] {site['name']} | URL: {api} | 错误: {e}")
+        print(f"      [测速-失败] {site['name']} | 错误: {e}")
         pass
     return None
 
@@ -218,32 +247,32 @@ def apply_master_cleaning(all_sites):
             continue
 
         clean_name = re.sub(r'^\[.*?\]\s*', '', raw_name)
+
+        # 移除强制的后缀删除代码，避免破坏原始带有 [js] [V2] [V3] 等标记的名称
+        # 只去除真正的乱码前缀
+        clean_name = clean_name.strip()
         if not clean_name:
             continue
 
-        try:
-            domain = urllib.parse.urlparse(str(api)).netloc
-            domain = re.sub(r'^(www|api|cj|vip|v|jx)\.', '', domain)
-        except:
-            domain = str(api)
-
-        if domain not in unique_sites and clean_name not in unique_names:
-            print(f"      [去重-保留] {clean_name} (主域名: {domain})")
+        # 按 API 全路径精确去重 (避免仅靠域名去重误杀同域下的不同路径源)
+        api_key = str(api).lower().strip()
+        if api_key not in unique_sites and clean_name not in unique_names:
+            print(f"      [去重-保留] {clean_name} (API: {api_key})")
             s["_clean_name"] = clean_name
-            unique_sites[domain] = s
+            unique_sites[api_key] = s
             unique_names.add(clean_name)
         else:
-            print(f"      [去重-剔除] 发现重复内容: {clean_name} (主域名: {domain})")
+            print(f"      [去重-剔除] 重复内容: {clean_name}")
 
     candidates = list(unique_sites.values())
     print(f"\n  ├─ 归一去重完毕，最终进入并发测速池站点总数: {len(candidates)} 个")
-    print(f"  ├─ 开始多线程并发测速，抛弃失效接口...")
 
     alive_sites = []
     with ThreadPoolExecutor(max_workers=20) as executor:
         for res in as_completed([executor.submit(check_api_alive, site) for site in candidates]):
             if res.result(): alive_sites.append(res.result())
 
+    # 按测速从小到大排序 (JS/JAR/EXT 免检源因为 cost=10 会天然排在前面)
     alive_sites.sort(key=lambda x: x.get("_cost", 9999))
     print(f"  └─ 联通测试存活可用站点: {len(alive_sites)} 个\n")
     return alive_sites
@@ -254,11 +283,8 @@ def export_router_rules(sites):
     for s in sites:
         if s.get("api"):
             try:
-                # 获取净域名并移除常见 API 前缀，实现真正的泛化域名直连
                 domain = urllib.parse.urlparse(str(s["api"])).netloc.split(":")[0]
                 domain = re.sub(r'^(www|api|cj|vip|v|jx|m|wap|app)\.', '', domain)
-
-                # 排除 GitHub 及相关托管源域名，因为代理软件通常需要对它们进行代理以加速
                 if domain and "github" not in domain and "jsdelivr" not in domain:
                     domains.add(domain)
             except: pass
@@ -273,7 +299,6 @@ def export_router_rules(sites):
         for d in sorted_domains: f.write(f"  - DOMAIN-SUFFIX,{d}\n")
 
 def build_multi_store():
-    """重新构建符合标准的顶级分类多仓"""
     multi_stores = [
         {"sourceName": "🚀 [主推] 全网纯净采集大一统", "sourceUrl": "https://raw.githubusercontent.com/haygcao/tvbox-master-aggregator/main/tvbox.json"},
         {"sourceName": "💎 [旗舰] 饭太硬精选仓", "sourceUrl": "https://raw.githubusercontent.com/FongMi/CatVodSpider/main/json/config.json"},
@@ -319,17 +344,16 @@ def main():
             "filterable": s.get("filterable", 1)
         }
 
-        # 仅保留上游特意设置的自定义分类，绝不画蛇添足强加默认分类
+        # 完整保留上游专属解析、依赖属性，确保 js/ext 配置正常工作
+        for prop in ["ext", "jar", "playerType", "click", "style"]:
+            if prop in s:
+                c_site[prop] = s[prop]
+
         if "categories" in s and isinstance(s["categories"], list) and len(s["categories"]) > 0:
             c_site["categories"] = s["categories"]
 
-        if "ext" in s:
-            c_site["ext"] = s["ext"]
-
         clean_sites.append(c_site)
 
-    # 为了方便用户在 TVBox 首页顶部展示齐全的分类（不依赖特定站点自带的分类），
-    # 在主推首个站点的配置中赋予全量的总分类（仅此一个站点，不干扰全局资源池）
     if clean_sites and "categories" not in clean_sites[0]:
         clean_sites[0]["categories"] = COMPREHENSIVE_CATEGORIES
 
@@ -358,7 +382,7 @@ def main():
             {"name": "lz", "hosts": ["lz"], "regex": ["#EXT-X-DISCONTINUITY"]},
             {"name": "ff", "hosts": ["ff"], "regex": ["#EXT-X-DISCONTINUITY"]}
         ],
-        "note": "本配置由 TVBox 资源全量整合引擎自动生成。"
+        "note": "本配置由 TVBox 资源全量整合引擎自动生成。致谢开源贡献者：FongMi、gaotianliuyun、Yoursmile7、liu673cn、Lightconer、zzzypro。"
     }
 
     with open(os.path.join(WORK_DIR, "tvbox.json"), "w", encoding="utf-8") as f:
@@ -366,8 +390,12 @@ def main():
     print(f"\n[OK] 生成整合主配置文件: tvbox.json ({len(clean_sites)} 个纯净站点)", flush=True)
 
     build_multi_store()
-
     export_router_rules(clean_sites)
+
+    with open(os.path.join(WORK_DIR, "sources.txt"), "w", encoding="utf-8") as f:
+        f.write(f"# TVBox 纯净全量资源汇总 ({time.strftime('%Y-%m-%d %H:%M:%S')})\n\n")
+        for s in clean_sites:
+            f.write(f"{s['name']}\n{s['api']}\n\n")
 
     print("\n[5/5] 完成！所有产物已同步写入仓库。\n", flush=True)
 
