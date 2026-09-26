@@ -329,35 +329,47 @@ def main():
         "综艺", "纪录片", "短剧", "体育", "音乐", "解说", "游戏", "戏曲"
     ]
 
+    # 动态构建：TVBox 客户端所支持的所有已知 Site 级别配置项 (完全保留)
+    # 包括但不限于各种 js, jar, ali, ext 扩展，嗅探开关，展示样式等
+    VALID_SITE_PROPS = [
+        "key", "name", "type", "api", "searchable", "quickSearch", "filterable",
+        "ext", "jar", "playerType", "click", "style", "playUrl", "timeout",
+        "categories", "ua", "epg", "logo", "header", "indexs", "changeable",
+        "recordable", "vipUrl", "flag", "parse", "jx", "url"
+    ]
+
     clean_sites = []
     for i, s in enumerate(cleaned_alive_sites):
         cost = s.pop("_cost", 0)
         clean_name = s.pop("_clean_name", s.get("name", ""))
 
-        c_site = {
-            "key": s.get("key", clean_name),
-            "name": clean_name,
-            "type": s.get("type", 1),
-            "api": s.get("api", ""),
-            "searchable": s.get("searchable", 1),
-            "quickSearch": s.get("quickSearch", 1),
-            "filterable": s.get("filterable", 1)
-        }
-
-        # 完整保留上游专属解析、依赖属性，确保 js/ext 配置正常工作
-        for prop in ["ext", "jar", "playerType", "click", "style"]:
+        c_site = {}
+        # 1. 动态复制该站点在源配置中原有的所有合法属性 (动态大一统继承)
+        for prop in VALID_SITE_PROPS:
             if prop in s:
                 c_site[prop] = s[prop]
 
-        if "categories" in s and isinstance(s["categories"], list) and len(s["categories"]) > 0:
-            c_site["categories"] = s["categories"]
+        # 2. 覆盖和强制重写必须标准化的属性
+        c_site["key"] = s.get("key", clean_name)
+        c_site["name"] = clean_name
+
+        # 对于 type=3 或 ext 的高级爬虫源，必须有特定的 type
+        if "type" not in c_site:
+            c_site["type"] = 1
+
+        if "searchable" not in c_site: c_site["searchable"] = 1
+        if "quickSearch" not in c_site: c_site["quickSearch"] = 1
+        if "filterable" not in c_site: c_site["filterable"] = 1
 
         clean_sites.append(c_site)
 
+    # 3. 仅在第一个站点添加综合默认分类，供首页顶部加载全量菜单
     if clean_sites and "categories" not in clean_sites[0]:
         clean_sites[0]["categories"] = COMPREHENSIVE_CATEGORIES
 
-    DEFAULT_SPIDER = "https://cdn.jsdelivr.net/gh/CatVod/CatVodSpider@main/jar/custom_spider.jar"
+    # =======================================================================
+    # 动态抓取合并全局配置项 (lives, parses, rules, flags, ads, wallpaper, warning)
+    # =======================================================================
 
     seen_lives, unique_lives = set(), []
     for l in [{"name": "IPTV国内直连", "type": 0, "url": "https://raw.githubusercontent.com/Guovin/iptv-api/gd/output/result.m3u"}] + upstream_lives:
@@ -373,15 +385,25 @@ def main():
             seen_parses.add(url)
             unique_parses.append(p)
 
+    # 将上游所有的 rules (嗅探规则) 彻底合并
+    # 这些是饭太硬等核心仓库实现“免广、秒播”的核心灵魂
+    unique_rules = [{"name": "lz", "hosts": ["lz"], "regex": ["#EXT-X-DISCONTINUITY"]},
+                    {"name": "ff", "hosts": ["ff"], "regex": ["#EXT-X-DISCONTINUITY"]}]
+
+    for r in upstream_rules if 'upstream_rules' in locals() else []:
+        r_name = r.get("name")
+        if r_name and not any(ur.get("name") == r_name for ur in unique_rules):
+            unique_rules.append(r)
+
+    DEFAULT_SPIDER = "https://cdn.jsdelivr.net/gh/CatVod/CatVodSpider@main/jar/custom_spider.jar"
+
     master_config = {
         "spider": DEFAULT_SPIDER,
+        "wallpaper": "https://bing.img.run/1920x1080.php",
         "sites": clean_sites,
         "lives": unique_lives,
         "parses": unique_parses,
-        "rules": [
-            {"name": "lz", "hosts": ["lz"], "regex": ["#EXT-X-DISCONTINUITY"]},
-            {"name": "ff", "hosts": ["ff"], "regex": ["#EXT-X-DISCONTINUITY"]}
-        ],
+        "rules": unique_rules,
         "note": "本配置由 TVBox 资源全量整合引擎自动生成。致谢开源贡献者：FongMi、gaotianliuyun、Yoursmile7、liu673cn、Lightconer、zzzypro。"
     }
 
