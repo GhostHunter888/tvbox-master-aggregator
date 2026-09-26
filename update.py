@@ -259,7 +259,7 @@ def build_multi_store():
         {"name": "✨ [4K] 蓝光专线仓", "url": "https://cdn.jsdelivr.net/gh/Lightconer/tvbox-ysc-config@main/output/4k.json", "type": 0}
     ]
     multi_config = {
-        "spider": "https://raw.githubusercontent.com/CatVod/CatVodSpider/main/jar/custom_spider.jar",
+        "spider": "https://raw.githubusercontent.com/FongMi/CatVodSpider/main/jar/custom_spider.jar",
         "sites": multi_sites,
         "stores": [{"name": m["name"], "url": m["url"]} for m in multi_sites],
         "urls": [{"name": m["name"], "url": m["url"]} for m in multi_sites],
@@ -304,7 +304,7 @@ def main():
 
         clean_sites.append(c_site)
 
-    DEFAULT_SPIDER = "https://raw.githubusercontent.com/CatVod/CatVodSpider/main/jar/custom_spider.jar"
+    DEFAULT_SPIDER = "https://raw.githubusercontent.com/FongMi/CatVodSpider/main/jar/custom_spider.jar"
 
     seen_lives, unique_lives = set(), []
     for l in [{"name": "IPTV国内直连", "type": 0, "url": "https://raw.githubusercontent.com/Guovin/iptv-api/gd/output/result.m3u"}] + upstream_lives:
