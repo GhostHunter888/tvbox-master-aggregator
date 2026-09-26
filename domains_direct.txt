@@ -55,8 +55,8 @@ gh-proxy.org
 gitlab.com
 haiwaikan.com
 hhzyapi.com
-ikunzyapi.com
 iqiyizyapi.com
+jihulab.com
 jipinvip.com
 jszyapi.com
 jyzyapi.com
@@ -71,15 +71,12 @@ raw.githubusercontent.com
 rihou.cc
 sdzyapi.com
 shandianzy.com
-shayuapi.com
 slapibf.com
 so.yinpai.xyz
 subocaiji.com
 suoniapi.com
 tyyszy.com
 tyyszyapi.com
-video.adminqt.cn
-vnzyz.com
 wolongzyw.com
 www.agit.ai
 www.gdlsp.com

@@ -56,8 +56,8 @@ payload:
   - DOMAIN-SUFFIX,gitlab.com
   - DOMAIN-SUFFIX,haiwaikan.com
   - DOMAIN-SUFFIX,hhzyapi.com
-  - DOMAIN-SUFFIX,ikunzyapi.com
   - DOMAIN-SUFFIX,iqiyizyapi.com
+  - DOMAIN-SUFFIX,jihulab.com
   - DOMAIN-SUFFIX,jipinvip.com
   - DOMAIN-SUFFIX,jszyapi.com
   - DOMAIN-SUFFIX,jyzyapi.com
@@ -72,15 +72,12 @@ payload:
   - DOMAIN-SUFFIX,rihou.cc
   - DOMAIN-SUFFIX,sdzyapi.com
   - DOMAIN-SUFFIX,shandianzy.com
-  - DOMAIN-SUFFIX,shayuapi.com
   - DOMAIN-SUFFIX,slapibf.com
   - DOMAIN-SUFFIX,so.yinpai.xyz
   - DOMAIN-SUFFIX,subocaiji.com
   - DOMAIN-SUFFIX,suoniapi.com
   - DOMAIN-SUFFIX,tyyszy.com
   - DOMAIN-SUFFIX,tyyszyapi.com
-  - DOMAIN-SUFFIX,video.adminqt.cn
-  - DOMAIN-SUFFIX,vnzyz.com
   - DOMAIN-SUFFIX,wolongzyw.com
   - DOMAIN-SUFFIX,www.agit.ai
   - DOMAIN-SUFFIX,www.gdlsp.com
