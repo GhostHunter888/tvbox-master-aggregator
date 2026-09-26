@@ -410,7 +410,7 @@ def main():
             {"name": "lz", "hosts": ["lz"], "regex": ["#EXT-X-DISCONTINUITY"]},
             {"name": "ff", "hosts": ["ff"], "regex": ["#EXT-X-DISCONTINUITY"]}
         ],
-        "note": "由 TVBox Master 引擎大一统去重聚合生成。致谢开源贡献者：FongMi、gaotianliuyun、Yoursmile7、liu673cn、Lightconer、zzzypro。"
+        "note": "本配置由 TVBox 资源全量整合引擎自动生成。致谢开源贡献者：FongMi、gaotianliuyun、Yoursmile7、liu673cn、Lightconer、zzzypro。"
     }
 
     tvbox_json_path = os.path.join(WORK_DIR, "tvbox.json")
