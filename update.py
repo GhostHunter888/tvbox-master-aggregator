@@ -115,10 +115,17 @@ def sync_upstream_generated_data():
                         raw_sites.append(item)
         elif isinstance(data, dict):
             spider = data.get("spider", "")
-            if spider and ("github" in spider.lower() or "jsdelivr" in spider.lower()):
+            # 动态解析上游相对路径的 spider jar 链接为绝对路径
+            if spider:
+                if spider.startswith("./") or spider.startswith("../"):
+                    spider = urllib.parse.urljoin(url, spider)
                 spider_jars.append(spider)
+
             for s in (data.get("sites") or []):
                 if s.get("api") and not is_blacklisted(s.get("name")) and not is_blacklisted(str(s.get("api"))):
+                    # 动态给每个上游站点绑定原仓库专属的特定 spider jar 包，避免跨仓库爬虫不兼容
+                    if spider and "jar" not in s and "spider" not in s:
+                        s["jar"] = spider
                     raw_sites.append(s)
             raw_lives.extend(data.get("lives") or [])
             raw_parses.extend(data.get("parses") or [])
@@ -304,7 +311,7 @@ def main():
 
         clean_sites.append(c_site)
 
-    DEFAULT_SPIDER = "https://raw.githubusercontent.com/FongMi/CatVodSpider/main/jar/custom_spider.jar"
+    DEFAULT_SPIDER = spider_jars[0] if spider_jars else "https://raw.githubusercontent.com/FongMi/CatVodSpider/main/jar/custom_spider.jar"
 
     seen_lives, unique_lives = set(), []
     for l in [{"name": "IPTV国内直连", "type": 0, "url": "https://raw.githubusercontent.com/Guovin/iptv-api/gd/output/result.m3u"}] + upstream_lives:
