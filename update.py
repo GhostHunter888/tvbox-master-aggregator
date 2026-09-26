@@ -345,8 +345,31 @@ def build_multi_store(cleaned_alive_sites):
     # 强制修正：由于国内网络访问 raw.githubusercontent.com 必定报错网络连接失败
     # 所以把 Advanced 仓里的默认 Spider 全面替换为走 jsdelivr CDN 代理加速的链接
     advanced_config = {
-        "spider": "https://cdn.jsdelivr.net/gh/CatVod/CatVodSpider@main/jar/custom_spider.jar",
+        "spider": "https://raw.githubusercontent.com/CatVod/CatVodSpider/main/jar/custom_spider.jar",
+        "wallpaper": "https://bing.img.run/1920x1080.php",
         "sites": advanced_spiders,
+        "classes": [
+            {"type_name": "电影", "type_id": "1"},
+            {"type_name": "电视剧", "type_id": "2"},
+            {"type_name": "国产剧", "type_id": "13"},
+            {"type_name": "综艺", "type_id": "3"},
+            {"type_name": "动漫", "type_id": "4"},
+            {"type_name": "少儿", "type_id": "6"},
+            {"type_name": "韩剧", "type_id": "15"},
+            {"type_name": "美剧", "type_id": "16"},
+            {"type_name": "日剧", "type_id": "17"},
+            {"type_name": "港剧", "type_id": "14"},
+            {"type_name": "台剧", "type_id": "18"},
+            {"type_name": "泰剧", "type_id": "19"},
+            {"type_name": "海外剧", "type_id": "20"},
+            {"type_name": "纪录片", "type_id": "21"},
+            {"type_name": "短剧", "type_id": "22"},
+            {"type_name": "体育", "type_id": "23"},
+            {"type_name": "音乐", "type_id": "24"},
+            {"type_name": "解说", "type_id": "25"},
+            {"type_name": "游戏", "type_id": "26"},
+            {"type_name": "戏曲", "type_id": "27"}
+        ],
         "note": "本仓库包含全网去重聚合的所有高阶 JS/JAR 专属爬虫源"
     }
 
@@ -461,6 +484,28 @@ def main():
         "lives": unique_lives,
         "parses": unique_parses,
         "rules": unique_rules,
+        "classes": [
+            {"type_name": "电影", "type_id": "1"},
+            {"type_name": "电视剧", "type_id": "2"},
+            {"type_name": "国产剧", "type_id": "13"},
+            {"type_name": "综艺", "type_id": "3"},
+            {"type_name": "动漫", "type_id": "4"},
+            {"type_name": "少儿", "type_id": "6"},
+            {"type_name": "韩剧", "type_id": "15"},
+            {"type_name": "美剧", "type_id": "16"},
+            {"type_name": "日剧", "type_id": "17"},
+            {"type_name": "港剧", "type_id": "14"},
+            {"type_name": "台剧", "type_id": "18"},
+            {"type_name": "泰剧", "type_id": "19"},
+            {"type_name": "海外剧", "type_id": "20"},
+            {"type_name": "纪录片", "type_id": "21"},
+            {"type_name": "短剧", "type_id": "22"},
+            {"type_name": "体育", "type_id": "23"},
+            {"type_name": "音乐", "type_id": "24"},
+            {"type_name": "解说", "type_id": "25"},
+            {"type_name": "游戏", "type_id": "26"},
+            {"type_name": "戏曲", "type_id": "27"}
+        ],
         "note": "本配置由 TVBox 资源全量整合引擎自动生成。致谢开源贡献者：FongMi、gaotianliuyun、Yoursmile7、liu673cn、Lightconer、zzzypro。"
     }
 
