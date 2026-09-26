@@ -1,0 +1,35 @@
+name: TVBox 资源整合与策略定时更新
+
+on:
+  schedule:
+    - cron: '0 */6 * * *'  # 每 6 小时自动运行一次 (00:00, 06:00, 12:00, 18:00 UTC)
+  workflow_dispatch:        # 支持在 GitHub 页面手动触发运行
+
+# 赋予 GitHub Actions 写权限 (允许自动 Push 生成的配置文件)
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 设置 Python 3.11 环境
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: 运行主聚合清洗脚本
+        env:
+          PYTHONUNBUFFERED: "1"
+        run: python3 update.py
+
+      - name: 提交最新配置文件与规则集
+        run: |
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+          git add -A
+          git diff --cached --quiet && echo "数据无变更，跳过提交" && exit 0
+          git commit -m "auto: 自动更新资源配置与路由策略规则 [$(date -u '+%Y-%m-%d %H:%M:%S')]"
+          git push origin HEAD:main
