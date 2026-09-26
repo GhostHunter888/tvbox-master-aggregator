@@ -292,30 +292,29 @@ def main():
     all_raw_sites = upstream_sites + web_sites
     cleaned_alive_sites = apply_master_cleaning(all_raw_sites)
 
-    COMPREHENSIVE_CATEGORIES = [
-        "电影", "电视剧", "国产剧", "少儿", "动漫", "韩剧", "美剧", "日剧", "港剧", "台剧", "泰剧", "海外剧",
-        "综艺", "纪录片", "短剧", "体育", "音乐", "解说", "游戏", "戏曲"
-    ]
-
     clean_sites = []
     for s in cleaned_alive_sites:
         cost = s.pop("_cost", 0)
         clean_name = s.pop("_clean_name", s.get("name", ""))
 
-        assigned_cats = s.get("categories", [])
-        if not isinstance(assigned_cats, list) or len(assigned_cats) == 0:
-            assigned_cats = COMPREHENSIVE_CATEGORIES
-
-        clean_sites.append({
+        c_site = {
             "key": s.get("key", clean_name),
             "name": f"[{cost}ms] {clean_name}",
             "type": s.get("type", 1),
             "api": s.get("api", ""),
             "searchable": s.get("searchable", 1),
             "quickSearch": s.get("quickSearch", 1),
-            "filterable": s.get("filterable", 1),
-            "categories": assigned_cats
-        })
+            "filterable": s.get("filterable", 1)
+        }
+
+        # 仅保留上游特意设置的自定义分类，绝不画蛇添足强加默认分类
+        if "categories" in s and isinstance(s["categories"], list) and len(s["categories"]) > 0:
+            c_site["categories"] = s["categories"]
+
+        if "ext" in s:
+            c_site["ext"] = s["ext"]
+
+        clean_sites.append(c_site)
 
     DEFAULT_SPIDER = "https://cdn.jsdelivr.net/gh/CatVod/CatVodSpider@main/jar/custom_spider.jar"
 
