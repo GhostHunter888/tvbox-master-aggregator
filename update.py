@@ -280,10 +280,10 @@ def main():
         if "quickSearch" not in c_site: c_site["quickSearch"] = 1
         if "filterable" not in c_site: c_site["filterable"] = 1
 
-        # 权威规范：在 sites[0]...sites[N] 内部设置 categories 字符串列表
-        # 若站点本身没有定义，赋予标准字符串列表 categories
-        if "categories" not in c_site or not c_site["categories"]:
-            c_site["categories"] = STD_SITE_CATEGORIES
+        # 仅保留上游站点原本自带的特定 categories 属性，绝不强行注入统一字符串数组
+        # 强制注入静态字符串数组会导致 TVBox 的 Class 过滤器拦截原站所有真实分类，造成“没有任何category”！
+        if "categories" in s and isinstance(s["categories"], list) and len(s["categories"]) > 0:
+            c_site["categories"] = s["categories"]
 
         clean_sites.append(c_site)
 
