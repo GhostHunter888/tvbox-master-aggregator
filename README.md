@@ -1,38 +1,41 @@
-# TVBox Master 全量深度聚合与大一统纯净源
+# TVBox Multi-Source Aggregation and Automated Cleaning Engine
 
-本仓库为独立的 TVBox 配置文件与直连规则自动生成引擎，运行于 GitHub Actions 云端，每小时定时自动运行，实现全网影视源的**大一统去重与纯净整合**。
-
----
-
-### 🌟 核心设计理念
-
-1. **底层大一统去重**：
-   - 各种多仓/品牌仓（如饭太硬、肥猫、王二小、潇洒、欧歌等）内部有高达 80%~90% 的底层采集接口是完全重复的。
-   - 本引擎通过底层 API Endpoint 主域名进行**物理级去重与存活测速**，将所有重复站点自动合并为一个干净的主频道，不再让冗余的品牌前缀污染界面，真正实现“大一统”。
-
-2. **18+ / 色情内容彻底清除**：
-   - 双重词库黑名单剔除机制，严格隔离并拦截任何低俗/色情/X站接口及分类，确保输出 100% 健康正规。
-
-3. **路由直连提取 (PassWall / Clash)**：
-   - 自动提取存活站点 API 与 CDN 域名，生成 `domains_direct.txt`（PassWall/SmartDNS 白名单）与 `clash_rules.yaml`（Clash 规则集），**强制所有视频流量走国内直连 IP，解决国外代理导致播放慢/失败的问题**。
-
-4. **100% 走 GitHub 镜像/直链**：
-   - 所有依赖的爬虫（Spider JAR/JS）与配置文件强制使用 GitHub 直链 (`raw.githubusercontent.com` / `cdn.jsdelivr.net`)。
+This repository is an independent TVBox configuration and routing rule generation system. Running on GitHub Actions cloud, it achieves multi-source dynamic collection, automated deduplication, category normalization, and routing strategy extraction.
 
 ---
 
-### 🔗 成果订阅地址
+## 📖 System Architecture & Core Features
 
-- **大一统主单仓订阅 (推荐)**：`https://raw.githubusercontent.com/<你的用户名>/tvbox-master-aggregator/main/tvbox.json`
-- **兼容多仓订阅**：`https://raw.githubusercontent.com/<你的用户名>/tvbox-master-aggregator/main/tvbox_multi.json`
-- **PassWall 域名直连白名单**：`https://raw.githubusercontent.com/<你的用户名>/tvbox-master-aggregator/main/domains_direct.txt`
-- **Clash 规则集**：`https://raw.githubusercontent.com/<你的用户名>/tvbox-master-aggregator/main/clash_rules.yaml`
+### 1. Multi-Source Integration & Deduplication
+- Automatically parses multi-channel interface data and extracts underlying CMS collection endpoints.
+- Implements a domain-based deduplication algorithm to eliminate cross-channel redundant sites and achieve unified resource merging.
+- Performs high-concurrency connectivity testing and latency evaluation on upstream sites to automatically generate optimized priority lists.
+
+### 2. Content Safety Filtering
+- Built-in keyword filtering mechanism to comprehensively identify and intercept non-compliant, low-quality, or adult content sources and channel categories, ensuring output data compliance.
+
+### 3. Routing Strategy & Rule Extraction
+- Automatically extracts active site APIs and related CDN domains to generate proxy-compatible rule files:
+  - **`domains_direct.txt`**: Domain direct whitelist for PassWall, SmartDNS, MosDNS, etc.
+  - **`clash_rules.yaml`**: `DOMAIN-SUFFIX` format strategy configuration for Clash.
+
+### 4. Standardized Dependencies
+- External dependencies referenced in configurations (such as Spider crawler modules) uniformly use official GitHub Raw and CDN mirror services to ensure access reliability and stability.
 
 ---
 
-### ❤️ 致谢与数据源说明 (Credits & Acknowledgments)
+## 🔗 Configuration Subscription URLs
 
-本项目能够实现数据的大一统与自动更新，离不开以下开源项目、维护者以及资源站点的无私奉献，在此表达诚挚的感谢：
+- **Full Integrated Configuration**: `https://raw.githubusercontent.com/haygcao/tvbox-master-aggregator/main/tvbox.json`
+- **Compatible Multi-Store Configuration**: `https://raw.githubusercontent.com/haygcao/tvbox-master-aggregator/main/tvbox_multi.json`
+- **PassWall Direct Domain Whitelist**: `https://raw.githubusercontent.com/haygcao/tvbox-master-aggregator/main/domains_direct.txt`
+- **Clash Ruleset**: `https://raw.githubusercontent.com/haygcao/tvbox-master-aggregator/main/clash_rules.yaml`
+
+---
+
+## 🤝 Credits & Acknowledgments
+
+The automated integration and updating of this system rely on data support from the following open-source projects and resource navigation platforms, with sincere gratitude:
 
 - **FongMi / CatVodSpider** (`https://github.com/FongMi/CatVodSpider`)
 - **gaotianliuyun** (`https://github.com/gaotianliuyun/gao`)
@@ -40,7 +43,6 @@
 - **liu673cn / box** (`https://github.com/liu673cn/box`)
 - **Lightconer / tvbox-ysc-config** (`https://github.com/Lightconer/tvbox-ysc-config`)
 - **youhunwl / TVAPP** (`https://github.com/youhunwl/TVAPP`)
-- **tvyuan / tvbox-dc / my-tvbox / ziyuanzhan** 等开源参考库
-- **zzzypro.com** 与 **clbug.com** 影视资源导航平台
+- **zzzypro.com** & **clbug.com** resource platforms
 
-*注：本仓库仅对上述公开数据进行连通性检测、黑名单筛选与域名规则提取，版权归各原作者与接口提供方所有。*
+*Note: This repository only provides automated data extraction, testing, and rule generation services. Relevant data property rights belong to the original authors or providers.*
