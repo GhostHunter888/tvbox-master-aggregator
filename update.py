@@ -475,7 +475,7 @@ def main():
         if r_name and not any(ur.get("name") == r_name for ur in unique_rules):
             unique_rules.append(r)
 
-    DEFAULT_SPIDER = "https://cdn.jsdelivr.net/gh/CatVod/CatVodSpider@main/jar/custom_spider.jar"
+    DEFAULT_SPIDER = "https://raw.githubusercontent.com/CatVod/CatVodSpider/main/jar/custom_spider.jar"
 
     master_config = {
         "spider": DEFAULT_SPIDER,
