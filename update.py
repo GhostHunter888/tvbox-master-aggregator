@@ -253,7 +253,12 @@ def export_router_rules(sites):
     domains = set(["raw.githubusercontent.com", "cdn.jsdelivr.net", "fastly.jsdelivr.net"])
     for s in sites:
         if s.get("api"):
-            try: domains.add(urllib.parse.urlparse(str(s["api"])).netloc.split(":")[0])
+            try:
+                # 获取净域名并移除常见 API 前缀，实现真正的泛化域名直连
+                domain = urllib.parse.urlparse(str(s["api"])).netloc.split(":")[0]
+                domain = re.sub(r'^(www|api|cj|vip|v|jx|m|wap|app)\.', '', domain)
+                if domain:
+                    domains.add(domain)
             except: pass
     sorted_domains = sorted(list(domains))
 
@@ -299,7 +304,7 @@ def main():
 
         c_site = {
             "key": s.get("key", clean_name),
-            "name": f"[{cost}ms] {clean_name}",
+            "name": clean_name,
             "type": s.get("type", 1),
             "api": s.get("api", ""),
             "searchable": s.get("searchable", 1),
