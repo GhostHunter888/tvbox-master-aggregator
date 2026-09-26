@@ -250,14 +250,16 @@ def apply_master_cleaning(all_sites):
 
 def export_router_rules(sites):
     print("[4/4] === 导出 PassWall / Clash 国内直连域名规则策略 ===")
-    domains = set(["raw.githubusercontent.com", "cdn.jsdelivr.net", "fastly.jsdelivr.net"])
+    domains = set()
     for s in sites:
         if s.get("api"):
             try:
                 # 获取净域名并移除常见 API 前缀，实现真正的泛化域名直连
                 domain = urllib.parse.urlparse(str(s["api"])).netloc.split(":")[0]
                 domain = re.sub(r'^(www|api|cj|vip|v|jx|m|wap|app)\.', '', domain)
-                if domain:
+
+                # 排除 GitHub 及相关托管源域名，因为代理软件通常需要对它们进行代理以加速
+                if domain and "github" not in domain and "jsdelivr" not in domain:
                     domains.add(domain)
             except: pass
     sorted_domains = sorted(list(domains))
@@ -297,8 +299,13 @@ def main():
     all_raw_sites = upstream_sites + web_sites
     cleaned_alive_sites = apply_master_cleaning(all_raw_sites)
 
+    COMPREHENSIVE_CATEGORIES = [
+        "电影", "电视剧", "国产剧", "少儿", "动漫", "韩剧", "美剧", "日剧", "港剧", "台剧", "泰剧", "海外剧",
+        "综艺", "纪录片", "短剧", "体育", "音乐", "解说", "游戏", "戏曲"
+    ]
+
     clean_sites = []
-    for s in cleaned_alive_sites:
+    for i, s in enumerate(cleaned_alive_sites):
         cost = s.pop("_cost", 0)
         clean_name = s.pop("_clean_name", s.get("name", ""))
 
@@ -320,6 +327,11 @@ def main():
             c_site["ext"] = s["ext"]
 
         clean_sites.append(c_site)
+
+    # 为了方便用户在 TVBox 首页顶部展示齐全的分类（不依赖特定站点自带的分类），
+    # 在主推首个站点的配置中赋予全量的总分类（仅此一个站点，不干扰全局资源池）
+    if clean_sites and "categories" not in clean_sites[0]:
+        clean_sites[0]["categories"] = COMPREHENSIVE_CATEGORIES
 
     DEFAULT_SPIDER = "https://cdn.jsdelivr.net/gh/CatVod/CatVodSpider@main/jar/custom_spider.jar"
 
