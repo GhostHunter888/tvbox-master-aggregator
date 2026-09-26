@@ -1,12 +1,51 @@
 {
-  "urls": [
+  "spider": "https://raw.githubusercontent.com/CatVod/CatVodSpider/main/jar/custom_spider.jar",
+  "sites": [
+    {
+      "name": "🚀 [主推] 全网纯净采集大一统",
+      "url": "https://raw.githubusercontent.com/haygcao/tvbox-master-aggregator/main/tvbox.json",
+      "type": 0
+    },
+    {
+      "name": "💎 [旗舰] 饭太硬精选仓",
+      "url": "https://raw.githubusercontent.com/FongMi/CatVodSpider/main/json/config.json",
+      "type": 0
+    },
+    {
+      "name": "💎 [旗舰] 肥猫精选仓",
+      "url": "https://cdn.jsdelivr.net/gh/Lightconer/tvbox-ysc-config@main/output/feimao.json",
+      "type": 0
+    },
+    {
+      "name": "💎 [旗舰] 欧歌专仓",
+      "url": "https://cdn.jsdelivr.net/gh/Lightconer/tvbox-ysc-config@main/output/ouge.json",
+      "type": 0
+    },
+    {
+      "name": "🔥 [高阶] FongMi 官方仓",
+      "url": "https://raw.githubusercontent.com/FongMi/CatVodSpider/main/json/config.json",
+      "type": 0
+    },
+    {
+      "name": "🔥 [聚合] 王二小专仓",
+      "url": "https://cdn.jsdelivr.net/gh/Lightconer/tvbox-ysc-config@main/output/wangerxiao.json",
+      "type": 0
+    },
+    {
+      "name": "🔥 [聚合] 高天流云配置",
+      "url": "https://raw.githubusercontent.com/gaotianliuyun/gao/master/js.json",
+      "type": 0
+    },
+    {
+      "name": "✨ [4K] 蓝光专线仓",
+      "url": "https://cdn.jsdelivr.net/gh/Lightconer/tvbox-ysc-config@main/output/4k.json",
+      "type": 0
+    }
+  ],
+  "stores": [
     {
       "name": "🚀 [主推] 全网纯净采集大一统",
       "url": "https://raw.githubusercontent.com/haygcao/tvbox-master-aggregator/main/tvbox.json"
-    },
-    {
-      "name": "🔥 [高阶] 全网聚合 JS/JAR 爬虫源",
-      "url": "https://raw.githubusercontent.com/haygcao/tvbox-master-aggregator/main/tvbox_advanced.json"
     },
     {
       "name": "💎 [旗舰] 饭太硬精选仓",
@@ -36,5 +75,40 @@
       "name": "✨ [4K] 蓝光专线仓",
       "url": "https://cdn.jsdelivr.net/gh/Lightconer/tvbox-ysc-config@main/output/4k.json"
     }
-  ]
+  ],
+  "urls": [
+    {
+      "name": "🚀 [主推] 全网纯净采集大一统",
+      "url": "https://raw.githubusercontent.com/haygcao/tvbox-master-aggregator/main/tvbox.json"
+    },
+    {
+      "name": "💎 [旗舰] 饭太硬精选仓",
+      "url": "https://raw.githubusercontent.com/FongMi/CatVodSpider/main/json/config.json"
+    },
+    {
+      "name": "💎 [旗舰] 肥猫精选仓",
+      "url": "https://cdn.jsdelivr.net/gh/Lightconer/tvbox-ysc-config@main/output/feimao.json"
+    },
+    {
+      "name": "💎 [旗舰] 欧歌专仓",
+      "url": "https://cdn.jsdelivr.net/gh/Lightconer/tvbox-ysc-config@main/output/ouge.json"
+    },
+    {
+      "name": "🔥 [高阶] FongMi 官方仓",
+      "url": "https://raw.githubusercontent.com/FongMi/CatVodSpider/main/json/config.json"
+    },
+    {
+      "name": "🔥 [聚合] 王二小专仓",
+      "url": "https://cdn.jsdelivr.net/gh/Lightconer/tvbox-ysc-config@main/output/wangerxiao.json"
+    },
+    {
+      "name": "🔥 [聚合] 高天流云配置",
+      "url": "https://raw.githubusercontent.com/gaotianliuyun/gao/master/js.json"
+    },
+    {
+      "name": "✨ [4K] 蓝光专线仓",
+      "url": "https://cdn.jsdelivr.net/gh/Lightconer/tvbox-ysc-config@main/output/4k.json"
+    }
+  ],
+  "note": "本配置由 TVBox 资源整合引擎自动生成。"
 }

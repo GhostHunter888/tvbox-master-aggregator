@@ -1,418 +1,934 @@
-# TVBox 纯净全量资源汇总 (2026-09-26 15:06:27)
+# TVBox 纯净全量资源汇总 (2026-09-26 15:20:36)
 
-🎼酷听┃音乐🎼
-csp_MusicAiKuWoGuard
+рҹҗјв”ғй…ҚзҪ®в”ғдёӯеҝғ
+csp_Config
 
-请勿信视频中任何广告
-csp_XPathGuard
-
-🥝荐片┃多线
-csp_JPJGuard
-
-🎎戏曲┃秒播🎎
-csp_MusicAiLiYuanGuard
-
-🚌巴士┃动漫
-csp_Dm84Guard
-
-🌟立播┃不卡
-csp_LibvioGuard
-
-👁️Alist┃DIY👁️
-csp_AListGuard
-
-🌈优汐┃搜搜
-csp_UuSsGuard
-
-💓‍玩偶┃4K💓‍
-csp_AiNewWoggGuard
-
-🍉短剧┃好看🍉
-csp_DuanJuAiHaoKanGuard
-
-AliPS
-csp_AliPS
-
-🚑急救┃教学
-csp_FirstAidGuard
-
-💃跳舞┃教学💃
-csp_MusicAiTangDouGuard
-
-🍄抠抠┃搜搜
-csp_KkSsGuard
-
-👼宝宝┃儿歌👼
-csp_ChildrenAiBaoBaoGuard
-
-宜搜
-csp_Yisou
-
-👁Vod┃DIY👁️
-csp_DiyVodGuard
-
-💓‍原盘┃4K💓‍
-csp_AiNewZhiNan4KGuard
-
-⚽八八┃看球
-csp_KanqiuGuard
-
-🎼轮回┃舞曲🎼
-csp_MusicAiLunHuiGuard
-
-Up云搜
-csp_Upyunso
-
-🌐八八┃体育🌐
-csp_SportAiKanqiuGuard
-
-🐞盘他┃嘟嘟
-csp_BpanSoGuard
-
-💓剧透┃4K💓
-csp_AiNewJuTouGuard
-
-🍄比特┃不卡
-csp_BttwooGuard
-
-🎃‍小红┃听书🎃
-csp_BookHongGuoGuard
-
-🎈盘搜┃四盘
-csp_S_zpsGuard
-
-找资源
-csp_Zhaozy
-
-👒原创┃不卡
-csp_YCyzGuard
-
-🅱哔哩┃影视🅱
-csp_BiliYsGuard
-
-🧲新6V┃磁力
-csp_SixVGuard
-
-💓逸动┃4K💓
-csp_AiNewYiDong4KGuard
-
-小纸条(新)
-csp_Gitcafe
-
-💓多多┃4K💓
-csp_AiNewDuoDuoGuard
-
-🐮【免费分享】🐮
-csp_NewDouBanGuard
-
-360
-csp_SP360
-
-🏀多多┃回放
-csp_DoubaoGuard
-
-Alist(SP)
-csp_Alist
-
-6080电影(XBPQ)
-csp_XBPQ
-
-🍉漫短┃小喜🍉
-csp_ManJuAiXiFanGuard
-
-🎧有声┃小说
-csp_Tingshu275Guard
-
-🎃‍悦庭┃听书🎃
-csp_BookAiYueTingGuard
-
-低端影视(DRPY)
-http://home.jundie.top:666/JS/dr_py/libs/drpy.min.js
-
-💓‍观影┃4K💓‍
-csp_AiNewGuanYingGuard
-
-🗂我的云盘┃配置
-csp_MyDriveGuard
-
-🎃‍小马┃听书🎃
-csp_BookHeMaGuard
-
-🐳斗鱼┃直播🐳
-csp_LiveAiDouYuGuard
-
-💓花卷┃4K💓‍
-csp_AiNewHuaJuanGuard
-
-🌐咖啡┃体育🌐
-csp_SportAiKaFeiGuard
-
-🍉短剧┃小薇🍉
-csp_DuanJuAiWeiGuanGuard
-
-🚀叨观荐影┃预告片
-csp_YGPGuard
-
-🎮一直播┃直播
-csp_AllliveGuard
-
-🐯‍虎牙┃直播🐯‍
-csp_LiveAiHuYaGuard
-
-🍉短剧┃星星🍉
-csp_DuanJuAiXingYaGuard
-
-📔厂长┃不卡
-csp_NewCzGuard
-
-👽玩偶哥哥┃4K弹幕
-csp_WoGGGuard
-
-🏐吃瓜┃看球
-csp_LiveGzGuard
-
-👼兔兔┃儿歌👼
-csp_ChildrenAiTuTuGuard
-
-🤡魔都┃动漫🤡
-csp_AnimeAiMoDuGuard
-
-🤡稀饭┃动漫🤡
-csp_AnimeXiFanGuard
-
-🎠卡卡┃综合🎠
-csp_SoKaKaGuard
-
-🍉漫剧┃小猫🍉
-csp_ManJuAiQiMaoGuard
-
-乐猪(XBiu)
-csp_XBiu
+弹幕 | Samba分享[jar]
+csp_SambaShare
 
 👼贝贝┃儿歌👼
-csp_ChildrenAiBeiWaGuard
+csp_WexbeiwaGuard
 
-🅱️哔哩┃直播🅱️
-csp_LiveAiBiLiGuard
+рҹҗҫв”ғй…·зӢ—в”ғйҹід№җ
+csp_Kugou
 
-🎠爱盘┃综合🎠
-csp_SoAiAiPanSoGuard
+💥賤片┃p2p💥
+csp_WexJianpianGuard
 
-💓115┃分享💓‍
-csp_FakeAi115ShareGuard
+💓我的┃百度💓‍
+csp_WexWoBaiduPanGuard
 
-🍉漫短┃小马🍉
-csp_ManJuAiHeMaGuard
+рҹ“Җв”ғе…үзӣҳв”ғAPP
+csp_AppQi
 
-🌐瓜子┃体育🌐
-csp_SportAiGuaZiGuard
+рҹҢ–в”ғзұіжҗңв”ғзҪ‘зӣҳ
+csp_MiSou
 
-💓Emby001┃4K💓
-csp_EmbyDiyGuard
+👒┃七七┃App
+csp_Kunyu77
 
-💓虎斑┃4K💓
-csp_AiNewHuBanGuard
+рҹҡ‘в”ғжҖҘж•‘в”ғж•ҷеӯҰ
+csp_FirstAid
 
-🍉漫剧┃小龙🍉
-csp_ManJuAiHuoLongGuard
+弹幕 | UC分享[jar]
+csp_UCShare
 
-💓立播┃4K💓
-csp_AiNewLibvioGuard
+🎃┃南坊┃App
+csp_AppMao
 
-💥伊影┃秒播💥
-csp_WexAiYiYsGuard
-
-💓盘库┃4K💓
-csp_AiNewPianKuGuard
-
-🎇伯伯┃秒播🎇
-csp_WexAiBoBoGuard
-
-🌞光影┃不卡
-csp_T4Guard
-
-🎇爱看┃采集🎇
-csp_WexAiIkanBotGuard
-
-🌐球通┃体育🌐
-csp_SportAiKanQiuTongGuard
-
-💓Emby┃4K💓
-csp_EmbyGuard
-
-💡聚剧┃四盘
-csp_SeedhubGuard
-
-📺热播┃多线
-csp_AppTTGuard
-
-💓‍蜗牛┃4K💓‍
-csp_AiNewWoNiu4KGuard
+💓我的┃讯蕾💓‍
+csp_WexWoXunLeiPanGuard
 
 💥韩剧┃秒播💥
-csp_WexAiHanXiaoQuanGuard
+csp_WexhanxiaoquanGuard
 
-🍉漫短┃小红🍉
-csp_ManJuAiHongGuoGuard
+рҹҗјв”ғиӮҘзҢ«в”ғAPP
+csp_AppGet
 
-🎙️易听音乐┃带歌词
-csp_MusicGuard
+рҹҘҮпёҸв”ғйҮ‘зүҢв”ғеҪұи§Ҷ
+csp_Jpys
 
-🌐WWE┃体育🌐
-csp_SportAiWweGuard
+👼多多┃儿歌👼
+csp_WexergeduoduoGuard
 
-🎠九七┃综合🎠
-csp_SoAiPanSooGuard
+弹幕 | 115分享[jar]
+csp_P115Share
 
-💥师兄┃秒播💥
-csp_WexAppV7Guard
+🌾┃农民┃直连
+csp_Nmys
+
+💓我的┃123💓‍
+csp_WexWo123panGuard
+
+💃跳舞┃教学💃
+csp_WextangdouGuard
+
+💓123┃4K💓
+csp_Wexpan123ziyuanGuard
+
+🍩┃赛文┃资源
+csp_AppYsV2
+
+弹幕 | 夸克分享[jar]
+csp_QuarkShare
+
+рҹҸңв”ғжҪ®жөҒв”ғAPP
+csp_AppRJ
+
+💡┃天天┃影视
+csp_TTian
+
+🎎戏曲┃秒播🎎
+csp_WexliyuanGuard
+
+вҡЎв”ғй—Әз”өв”ғдјҳжұҗ
+csp_Duopan
+
+💓我的┃异动💓‍
+csp_WexWoydpanGuard
+
+💓虎斑┃4K💓
+csp_WexhubanGuard
+
+弹幕 | 迅雷分享[jar]
+csp_ThunderShare
+
+MV | KTV[jar]
+csp_Iktv
+
+🍊┃小柚┃App
+csp_AppSK
+
+рҹ“әв”ғ360в”ғе®ҳжәҗ
+csp_SP360
+
+💓我的┃优熙💓‍
+csp_WexWoucpanGuard
 
 🎃‍极品┃听书🎃
-csp_BookAiShiJieGuard
+csp_Wex275tingshuGuard
 
-💮文采┃秒播
-csp_JpysGuard
+💓双星┃4K💓
+csp_WexshuangzixingGuard
 
-💥热播┃秒播💥
-csp_WexAiReBoGuard
+弹幕 | PikPak分享[jar]
+csp_PikPakShare
 
-💓盘迷┃4K💓
-csp_AiPan1MeGuard
+🐻┃熊掌┃高清
+https://xzcjz.com/api.php/provide/vod
 
-🌸茉莉┃多线
-csp_App99Guard
+рҹҸӯв”ғеҺӮй•ҝв”ғеҪұи§Ҷ
+csp_Czsapp
 
-🐮配置┃中心🐮
-csp_PanConfigGuard
+рҹӨЈв”ғеҠЁжј«в”ғе·ҙеЈ«
+csp_Dm84
 
-💥小枫┃秒播💥
-csp_WexFengYe4KGuard
+💓我的┃夸克💓‍
+csp_WexWoquarkpanGuard
 
-🅱‍哔哩┃合集🅱‍
-csp_BiliGuard
+🎀┃九六┃直连
+csp_Cs1369
 
-💥文才┃秒播💥
-csp_WexAiWenCaiGuard
+🎃‍白兔┃听书🎃
+csp_WexlaobaitingshuGuard
 
-🍉短剧┃小猫🍉
-csp_DuanJuAiQiMiaoGuard
-
-🐮我的┃网盘🐮
-csp_MyPanGuard
-
-泥巴(墙)
-csp_Nbys
-
-🎼小酷┃音乐🎼
-csp_MusicAiKuWoaGuard
-
-💓‍七味┃4K💓‍
-csp_AiQwMkvGuard
-
-🎼蜻蜓┃电台🎼
-csp_MusicAiQingTingGuard
-
-💥闪电┃秒播💥
-csp_WexAiYueYueGuard
-
-🎼易听┃音乐🎼
-csp_MusicAi163Guard
-
-💥贱片┃秒播💥
-csp_WexAiJianPianGuard
-
-🎠趣搜┃百度🎠
-csp_SoAiQuPanSheGuard
-
-🏝奥特┃多线
-csp_AueteGuard
+💓木偶┃4K💓
+csp_WexmuouggGuard
 
 推送
 csp_PushGuard
 
-💓木偶┃4K💓
-csp_AiNewMuOuGuard
+рҹҚүв”ғз“ңеӯҗв”ғеҪұи§Ҷ
+csp_Gz360
 
-💥独播┃秒播💥
-csp_WexAiDuBoKuGuard
+弹幕 | 资源分享[jar]
+csp_PushShare
 
-🎃‍爱上┃听书🎃
-csp_BookAi23TingShuGuard
+👼宝宝┃儿歌👼
+csp_WexbaobaobashiGuard
 
-👀瓜子┃不卡
-csp_AppgzGuard
+🌺文才┃秒播🌺
+csp_WexwencaiGuard
 
-🍓糯米┃秒播
+рҹ”Ҙв”ғзҒ«зҒ«в”ғеҪұи§Ҷ
+csp_SaoHuo
+
+💓我的┃天逸💓‍
+csp_WexWo189Guard
+
+рҹ…ұв”ғпёҸе“”е“©в”ғеҗҲйӣҶ
+csp_Bili
+
+🍉短剧┃神品🍉
+csp_Wexduanju001Guard
+
+弹幕 | 哔滴[jar]
+csp_Bdys01
+
+🧡┃360┃官源
+https://jihulab.com/yw88075/tvbox/-/raw/main/dr/lib/drpy2.min.js
+
+💓我的┃115💓‍
+csp_Wex115shareGuard
+
+💓无名┃4K💓
+csp_WexnullnameGuard
+
+🍉短剧┃仙品🍉
+csp_WexduanjuhemaGuard
+
+💥葵花┃影视💥
+csp_WexkuihuatvGuard
+
+💓‍玩偶┃4K💓‍
+csp_WoggGuard
+
+🎠九七┃综合🎠
+csp_Wex97pansoGuard
+
+❤┃一起┃2K
+csp_YQKan
+
+🍉短剧┃瞬播🍉
+csp_WexduanjuvmpGuard
+
+рҹҢҫпёҸв”ғеҶңж°‘в”ғеҪұи§Ҷ
+csp_Wwys
+
+💕┃磁力┃4K
+csp_SixV
+
+вӯ•в”ғйҹ©еңҲ в”ғAPP
+csp_Hxq
+
+🎗┃奈飞┃秒播
+csp_XYQHiker
+
+🐮影视专用┃配置中心🐮
+csp_WexokconfigGuard
+
+🎠海音┃综合🎠
+csp_WexHaiYinsoGuard
+
+🍉短剧┃速播🍉
+csp_WexduanjusuipianGuard
+
+рҹҳҢв”ғиЎҢеҠЁв”ғAPP
+csp_AppDrama
+
+视频 | Youtube[jar]
+csp_Youtube
+
+🧲┃荐片┃磁力
+http://rihou.vip:55/lib/drpy2.min.js
+
+📺┃央视┃大全
+csp_CCTV
+
+🧲┃SeedHub┃4k
+csp_SeedHub
+
+🥰┃短剧┃视频
+csp_Panda
+
+🎠给力┃百度🎠
+csp_WexbaidusoGuard
+
+📺┃央视┃少儿
+py_cctv_full
+
+🐮通用类型┃配置中心🐮
+csp_WexconfigGuard
+
+рҹҡғв”ғзӣҳжҗңв”ғзҪ‘зӣҳ
+csp_PanSearch
+
+搜索 | TG[jar]
+csp_TGYunPanLocal
+
+🎃┃南瓜┃App
+csp_NanGua
+
+👽┃玩偶┃4K①
+csp_WoGG
+
+рҹҺ¬в”ғиҚҗзүҮв”ғеҪұи§Ҷ
+csp_Jianpian
+
+🅱️哔哩┃直播🅱️
+csp_WexNewBiLiLiveGuard
+
+рҹҗјв”ғиұҶз“Јв”ғйў„е‘Ҡ
+csp_YGP
+
+🐮【免费分享】🐮
+csp_DoubanGuard
+
+😾┃七夜┃搜索
+csp_Dovx
+
+💓多多┃4K💓
+csp_WexduoduoziyuanGuard
+
+🌐瓜子┃体育🌐
+csp_WexGZsportGuard
+
+рҹҸҖв”ғз“ңеӯҗв”ғдҪ“иӮІ
+csp_GuaziTY
+
+电视 | 直播[js]
+./lib/lf_live_min.js
+
+🐳斗鱼┃直播🐳
+csp_WexNewDouYuGuard
+
+вҡҫв”ғзңӢзҗғв”ғзӣҙж’ӯ
+csp_Kanqiu
+
+📽推送
+csp_PushAgent
+
+测┃玩我┃哥哥
+csp_XYQHikerAL
+
+🌐88┃体育🌐
+csp_KanqiuGuard
+
+🐲阿里┃云盘登录
+csp_AliYunPan
+
+路飞 | 磁力[js]
+./lib/lf_p2p2_min.js
+
+🔥┃小胡┃4K
+http://xh1.xn--yetu07f.icu/api.php/provide/vod/
+
+MV | 音悦台[jar]
+csp_Yinyuetai
+
+🐯‍虎牙┃直播🐯‍
+csp_WexNewHuYaGuard
+
+🔥公众号：聚玩盒
+csp_DouDou
+
+搜索 | 路飞[js]
+./lib/lf_search3_min.js
+
+🎼轮回┃舞曲🎼
+csp_WexLunhuiDJGuard
+
+🔥聚玩盒子4K
+https://jihulab.com/yydfys/yydf/-/raw/main/yydf/lib/drpy2.min.js
+
+🀄️emby┃4K🀄️
+csp_WexembyGuard
+
+е…іжіЁе…¬дј—еҸ·пјҡзҶҠзҢ«жҳҜеҸӘиӮҘзҢ«
+csp_Push
+
+搜索 | 豆瓣[js]
+./lib/drpy2.min.js
+
+🅱哔哔┃合集🅱
+csp_BiliGuard
+
+рҹ“ҡв”ғе„ҝз«Ҙв”ғеҗҜи’ҷ
+./api/drpy2.min.js
+
+🛩️新6V┃P2P🛩
+csp_WexXb6vGuard
+
+🧲┃Mp4┃4k
+csp_Mp4Mov
+
+Local
+csp_Local
+
+🅱‍哔哔┃影视🅱‍
+csp_WexbiliysGuard
+
+🍉短剧┃秒播🍉
+csp_WexduanjuvopGuard
+
+⚽310直播
+https://github.moeyy.xyz/raw.githubusercontent.com/gaotianliuyun/gao/master/lib/drpy2.min.js
+
+🎠给力┃天逸🎠
+csp_WextysoGuard
+
+🎇爱看┃采集🎇
+csp_WexikanbotGuard
+
+📢接口软件永远免费
+https://cdn.jsdmirror.com/gh/ouhaibo1980/tvbox@main/py/py_douban.py
+
+🥇Alist┃DIY🥇
+csp_AListGuard
+
+🎇大鼻涕┃秒播🎇
+csp_WexbttwoGuard
+
+弹幕 | HDmoli[jar]
+csp_Moli
+
+😻┃Up搜┃搜索
+csp_UpYun
+
+🥇全能┃DIY🥇
+csp_WexdiyGuard
+
+🛒本地包更新
+csp_Market
+
+🎇伯伯┃秒播🎇
+csp_WexNmysGuard
+
+弹幕 | 新视觉[jar]
+csp_Xinshijue
+
+❤装歌APP
+csp_PanWebShare
+
+🎤KTV┃音乐🎤
+csp_WexIktvGuard
+
+📺┃网红┃直播
+http://alist.xn--z7x900a.live/ddrpy2.m.js
+
+书籍 | 分享[jar]
+csp_AliShare
+
+🦊┃盘搜┃搜索
+csp_PanSou
+
+📺┃竞技┃直播
+csp_Yj1211
+
+👼┃七新┃2K
+csp_XBPQ
+
+弹幕 | 表哥[jar]
+csp_Wobg
+
+рҹҗјв”ғе…¬дј—еҸ·пјҡзҶҠзҢ«жҳҜеҸӘиӮҘзҢ«в”ғ
+csp_Douban
+
+📢公告停更
+csp_Notice
+
+👼兔兔┃儿歌👼
+csp_WextuxiaobeiGuard
+
+弹幕 | 不太灵[jar]
+csp_Bt0
+
+弹幕 | 低端[jar]
+csp_Ddys
+
+弹幕 | 美剧迷[jar]
+csp_Meijumi
+
+弹幕 | 皮皮虾[jar]
+csp_Ppxzy
+
+弹幕 | 新6V[jar]
+csp_Xb6v
+
+弹幕 | 4KHDR[jar]
+csp_FourKHDR
+
+弹幕 | 校长[jar]
+csp_XiaoZhang
+
+弹幕 | 团长[jar]
+csp_TZFile
+
+弹幕 | 影巢[jar]
+csp_Hdh
+
+弹幕 | 盘Ta[jar]
+csp_Panta
+
+弹幕 | 云盘[jar]
+csp_YunPan
+
+弹幕 | 玩偶4k[jar]
+csp_Wo4k
+
+弹幕 | 小盘盘[jar]
+csp_Xpanpan
+
+弹幕 | 高清网[jar]
+csp_Gaoqing
+
+网盘 | TG搜索[jar]
+csp_TGYunPan
+
+磁力 | 影搜[jar]
+csp_YingSo
+
+网盘 | 盘友圈
+csp_Panyq
+
+网盘 | 88网盘[jar]
+csp_EightEight
+
+网盘 | 皮卡搜[jar]
+csp_PikaSo
+
+网盘 | 混合盘[jar]
+csp_HunHePan
+
+网盘 | 秒搜[jar]
+csp_MiaoSou
+
+网盘 | LIBVIO[jar]
+csp_Libvio
+
+网盘 | 大盘搜[jar]
+csp_DaPanSo
+
+网盘 | 千帆[jar]
+csp_Qianfan
+
+网盘 | 小云[jar]
+csp_YunSo
+
+网盘 | 云盘[jar]
+csp_YunPanOne
+
+阿里 | 纸条[jar]
+csp_Gitcafe
+
+阿里 | 小紙條[jar]
+csp_XiaoZhiTiao
+
+阿里 | 找資源[jar]
+csp_Zhaozy
+
+阿里 | 易搜[jar]
+csp_YiSo
+
+夸克  | 趣盘搜[jar]
+csp_Funletu
+
+夸克 | 盘搜[jar]
+csp_QuarkPanso
+
+夸克 | 推送
+csp_Quark
+
+体育 | JRKAN直播[js]
+./lib/drpy.min.js
+
+网盘 | Alist[js]
+./lib/alist.min.js
+
+(优)荐片
+csp_JPJGuard
+
+(优)糯米
 csp_NmyswvGuard
 
-🎼KTV┃音乐🎼
-csp_MusicAiIKtvGuard
+(优)瓜子
+csp_AppgzGuard
 
-🎠盘搜┃综合🎠
-csp_SoAiHaiYinGuard
+(优)比特
+csp_BttwooGuard
+
+(优)文采
+csp_JpysGuard
+
+(优)剧圈
+csp_AppSxGuard
+
+(优)热播
+csp_AppTTGuard
+
+(优)视界
+csp_App99Guard
+
+(优)光影
+csp_T4Guard
+
+(优)厂长
+csp_NewCzGuard
+
+(优)奥特
+csp_AueteGuard
+
+(优)原创
+csp_YCyzGuard
+
+(优)AList
+csp_AList
+
+豪堪短剧
+csp_HHkkAmns
+
+盒马短剧
+csp_HemaAmns
+
+拜拜短剧
+csp_BddjAmns
+
+围观短剧
+csp_WgdjAmns
+
+喵喵短剧
+csp_QmdjAmns
+
+星星短剧
+csp_XydjAmns
+
+聚剧
+csp_SeedhubGuard
+
+豆瓣榜单
+csp_DouDouGuard
+
+(良)新6V[磁力]
+csp_SixVGuard
+
+云盘配置
+csp_MyDriveGuard
+
+聚盘搜
+csp_S_zpsGuard
+
+抠搜搜索
+csp_KkSsGuard
+
+UC搜搜
+csp_UuSsGuard
+
+盘她夸父
+csp_YpanSoGuard
+
+盘他嘟嘟
+csp_BpanSoGuard
+
+巴士动漫
+csp_Dm84Guard
+
+有声小说
+csp_Tingshu275Guard
+
+易听音乐
+csp_MusicGuard
+
+虎牙直播
+https://gh-proxy.com/https://raw.githubusercontent.com/xiaolong69/tv/main/spider/19/js/drpy2.min.js
+
+急救教学
+csp_FirstAidGuard
+
+荐片P2P
+https://gitlab.com/fantaiying/ext/-/raw/main/drpy2.min.js
+
+糯米
+csp_Nmyswv
+
+苹果
+csp_LiteApple
+
+厂长
+csp_NewCz
+
+原创
+csp_YCyz
+
+在线
+csp_Zxzj
+
+低端
+csp_Ddrk
+
+奥特
+csp_Auete
+
+一直播LIVE
+csp_Alllive
+
+萌米
+csp_AppTT
+
+可可
+csp_Kekys
+
+异界动漫
+csp_Ysj
+
+日本动漫
+csp_Anime1
+
+小米(网盘搜索)
+csp_MIPanSo
+
+抠抠(网盘搜索)
+csp_KkSs
+
+优汐(网盘搜索)
+csp_UuSs
+
+泥视频(墙外)
+csp_NiNi
+
+央视[cat]
+./cat/cntv_open.js
+
+Bookan[cat]
+./cat/MyCatBookan.js
+
+童趣[cat]
+./cat/boosj_open.js
+
+兔小贝[cat]
+./cat/tuxiaobei_open.js
+
+贝乐虎[cat]
+./cat/ubestkid_open.js
+
+儿童┃启蒙
+https://ghp.ci/raw.githubusercontent.com/fantaiying7/EXT/refs/heads/main/drpy2.min.js
+
+🐮【更新日期:20260923】🐮
+csp_NewDouBanGuard
+
+🐮配置┃中心🐮
+csp_PanConfigGuard
+
+🐮我的┃网盘🐮
+csp_MyPanGuard
+
+💓花卷┃4K💓‍
+csp_AiNewHuaJuanGuard
+
+💓‍观影┃4K💓‍
+csp_AiNewGuanYingGuard
+
+💓‍七味┃4K💓‍
+csp_AiQwMkvGuard
+
+💓盘库┃4K💓
+csp_AiNewPianKuGuard
+
+💓剧透┃4K💓
+csp_AiNewJuTouGuard
+
+💓立播┃4K💓
+csp_AiNewLibvioGuard
+
+💓‍原盘┃4K💓‍
+csp_AiNewZhiNan4KGuard
+
+💓‍蜗牛┃4K💓‍
+csp_AiNewWoNiu4KGuard
+
+💓盘迷┃4K💓
+csp_AiPan1MeGuard
+
+💓逸动┃4K💓
+csp_AiNewYiDong4KGuard
 
 💥瓜子┃秒播💥
 csp_WexAiGuaZiGuard
 
+💥独播┃秒播💥
+csp_WexAiDuBoKuGuard
+
+💥闪电┃秒播💥
+csp_WexAiYueYueGuard
+
+💥文才┃秒播💥
+csp_WexAiWenCaiGuard
+
+💥小枫┃秒播💥
+csp_WexFengYe4KGuard
+
+💥贱片┃秒播💥
+csp_WexAiJianPianGuard
+
+💥师兄┃秒播💥
+csp_WexAppV7Guard
+
+💥伊影┃秒播💥
+csp_WexAiYiYsGuard
+
+💥热播┃秒播💥
+csp_WexAiReBoGuard
+
+🍉漫短┃小红🍉
+csp_ManJuAiHongGuoGuard
+
+🍉漫剧┃小龙🍉
+csp_ManJuAiHuoLongGuard
+
+🍉漫剧┃小猫🍉
+csp_ManJuAiQiMaoGuard
+
+🍉漫短┃小喜🍉
+csp_ManJuAiXiFanGuard
+
+🍉漫短┃小马🍉
+csp_ManJuAiHeMaGuard
+
+🍉短剧┃好看🍉
+csp_DuanJuAiHaoKanGuard
+
+🍉短剧┃小猫🍉
+csp_DuanJuAiQiMiaoGuard
+
+🍉短剧┃星星🍉
+csp_DuanJuAiXingYaGuard
+
+🍉短剧┃小薇🍉
+csp_DuanJuAiWeiGuanGuard
+
+🤡稀饭┃动漫🤡
+csp_AnimeXiFanGuard
+
 🤡次元┃动漫🤡
 csp_AnimeCiYuanChengGuard
 
-🐻剧圈┃多线
-csp_AppSxGuard
+🤡魔都┃动漫🤡
+csp_AnimeAiMoDuGuard
+
+🎃‍小红┃听书🎃
+csp_BookHongGuoGuard
+
+🎃‍小马┃听书🎃
+csp_BookHeMaGuard
+
+🎃‍悦庭┃听书🎃
+csp_BookAiYueTingGuard
+
+🎃‍爱上┃听书🎃
+csp_BookAi23TingShuGuard
+
+🎼蜻蜓┃电台🎼
+csp_MusicAiQingTingGuard
+
+🎼KTV┃音乐🎼
+csp_MusicAiIKtvGuard
+
+🎼小酷┃音乐🎼
+csp_MusicAiKuWoaGuard
+
+🎼易听┃音乐🎼
+csp_MusicAi163Guard
+
+🎼酷听┃音乐🎼
+csp_MusicAiKuWoGuard
 
 🌐飞球┃体育🌐
 csp_SportAiFeiQiuGuard
 
+🌐球通┃体育🌐
+csp_SportAiKanQiuTongGuard
+
+🌐八八┃体育🌐
+csp_SportAiKanqiuGuard
+
+🌐咖啡┃体育🌐
+csp_SportAiKaFeiGuard
+
+🌐WWE┃体育🌐
+csp_SportAiWweGuard
+
+💓115┃分享💓‍
+csp_FakeAi115ShareGuard
+
+💓Emby┃4K💓
+csp_EmbyGuard
+
+💓Emby001┃4K💓
+csp_EmbyDiyGuard
+
+👁Vod┃DIY👁️
+csp_DiyVodGuard
+
+🅱哔哩┃影视🅱
+csp_BiliYsGuard
+
+🎠盘搜┃综合🎠
+csp_SoAiHaiYinGuard
+
+🎠趣搜┃百度🎠
+csp_SoAiQuPanSheGuard
+
+🎠爱盘┃综合🎠
+csp_SoAiAiPanSoGuard
+
+🎠卡卡┃综合🎠
+csp_SoKaKaGuard
+
+泥巴(墙)
+csp_Nbys
+
+乐猪(XBiu)
+csp_XBiu
+
+低端影视(DRPY)
+http://home.jundie.top:666/JS/dr_py/libs/drpy.min.js
+
+Up云搜
+csp_Upyunso
+
+宜搜
+csp_Yisou
+
+AliPS
+csp_AliPS
+
+🚀叨观荐影┃预告片
+csp_YGPGuard
+
+🌟立播┃不卡
+csp_LibvioGuard
+
+🏀多多┃回放
+csp_DoubaoGuard
+
+🏐吃瓜┃看球
+csp_LiveGzGuard
+
+🎮一直播┃直播
+csp_AllliveGuard
+
 🐯虎牙┃直播
 ./FTY/drpy2.min.js
 
-热播 • APP
-csp_AppRJ
-
-爱看 • APP
-csp_AiKan
-
-配置 • 中心
-csp_Config
-
-一起 • APP
-csp_AppYQK
-
-🐌盘她┃夸父
-csp_YpanSoGuard
+请勿信视频中任何广告
+csp_XPathGuard
 
 本地 • 视频
 csp_LocalFile
 
-剧圈 • APP
-csp_App99
+一起 • APP
+csp_AppYQK
 
-天堂 • APP
-csp_AppDrama
+爱看 • APP
+csp_AiKan
+
+咕噜 • APP
+csp_Gulu
 
 布布 • APP
 csp_YunDuo
 
-韩圈 • APP
-csp_Hxq
-
-新片 • 预告
-csp_YGP
-
-豆瓣 • 首页
-csp_Douban
-
-玩偶 • 4K
-csp_Wogg
-
-快映 • 4K
-csp_PanWebShare
-
-哔哩 • 合集
-csp_Bili
-
 马猴 • APP
 csp_App3Q
+
+剧圈 • APP
+csp_App99
+
+哔哩 • 视频
+csp_BiliYS
+
+花卷 • 4K
+csp_PanWebShareHJ
 
 指南 • 4K
 csp_4KZhinan
@@ -420,8 +936,11 @@ csp_4KZhinan
 爱盼 • 4K
 csp_AiPan
 
-种子 • 4K
-csp_SeedHub
+移动 • 4K
+csp_Yidong4K
+
+人人 • 4K
+csp_RenRen
 
 即刻 • 4K
 csp_Jike
@@ -432,35 +951,26 @@ csp_ShuangXing
 七猫 • 短剧
 csp_ShortQimao
 
-人人 • 4K
-csp_RenRen
-
-移动 • 4K
-csp_Yidong4K
-
-好看 • 短剧
-csp_ShortHaokan
-
-哔哩 • 视频
-csp_BiliYS
-
-飞娱 • 影视
-csp_Feiyu
+河马 • 短剧
+csp_ShortHema
 
 围观 • 短剧
 csp_ShortWeiguan
 
-厂长 • 影视
-csp_Czsapp
-
-金牌 • 影视
-csp_Jpys
-
-骚火 • 影视
-csp_SaoHuo
+好看 • 短剧
+csp_ShortHaokan
 
 星芽 • 短剧
 csp_ShortXingya
+
+飞娱 • 影视
+csp_Feiyu
+
+独播 • 影视
+csp_Duboku
+
+枫叶 • 影视
+csp_FengYe
 
 爱看 • 影视
 csp_Ikanbot
@@ -468,59 +978,17 @@ csp_Ikanbot
 1905 • 影视
 csp_Web1905
 
-荐片 • 磁力
-csp_JianPian
-
 New6V • 磁力
 csp_New6v
-
-枫叶 • 影视
-csp_FengYe
-
-独播 • 影视
-csp_Duboku
-
-蓝鹰 • APP
-csp_AppQi
-
-咕噜 • APP
-csp_Gulu
-
-夸克 • 网盘
-csp_PanQuark
-
-河马 • 短剧
-csp_ShortHema
 
 迅雷吧 • 磁力
 csp_Xunlei8
 
-花卷 • 4K
-csp_PanWebShareHJ
-
-光鸭 • 云盘
-csp_PanGuangya
-
-觅盘 • 搜索
-csp_MiPan
-
-盘搜 • 搜索
-csp_PanSou
-
-迅雷 • 云盘
-csp_PanXunlei
-
-酷乐 • 搜索
-csp_KuLe
-
 阿里 • 云盘
 csp_PanAli
 
-88 • 看球
-csp_Sports88
-
-天翼 • 云盘
-csp_PanTianyi
+夸克 • 网盘
+csp_PanQuark
 
 UC • 网盘
 csp_PanUC
@@ -528,23 +996,62 @@ csp_PanUC
 百度 • 网盘
 csp_PanBaidu
 
-呦呦 • DJ
-csp_Djuu
+迅雷 • 云盘
+csp_PanXunlei
 
-咖啡 • 体育
-csp_SportsKafei
+光鸭 • 云盘
+csp_PanGuangya
 
-飞球 • 体育
-csp_SportsFeiqiu
+天翼 • 云盘
+csp_PanTianyi
 
-世界 • 听书
-csp_TingShijie
+123 • 云盘
+csp_Pan123
+
+觅盘 • 搜索
+csp_MiPan
 
 百酷 • 搜索
 csp_Baiku
 
+酷乐 • 搜索
+csp_KuLe
+
+鬼鬼 • 搜索
+csp_GuiGui
+
+趣盘 • 搜索
+csp_QuPanSo
+
+88 • 看球
+csp_Sports88
+
+飞球 • 体育
+csp_SportsFeiqiu
+
+瓜子 • 体育
+csp_SportsGuazi
+
+咖啡 • 体育
+csp_SportsKafei
+
+呦呦 • DJ
+csp_Djuu
+
+蜻蜓 • FM
+csp_QingtingFM
+
+世界 • 听书
+csp_TingShijie
+
 堇夏 • 听书
 csp_TingJinxia
+
+博看 • 听书
+csp_TingBokan
+
+戏曲 • 多多
+csp_AppLY
 
 童趣 • 儿童
 csp_TongQu
@@ -552,47 +1059,14 @@ csp_TongQu
 兔小贝 • 儿童
 csp_TuXiaoBei
 
-世界 • APP
-csp_AppGet
-
-趣盘 • 搜索
-csp_QuPanSo
-
-鬼鬼 • 搜索
-csp_GuiGui
-
-手机 • 推送
-csp_Push
-
-123 • 云盘
-csp_Pan123
-
-急救 • 教学
-csp_FirstAid
-
-美剧迷 • 磁力
-csp_MeijuMi
+贝乐虎 • 儿童
+csp_BeiLeHu
 
 养生 • 知识
 csp_YST
 
-🥇官源┃360[js]
-./lib/drpy2.min.js
-
-瓜子 • 体育
-csp_SportsGuazi
-
-🥇88┃看球_SP
-csp_Kanqiu
-
-🥇88┃看球[js]
-./lib/drpy.min.js
-
 访问网站【api.starlink.fan】获取最新接口
 http://124.223.214.31:8/api/lib/drpy2.min.js
-
-奴娜丨APP
-csp_AppYsV2
 
 花柳｜APP
 csp_AppFox
@@ -615,29 +1089,17 @@ https://git.yylx.win/raw.githubusercontent.com/PizazzGY/NewTVBox/main/movie/py/X
 剧王｜短剧
 https://git.yylx.win/raw.githubusercontent.com/PizazzGY/NewTVBox/main/movie/py/JWDJ.py
 
-🥏电视┃直播
-./lib/lf_live_min.js
+木兮｜影视
+csp_Symx
 
-贝乐虎 • 儿童
-csp_BeiLeHu
+零度｜影视
+csp_Lingdu
 
 云播｜影视
 csp_Tvyb
 
-苹果｜影视
-csp_LiteApple
-
 饺子｜影视
 csp_Jiaozi
-
-瓜子｜影视
-csp_Gz360
-
-农民｜影视
-csp_Wwys
-
-剧圈｜影视
-csp_XYQHiker
 
 漫国丨动漫
 csp_AppSy
@@ -657,155 +1119,20 @@ csp_BLSGod
 电影天堂｜磁力
 csp_DyGod
 
-木兮｜影视
-csp_Symx
-
-🐮通用类型┃配置中心🐮
-csp_WexconfigGuard
-
-🐮影视专用┃配置中心🐮
-csp_WexokconfigGuard
-
-💓无名┃4K💓
-csp_WexnullnameGuard
-
-💓双星┃4K💓
-csp_WexshuangzixingGuard
-
-💓123┃4K💓
-csp_Wexpan123ziyuanGuard
-
-💥賤片┃p2p💥
-csp_WexJianpianGuard
-
-💥葵花┃影视💥
-csp_WexkuihuatvGuard
-
-🌺文才┃秒播🌺
-csp_WexwencaiGuard
-
-🎇大鼻涕┃秒播🎇
-csp_WexbttwoGuard
-
-🛩️新6V┃P2P🛩
-csp_WexXb6vGuard
-
-🀄️emby┃4K🀄️
-csp_WexembyGuard
-
-🍉短剧┃秒播🍉
-csp_WexduanjuvopGuard
-
-🍉短剧┃速播🍉
-csp_WexduanjusuipianGuard
-
-🍉短剧┃瞬播🍉
-csp_WexduanjuvmpGuard
-
-🍉短剧┃仙品🍉
-csp_WexduanjuhemaGuard
-
-🍉短剧┃神品🍉
-csp_Wexduanju001Guard
-
-🎃‍白兔┃听书🎃
-csp_WexlaobaitingshuGuard
-
-👼多多┃儿歌👼
-csp_WexergeduoduoGuard
-
-🎤KTV┃音乐🎤
-csp_WexIktvGuard
-
-🥇全能┃DIY🥇
-csp_WexdiyGuard
-
-🅱‍哔哔┃影视🅱‍
-csp_WexbiliysGuard
-
-🎠给力┃天逸🎠
-csp_WextysoGuard
-
-🎠给力┃百度🎠
-csp_WexbaidusoGuard
-
-🎠海音┃综合🎠
-csp_WexHaiYinsoGuard
-
-💓我的┃115💓‍
-csp_Wex115shareGuard
-
-💓我的┃天逸💓‍
-csp_WexWo189Guard
-
-💓我的┃夸克💓‍
-csp_WexWoquarkpanGuard
-
-💓我的┃优熙💓‍
-csp_WexWoucpanGuard
-
-💓我的┃异动💓‍
-csp_WexWoydpanGuard
-
-💓我的┃123💓‍
-csp_WexWo123panGuard
-
-💓我的┃讯蕾💓‍
-csp_WexWoXunLeiPanGuard
-
-💓我的┃百度💓‍
-csp_WexWoBaiduPanGuard
-
-🥐豆瓣┃推荐
-csp_DouDou
-
 🍫畅梦┃秒播
 ./lib/apiv402drpy2.min.js
 
 🎬恐怖｜电影
 ./16.js
 
-🎃南瓜┃影视
-csp_NanGua
-
 🎬荐片┃影视
 ./lib/apiv461drpy2.min.js
-
-零度｜影视
-csp_Lingdu
-
-蜻蜓 • FM
-csp_QingtingFM
-
-💮天天┃App
-csp_TTian
 
 🌾农民┃影视
 csp_WexNmys
 
-戏曲 • 多多
-csp_AppLY
-
-⬇️【网盘类先扫码】⬇️
-csp_DoubanGuard
-
-博看 • 听书
-csp_TingBokan
-
-🌟立播┃秒播
-csp_Libvio
-
 🏳️素白┃影视
 csp_SuBaiBai
-
-👻可可┃多线
-csp_Kekys
-
-⏮️低端┃外剧
-csp_Ddrk
-
-☀原创┃不卡
-csp_YCyz
 
 🍄比特┃秒播
 csp_Bttwoo
@@ -822,20 +1149,8 @@ csp_Djtt
 🏖短剧┃天堂
 ./liba/apiv999drpy2.min.js
 
-🏝奥特┃无广
-csp_Auete
-
-👀萌米┃多线
-csp_AppTT
-
-🇨🇳央视┃大全
-csp_CCTV
-
 🇨🇳央视┃栏目
 py_cctv
-
-📽️游戏┃直播
-csp_Alllive
 
 大马猴丨弹幕
 csp_AppMH
@@ -876,9 +1191,6 @@ csp_KafeiTY
 球通｜体育直播
 csp_QiutongTY
 
-瓜子｜体育直播
-csp_GuaziTY
-
 爱听｜音乐歌曲
 https://gitee.com/fuleishu/fulei/raw/master/json/爱听音乐.py
 
@@ -893,9 +1205,6 @@ csp_Djlh
 
 兄弟｜网盘搜索
 csp_XiongdiPan
-
-米搜｜网盘搜索
-csp_MiSou
 
 音海丨网盘搜索
 csp_JuheSo
@@ -978,66 +1287,6 @@ https://ghfast.top/https://raw.githubusercontent.com/FGBLH/HKL/refs/heads/main/p
 腾云驾雾[官](drpy_t3)
 https://gh-proxy.org/https://raw.github.com/tly824/hipy-server/master/app/t4/files/drpy_libs/drpy2.min.js
 
-荐片P2P
-https://gitlab.com/fantaiying/ext/-/raw/main/drpy2.min.js
-
-糯米
-csp_Nmyswv
-
-厂长
-csp_NewCz
-
-在线
-csp_Zxzj
-
-新6V磁力
-csp_SixV
-
-巴士动漫
-csp_Dm84
-
-异界动漫
-csp_Ysj
-
-日本动漫
-csp_Anime1
-
-小米(网盘搜索)
-csp_MIPanSo
-
-抠抠(网盘搜索)
-csp_KkSs
-
-优汐(网盘搜索)
-csp_UuSs
-
-泥视频(墙外)
-csp_NiNi
-
-夸搜(网盘搜索)
-csp_PanSearch
-
-易搜(网盘搜索)
-csp_YiSo
-
-央视[cat]
-./cat/cntv_open.js
-
-Bookan[cat]
-./cat/MyCatBookan.js
-
-童趣[cat]
-./cat/boosj_open.js
-
-兔小贝[cat]
-./cat/tuxiaobei_open.js
-
-贝乐虎[cat]
-./cat/ubestkid_open.js
-
-儿童┃启蒙
-https://ghp.ci/raw.githubusercontent.com/fantaiying7/EXT/refs/heads/main/drpy2.min.js
-
 ITalkBB • 外
 ./py/ITalkBBTV.py
 
@@ -1059,8 +1308,8 @@ TVB云播
 网飞猫
 ./py/Ncat.py
 
-本地存储
-csp_Local
+骚火电影(XP)
+csp_XPath
 
 大师兄(XPF)
 csp_XPathFilter
@@ -1074,29 +1323,17 @@ csp_Duanjuw
 阿里｜设置token
 csp_KungFu404
 
-😻Up搜┃搜索
-csp_UpYun
-
-骚火电影(XP)
-csp_XPath
-
 🐼┃游戏┃直播
 csp_Living
-
-⚡┃闪电┃优汐
-csp_Duopan
-
-🐾┃酷狗┃音乐
-csp_Kugou
 
 📚┃儿童┃启蒙
 https://gh-proxy.net/https://raw.githubusercontent.com/fantaiying7/EXT/refs/heads/main/drpy2.min.js
 
-🧿²⁰²⁶主页┃推荐
-csp_DouDouGuard
-
 🐾日本┃动漫
 csp_Anime1Guard
+
+⚽八八┃看球
+csp_Sir88Guard
 
 🧿我要┃吃瓜
 https://pan.szfx.top/down.php/9e279c961bceb59a7999404388ffa748.py
@@ -1184,24 +1421,6 @@ csp_LibvioAmns
 
 📽️嗷嗚┃短剧
 csp_HgggAmns
-
-📽️豪堪┃短剧
-csp_HHkkAmns
-
-📽️盒马┃短剧
-csp_HemaAmns
-
-📽️拜拜┃短剧
-csp_BddjAmns
-
-📽️围观┃短剧
-csp_WgdjAmns
-
-📽️喵喵┃短剧
-csp_QmdjAmns
-
-📽️星星┃短剧
-csp_XydjAmns
 
 ⭐橘汁┃快速
 csp_Woshinidie
@@ -1344,17 +1563,8 @@ https://gh-proxy.com/raw.githubusercontent.com/gaotianliuyun/gao/master/lib/drpy
 💕电视直播
 csp_Live2Vod
 
-💕直播综合
-csp_Yj1211
-
-💤推送(播放页链接或磁力)
-csp_PushAgent
-
 Cookie设置
 csp_Introduce
-
-盘他|139Pan
-csp_PanTa
 
 雷鲸|189Pan
 csp_LeiJing
@@ -1422,9 +1632,6 @@ csp_NG
 JustLive直播
 csp_JustLive
 
-新版6V视频
-csp_Xb6v
-
 七喜影视
 csp_QxiTv
 
@@ -1436,9 +1643,6 @@ csp_YunPanBa
 
 奇乐搜┃搜索
 csp_QiLeSo
-
-Market
-csp_Market
 
 精品 | 采集
 https://www.jingpinx.com/api.php/provide/vod/
@@ -1491,9 +1695,6 @@ jable[py]
 沙鱼 | 采集
 https://shayuapi.com/api.php/provide/vod/
 
-TG|涩涩
-csp_TGYunPan
-
 色播[js]
 https://raw.githubusercontent.com/fish2018/lib/main/js/dr_py/js/sebo.js
 
@@ -1527,41 +1728,17 @@ https://mgzyz1.com/api.php/provide/vod/
 523 | 采集
 https://523zyw.me/inc/apijson_vod.php
 
-🍏光速
-https://api.guangsuapi.com/api.php/provide/vod/
-
 🍏暴风
 https://bfzyapi.com/api.php/provide/vod/
 
-极速资源
-https://jszyapi.com/api.php/provide/vod/at/json
+🦜索尼┃采集
+https://suoniapi.com/api.php/provide/vod
 
-影视 • 率率[直连]
-https://suoniapi.com/api.php/provide/vod/?ac=list
-
-影视 | 量子[直连]
-https://cj.lziapi.com/api.php/provide/vod/
-
-🍏天堂
-http://caiji.dyttzyapi.com/api.php/provide/vod/from/dyttm3u8/at/json
-
-无尽ME
-https://api.wujinapi.me/api.php/provide/vod
-
-影视 • 非凡[直连]
-http://ffzy.tv/api.php/provide/vod/
-
-U酷资源
-https://api.ukuapi88.com/api.php/provide/vod/at/xmlsea
-
-非凡资源2
-http://ffzy5.tv/api.php/provide/vod
+🎀光速┃采集
+http://api.guangsuapi.com/api.php/provide/vod/
 
 光速资源
 http://api.guangsuapi.com/api.php/provide/vod
-
-🍏无尽
-https://api.wujinapi.com/api.php/provide/vod/
 
 影视 • 索尼[直连]
 https://suoniapi.com/api.php/provide/vod/at/xml/
@@ -1572,351 +1749,408 @@ https://api.zuidapi.com/api.php/provide/vod
 🎊索尼┃资源
 https://suoniapi.com/api.php/provide/vod/from/snm3u8/
 
-IK
-https://ikunzyapi.com/api.php/provide/vod/from/ikm3u8/
+幸资源
+https://xzybb1.com/api.php/provide/vod/at/xml
 
-🎀极速┃采集
-https://jszyapi.com/api.php/provide/vod/
+索尼
+https://suoniapi.com/api.php/provide/vod/?ac=list
+
+极速资源
+https://jszyapi.com/api.php/provide/vod/at/json
+
+🎥┃索尼┃资源
+https://suoniapi.com/api.php/provide/vod/
+
+🔰金鹰┃影视
+https://jyzyapi.com/provide/vod/
 
 U酷影视
 https://api.ukuapi88.com/api.php/provide/vod/from/ukm3u8/at/xml
 
-iKun资源
-https://ikunzyapi.com/api.php/provide/vod/at/xml
-
-采集视频3
-https://ikunzyapi.com/api.php/provide/vod
-
-🍏牛牛
-https://api.niuniuzy.me/api.php/provide/vod/
-
-无尽CC
-https://api.wujinapi.cc/api.php/provide/vod
-
-🦜索尼┃采集
-https://suoniapi.com/api.php/provide/vod
-
-🎀光速┃采集
-http://api.guangsuapi.com/api.php/provide/vod/
-
-🍊CK
-https://ckzy.me/api.php/provide/vod/
-
-牛牛资源
-https://api.niuniuzy.me/api.php/provide/vod/at/xml
-
-🍊色逼
-https://apilsbzy1.com/api.php/provide/vod/at/json
-
-🍊精东
-http://chujia.cc/api.php/provide/vod/from/m3u8/
-
-天涯API
-https://tyyszyapi.com/api.php/provide/vod
-
-鸭鸭资源
-https://cj.yayazy.net/api.php/provide/vod/?ac=list
-
-无尽NET
-https://api.wujinapi.net/api.php/provide/vod
-
-影视 • 尤酷[直连]
-https://api.ukuapi.com/api.php/provide/vod/?ac=list
-
-电影天堂
-http://caiji.dyttzyapi.com/api.php/provide/vod/at/xml/
-
-🍏最大
-http://zuidazy.me/api.php/provide/vod/
-
-🍊19
-https://19q.cc/api.php/provide/vod
-
-🦚量子┃采集
-https://cj.lziapi.com/api.php/provide/vod/at/xml/
-
-🍏无印
-https://api.wsyzy.net/api.php/provide/vod/
-
-幸资源
-https://xzybb1.com/api.php/provide/vod/at/xml
-
-闪电API
-https://sdzyapi.com/api.php/provide/vod
-
-🍏西瓜
-https://caiji.xgzyapi.com/api.php/provide/vod/
-
-🐂红牛┃采集
-https://www.hongniuzy2.com/api.php/provide/vod/
-
-🍏旺旺
-https://tyyszyapi.com/api.php/provide/vod/
-
-🍏鸭鸭
-https://cj.yayazy.net/api.php/provide/vod
-
-🧿量子┃资源
-https://cj.lziapi.com/api.php/provide/vod/?ac=list
-
-影视 • 天涯
-http://tyyszy.com/api.php/provide/vod
-
-影视 • 极速[直连]
-https://jszyapi.com/api.php/provide/vod/?ac=list
-
-鸭鸭资源2
-https://yayazy2.com/api.php/provide/vod/at/xml
-
-🥣爱坤┃影视
-https://ikunzyapi.com/api.php/provide/vod/from/ikm3u8/at/json
-
-索尼-闪电
-https://xsd.sdzyapi.com/api.php/provide/vod
-
-🍏360
-https://360zyzz.com/api.php/provide/vod
-
-🍏OK
-https://api.okzyw.net/api.php/provide/vod
-
-🚄快车┃影视
-https://caiji.kczyapi.com/api.php/provide/vod/
-
-🧿gay┃资源
-https://slapibf.com/api.php/provide/vod/?ac=list
-
-天涯资源
-https://tyyszyapi.com/api.php/provide/vod/at/xml/?ac=list
-
-淫水机资源(已修复)
-https://www.xrbsp.com/api/xml.php
-
-🍏非凡
-https://cj.ffzyapi.com/api.php/provide/vod/
-
-🔞PGX电影
-https://www.pgxdy.com/api/xml.php
-
-美少女资源(已修复)
-https://www.msnii.com/api/xml.php
-
-闪电资源
-https://shandianzy.com/api.php/provide/vod/at/xml
+U酷资源
+https://api.ukuapi88.com/api.php/provide/vod/at/xmlsea
 
 海外看(墙外)
 https://haiwaikan.com/api.php/provide/vod
 
-非凡资源
-http://api.ffzyapi.com/api.php/provide/vod/?ac=list
+影视 • 极速[直连]
+https://jszyapi.com/api.php/provide/vod/?ac=list
 
-🔃量子┃资源
+🎀极速┃采集
+https://jszyapi.com/api.php/provide/vod/
+
+无尽ME
+https://api.wujinapi.me/api.php/provide/vod
+
+🍏优酷
+https://api.ukuapi.com/api.php/provide/vod/
+
+🥣爱坤┃影视
+https://ikunzyapi.com/api.php/provide/vod/from/ikm3u8/at/json
+
+iKun资源
+https://ikunzyapi.com/api.php/provide/vod/at/xml
+
+🚄快车┃影视
+https://caiji.kczyapi.com/api.php/provide/vod/
+
+🍏最大
+http://zuidazy.me/api.php/provide/vod/
+
+非凡资源2
+http://ffzy5.tv/api.php/provide/vod
+
+影视 • 非凡[直连]
+http://ffzy.tv/api.php/provide/vod/
+
+🍏旺旺
+https://tyyszyapi.com/api.php/provide/vod/
+
+🎥┃光速┃资源
+https://api.guangsuapi.com/api.php/provide/vod/
+
+影视 • 天涯
+http://tyyszy.com/api.php/provide/vod
+
+🍏无印
+https://api.wsyzy.net/api.php/provide/vod/
+
+快车
+https://caiji.kuaichezy.org/api.php/provide/vod/?ac=list
+
+鸭鸭资源
+https://cj.yayazy.net/api.php/provide/vod/?ac=list
+
+牛牛资源
+https://api.niuniuzy.me/api.php/provide/vod/at/xml
+
+天涯API
+https://tyyszyapi.com/api.php/provide/vod
+
+🍏牛牛
+https://api.niuniuzy.me/api.php/provide/vod/
+
+索尼-闪电
+https://xsd.sdzyapi.com/api.php/provide/vod
+
+🍏新浪
+https://api.xinlangapi.com/xinlangapi.php/provide/vod/
+
+(良)量子资源
 http://cj.lziapi.com/api.php/provide/vod/
 
 影视 • 电影天堂
 http://caiji.dyttzyapi.com/api.php/provide/vod
 
-快车资源
-https://caiji.kuaichezy.org/api.php/provide/vod/?ac=list
+无尽NET
+https://api.wujinapi.net/api.php/provide/vod
 
-🦔暴風┃采集
+🍏天堂
+http://caiji.dyttzyapi.com/api.php/provide/vod/from/dyttm3u8/at/json
+
+🎥┃量子┃资源
+https://cj.lziapi.com/api.php/provide/vod/
+
+暴风
 https://bfzyapi.com/api.php/provide/vod
 
-香奶儿资源(已修复)
-https://www.gdlsp.com/api/xml.php
+🧿量子┃资源
+https://cj.lziapi.com/api.php/provide/vod/?ac=list
 
-柚子影视
-https://api.yzzy-api.com/inc/api.php/provide/vod/at/xml
+🍏鸭鸭
+https://cj.yayazy.net/api.php/provide/vod
 
-速播资源
-https://subocaiji.com/api.php/provide/vod/from/subyun/at/json
-
-🍏樱花
-https://m3u8.apiyhzy.com/api.php/provide/vod/
-
-360┃直连
-https://360zy.com/api.php/provide/vod/
-
-🍊奶香🪜
-https://Naixxzy.com/api.php/provide/vod/
-
-OK资源
-http://api.okzyw.net/api.php/provide/vod/from/okm3u8/at/xml
-
-🍎高清┃2K
-https://api.1080zyku.com/inc/apijson.php
-
-牛牛影视
-https://api.niuniuzy.me/api.php/provide/vod/from/nnm3u8/at/json
-
-🍏速播
-https://subocaiji.com/api.php/provide/vod/
-
-🍊大奶
-https://apidanaizi.com/api.php/provide/vod
-
-影视 • 建安
-http://154.219.117.232:9981/jacloudapi.php/provide/vod
-
-🍏优酷
-https://api.ukuapi.com/api.php/provide/vod/
-
-暴风影视
-http://by.bfzyapi.com/api.php/provide/vod/at/xml
-
-🍊极品
-https://jipinvip.com/api.php/provide/vod/
-
-🧿正品┃影视
-https://lbapi9.com/api.php/provide/vod/
-
-🔥️火狐┃秒播
-https://hhzyapi.com/api.php/provide/vod/?ac=list
-
-量子影视
-https://cj.lziapi.com/api.php/provide/vod/from/lzm3u8/at/xml/
-
-🔰金鹰┃影视
-https://jyzyapi.com/provide/vod/
-
-金鹰影视
-https://jyzyapi.com/provide/vod/from/jinyingm3u8/at/xml/
-
-🍏新浪
-https://api.xinlangapi.com/xinlangapi.php/provide/vod/
-
-魔都资源
-https://www.mdzyapi.com/api.php/provide/vod/?ac=list
-
-豆瓣采集2
-https://caiji.dbzy5.com/api.php/provide/vod/from/dbm3u8/at/json/
-
-豆瓣采集3
-https://caiji.dbzy5.com/api.php/provide/vod/at/json/
-
-豆瓣采集
-https://caiji.dbzy5.com/api.php/provide/vod/at/xml/
-
-🧿凤凰┃影视
-http://fhapi9.com/api.php/provide/vod/
-
-🍏虎牙
-https://www.huyaapi.com/api.php/provide/vod/from/hym3u8/at/json
-
-🍏魔都
-https://www.moduzy.com/api.php/provide/vod
-
-旺旺资源
-https://api.wwzy.tv/api.php/provide/vod/?ac=list
-
-爱奇艺资源
-https://iqiyizyapi.com/api.php/provide/vod
-
-🍏火狐
-https://hhzyapi.com/api.php/provide/vod/at/json
-
-新浪资源
-https://api.xinlangapi.com/xinlangapi.php/provide/vod/at/xml/
-
-🍏猫眼
-https://api.maoyanapi.top/api.php/provide/vod
-
-🍚玛丽┃秒播
-https://360zy.com/api.php/provide/vod
-
-🦚360┃采集
-https://360zy.com/api.php/provide/vod?
-
-🌈琥珀┃影视
-https://www.huyaapi.com/api.php/provide/vod/from/hym3u8
-
-猫眼影视
-https://api.maoyanapi.top/api.php/provide/vod/from/mym3u8/at/json
-
-360资源
-https://360zy.com/api.php/provide/vod/at/json
-
-暴风资源2
-http://bf.xoxowin86cisyap.com/api.php/provide/vod
-
-豆瓣影视
-https://caiji.dbzy5.com/api.php/provide/vod/from/dbm3u8/at/xml/
-
-🔮星空┃影视
-https://api.tiankongapi.com/api.php/provide/vod/
-
-迅雷┃网盘搜索
-https://so.yinpai.xyz/api.php?type=xunlei
-
-UC┃网盘搜索
-https://so.yinpai.xyz/api.php?type=uc
-
-移动┃网盘搜索
-https://so.yinpai.xyz/api.php?type=mobile
-
-123┃网盘搜索
-https://so.yinpai.xyz/api.php?type=123
-
-天翼┃网盘推送
-https://so.yinpai.xyz/api.php?type=tianyi
-
-百度┃网盘搜索
-https://so.yinpai.xyz/api.php?type=baidu
-
-阿里┃网盘搜索
-https://so.yinpai.xyz/api.php?type=aliyun
-
-夸克┃网盘搜索
-https://so.yinpai.xyz/api.php?type=quark
-
-🍊蝙蝠
-http://api.11bat.com/api.php/provide/vod/
-
-影视 • 卧龙资源[直连]
-https://wolongzyw.com/api.php/provide/vod/?ac=list
-
-影视 • 暴風[直连]
-https://bfzyapi.com/api.php/provide/vod/?ac=list
-
-豆瓣资源
-https://caiji.dbzy5.com/api.php/provide/vod/at/josn/
+🎥┃红牛┃资源
+https://www.hongniuzy2.com/api.php/provide/vod/
 
 💥┃火狐2K┃有广
 https://hhzyapi.com/api.php/provide/vod/
 
-🍊精品🪜
-https://www.jingpinx.com//api.php/provide/vod/
+天涯资源
+https://tyyszyapi.com/api.php/provide/vod/at/xml/?ac=list
 
-茅台资源
-https://caiji.maotaizy.cc/api.php/provide/vod/at/josn/
+无尽CC
+https://api.wujinapi.cc/api.php/provide/vod
 
-🍏茅台
-https://caiji.maotaizy.cc/api.php/provide/vod/from/mtm3u8/at/josn
+豆瓣采集2
+https://caiji.dbzy5.com/api.php/provide/vod/from/dbm3u8/at/json/
 
-追剧吧
-https://zjuba.vip/api.php/provide/vod
+🍏无尽
+https://api.wujinapi.com/api.php/provide/vod/
 
-🆕非凡┃资源
-http://cj.ffzyapi.com/api.php/provide/vod/
+闪电资源
+https://shandianzy.com/api.php/provide/vod/at/xml
 
-🍭非凡┃采集
-http://cj.ffzyapi.com/api.php/provide/vod/at/xml/
+闪电API
+https://sdzyapi.com/api.php/provide/vod
+
+🍏OK
+https://api.okzyw.net/api.php/provide/vod
+
+红牛云
+https://www.hongniuzy2.com/api.php/provide/vod/from/hnyun/at/xml/
+
+影视 • 尤酷[直连]
+https://api.ukuapi.com/api.php/provide/vod/?ac=list
+
+🍏火狐
+https://hhzyapi.com/api.php/provide/vod/at/json
+
+🦚量子┃采集
+https://cj.lziapi.com/api.php/provide/vod/at/xml/
+
+鸭鸭资源2
+https://yayazy2.com/api.php/provide/vod/at/xml
+
+无水印
+https://api.wsyzy.net/api.php/provide/vod/?ac=list
+
+速播资源
+https://subocaiji.com/api.php/provide/vod/from/subyun/at/json
 
 豪华资源
 https://hhzyapi.com/api.php/provide/vod
 
-茅台影视
-https://caiji.maotaizy.cc/api.php/provide/vod/from/mtm3u8/at/json
+极速
+https://jszyapi.com/api.php/provide/vod/from/jsyun/at/xml
 
-非凡影视
-https://api.ffzyapi.com/api.php/provide/vod/from/ffm3u8/at/xml/
+U酷
+https://api.ukuapi88.com/api.php/provide/vod/?ac=list
 
-🍏星球🪜
-https://www.ysxq.cc/api.php/provide/vod
+🍏樱花
+https://m3u8.apiyhzy.com/api.php/provide/vod/
+
+360资源
+https://360zy.com/api.php/provide/vod/at/json
+
+🍊色逼
+https://apilsbzy1.com/api.php/provide/vod/at/json
+
+OK资源
+http://api.okzyw.net/api.php/provide/vod/from/okm3u8/at/xml
+
+淫水机资源(已修复)
+https://www.xrbsp.com/api/xml.php
+
+🧿gay┃资源
+https://slapibf.com/api.php/provide/vod/?ac=list
+
+IK
+https://ikunzyapi.com/api.php/provide/vod/from/ikm3u8/
+
+豪华
+https://hhzyapi.com/api.php/provide/vod/from/hhyun/at/xml
+
+🎥┃豪华┃资源
+https://hhzyapi.com/api.php/provide/vod/?ac=list
+
+🍊大奶
+https://apidanaizi.com/api.php/provide/vod
+
+牛牛影视
+https://api.niuniuzy.me/api.php/provide/vod/from/nnm3u8/at/json
+
+影视 • 暴風[直连]
+https://bfzyapi.com/api.php/provide/vod/?ac=list
+
+香奶儿资源(已修复)
+https://www.gdlsp.com/api/xml.php
+
+影视 • 建安
+http://154.219.117.232:9981/jacloudapi.php/provide/vod
+
+新浪资源
+https://api.xinlangapi.com/xinlangapi.php/provide/vod/at/xml/
+
+360┃直连
+https://360zy.com/api.php/provide/vod/
+
+🍏360
+https://360zyzz.com/api.php/provide/vod
+
+🌈琥珀┃影视
+https://www.huyaapi.com/api.php/provide/vod/from/hym3u8
+
+旺旺资源
+https://api.wwzy.tv/api.php/provide/vod/?ac=list
+
+🍏西瓜
+https://caiji.xgzyapi.com/api.php/provide/vod/
+
+🆕非凡┃资源
+http://cj.ffzyapi.com/api.php/provide/vod/
+
+量子影视
+https://cj.lziapi.com/api.php/provide/vod/from/lzm3u8/at/xml/
+
+🧿凤凰┃影视
+http://fhapi9.com/api.php/provide/vod/
+
+豆瓣采集3
+https://caiji.dbzy5.com/api.php/provide/vod/at/json/
+
+🔞PGX电影
+https://www.pgxdy.com/api/xml.php
+
+🔥量子🔥
+https://cj.lziapi.com/api.php/provide/vod/from/liangzi/at/xml/
+
+豆瓣资源
+https://caiji.dbzy5.com/api.php/provide/vod/at/josn/
+
+🍏速播
+https://subocaiji.com/api.php/provide/vod/
+
+新浪云
+https://api.xinlangapi.com/xinlangapi.php/provide/vod/from/xlyun/at/xml/
+
+豆瓣采集
+https://caiji.dbzy5.com/api.php/provide/vod/at/xml/
+
+暴风影视
+http://by.bfzyapi.com/api.php/provide/vod/at/xml
+
+🍏虎牙
+https://www.huyaapi.com/api.php/provide/vod/from/hym3u8/at/json
+
+🍊极品
+https://jipinvip.com/api.php/provide/vod/
+
+牛牛
+https://api.niuniuzy.me/api.php/provide/vod/from/nnm3u8/at/xml
+
+金鹰影视
+https://jyzyapi.com/provide/vod/from/jinyingm3u8/at/xml/
+
+柚子影视
+https://api.yzzy-api.com/inc/api.php/provide/vod/at/xml
+
+🍏茅台
+https://caiji.maotaizy.cc/api.php/provide/vod/from/mtm3u8/at/josn
+
+光速云
+https://api.guangsuapi.com/api.php/provide/vod/from/gsyun/at/xml/
+
+🔮星空┃影视
+https://api.tiankongapi.com/api.php/provide/vod/
+
+美少女资源(已修复)
+https://www.msnii.com/api/xml.php
+
+影视 • 卧龙资源[直连]
+https://wolongzyw.com/api.php/provide/vod/?ac=list
+
+茅台资源
+https://caiji.maotaizy.cc/api.php/provide/vod/at/josn/
+
+非凡资源
+http://api.ffzyapi.com/api.php/provide/vod/?ac=list
+
+🍚玛丽┃秒播
+https://360zy.com/api.php/provide/vod
+
+🍎高清┃2K
+https://api.1080zyku.com/inc/apijson.php
+
+魔都
+https://www.mdzyapi.com/api.php/provide/vod/?ac=list
+
+🍏非凡
+https://cj.ffzyapi.com/api.php/provide/vod/
+
+虎牙云
+https://www.huyaapi.com/api.php/provide/vod/from/hyyun/at/xml/
+
+🧡┃初恋┃官源
+https://video.adminqt.cn/api.php/provide/vod/
+
+豆瓣影视
+https://caiji.dbzy5.com/api.php/provide/vod/from/dbm3u8/at/xml/
+
+猫眼影视
+https://api.maoyanapi.top/api.php/provide/vod/from/mym3u8/at/json
+
+🍭非凡┃采集
+http://cj.ffzyapi.com/api.php/provide/vod/at/xml/
+
+速播
+https://subocj.com/api.php/provide/vod/from/subyun/at/json
+
+🍏魔都
+https://www.moduzy.com/api.php/provide/vod
+
+🦚360┃采集
+https://360zy.com/api.php/provide/vod?
+
+🧿正品┃影视
+https://lbapi9.com/api.php/provide/vod/
+
+🍊奶香🪜
+https://Naixxzy.com/api.php/provide/vod/
+
+电影天堂
+http://caiji.dyttzyapi.com/api.php/provide/vod/at/xml/
+
+🍊19
+https://19q.cc/api.php/provide/vod
+
+🍏猫眼
+https://api.maoyanapi.top/api.php/provide/vod
+
+暴风资源2
+http://bf.xoxowin86cisyap.com/api.php/provide/vod
+
+🍊蝙蝠
+http://api.11bat.com/api.php/provide/vod/
+
+移动┃网盘搜索
+https://so.yinpai.xyz/api.php?type=mobile
+
+迅雷┃网盘搜索
+https://so.yinpai.xyz/api.php?type=xunlei
+
+123┃网盘搜索
+https://so.yinpai.xyz/api.php?type=123
+
+阿里┃网盘搜索
+https://so.yinpai.xyz/api.php?type=aliyun
 
 🍏如意
 https://cj.rycjapi.com/api.php/provide/vod
 
+百度┃网盘搜索
+https://so.yinpai.xyz/api.php?type=baidu
+
+夸克┃网盘搜索
+https://so.yinpai.xyz/api.php?type=quark
+
+UC┃网盘搜索
+https://so.yinpai.xyz/api.php?type=uc
+
+非凡影视
+https://api.ffzyapi.com/api.php/provide/vod/from/ffm3u8/at/xml/
+
+茅台影视
+https://caiji.maotaizy.cc/api.php/provide/vod/from/mtm3u8/at/json
+
+天翼┃网盘推送
+https://so.yinpai.xyz/api.php?type=tianyi
+
+如意云
+https://cj.rycjapi.com/api.php/provide/vod/from/ruyi/at/xml/
+
+🍊精东
+http://chujia.cc/api.php/provide/vod/from/m3u8/
+
+非凡
+http://api.ffzyapi.com/api.php/provide/vod/from/feifan/at/xml/
+
 🍊越南
 https://vnzyz.com/api.php/provide/vod
+
+🍏星球🪜
+https://www.ysxq.cc/api.php/provide/vod
+
+追剧吧
+https://zjuba.vip/api.php/provide/vod
 

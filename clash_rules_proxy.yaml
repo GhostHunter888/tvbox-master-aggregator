@@ -1,3 +1,4 @@
 # TVBox 视频源 Clash 强制代理规则集 (DOMAIN-SUFFIX 格式)
 payload:
+  - DOMAIN-SUFFIX,github.moeyy.xyz
   - DOMAIN-SUFFIX,raw.githubusercontent.com

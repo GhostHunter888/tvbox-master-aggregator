@@ -1,2 +1,3 @@
-# TVBox 视频源强制代理域名列表 (含 GitHub/JS 依赖及需翻墙节点)
+# TVBox 视频源强制代理域名列表
+github.moeyy.xyz
 raw.githubusercontent.com
