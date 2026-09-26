@@ -25,6 +25,7 @@ payload:
   - DOMAIN-SUFFIX,caiji.xgzyapi.com
   - DOMAIN-SUFFIX,cdn.jsdmirror.com
   - DOMAIN-SUFFIX,chujia.cc
+  - DOMAIN-SUFFIX,ckzy.me
   - DOMAIN-SUFFIX,ffzy.tv
   - DOMAIN-SUFFIX,ffzy5.tv
   - DOMAIN-SUFFIX,ffzyapi.com
@@ -47,6 +48,7 @@ payload:
   - DOMAIN-SUFFIX,hongniuzy2.com
   - DOMAIN-SUFFIX,huyaapi.com
   - DOMAIN-SUFFIX,ikunzyapi.com
+  - DOMAIN-SUFFIX,iqiyizyapi.com
   - DOMAIN-SUFFIX,jihulab.com
   - DOMAIN-SUFFIX,jingpinx.com
   - DOMAIN-SUFFIX,jipinvip.com
@@ -80,7 +82,6 @@ payload:
   - DOMAIN-SUFFIX,ukuapi.com
   - DOMAIN-SUFFIX,ukuapi88.com
   - DOMAIN-SUFFIX,video.adminqt.cn
-  - DOMAIN-SUFFIX,vnzyz.com
   - DOMAIN-SUFFIX,wolongzyw.com
   - DOMAIN-SUFFIX,wsyzy.net
   - DOMAIN-SUFFIX,wujinapi.cc

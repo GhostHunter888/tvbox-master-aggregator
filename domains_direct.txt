@@ -24,6 +24,7 @@ caiji.maotaizy.cc
 caiji.xgzyapi.com
 cdn.jsdmirror.com
 chujia.cc
+ckzy.me
 ffzy.tv
 ffzy5.tv
 ffzyapi.com
@@ -46,6 +47,7 @@ home.jundie.top
 hongniuzy2.com
 huyaapi.com
 ikunzyapi.com
+iqiyizyapi.com
 jihulab.com
 jingpinx.com
 jipinvip.com
@@ -79,7 +81,6 @@ tyyszyapi.com
 ukuapi.com
 ukuapi88.com
 video.adminqt.cn
-vnzyz.com
 wolongzyw.com
 wsyzy.net
 wujinapi.cc
