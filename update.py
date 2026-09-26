@@ -361,7 +361,7 @@ def build_multi_store(cleaned_alive_sites):
     with open(os.path.join(WORK_DIR, "tvbox_advanced.json"), "w", encoding="utf-8") as f:
         json.dump(advanced_config, f, ensure_ascii=False, indent=2)
 
-    # 重新构建多仓机制
+    # 重新构建带有详细直连支持的顶级分类多仓
     multi_stores = [
         {"sourceName": "🚀 [主推] 全网纯净普通大一统采集", "sourceUrl": "https://raw.githubusercontent.com/haygcao/tvbox-master-aggregator/main/tvbox.json"},
         {"sourceName": "🔥 [高阶] 全网聚合优质 JS/JAR 爬虫大全", "sourceUrl": "https://raw.githubusercontent.com/haygcao/tvbox-master-aggregator/main/tvbox_advanced.json"}
