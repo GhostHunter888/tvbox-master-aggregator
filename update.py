@@ -335,7 +335,14 @@ def main():
     cleaned_alive_sites = apply_master_cleaning(all_raw_sites)
 
     # 4. 消除品牌包袱，智能优先置顶与多维测速排序
-    STD_CATEGORIES = ["电影", "电视剧", "综艺", "动漫", "泰剧", "韩剧", "美剧", "日剧", "港剧"]
+    # 提取所有存活站点的分类 (Dynamic Category Extraction)
+    # 如果源站点自身包含 categories 列表，则保留其原生分类；
+    # 若缺失，则自动赋予全面的默认兜底分类
+    COMPREHENSIVE_CATEGORIES = [
+        "电影", "电视剧", "综艺", "动漫", "纪录片", "短剧",
+        "少儿", "体育", "音乐", "解说", "游戏", "戏曲",
+        "国产剧", "韩剧", "美剧", "日剧", "港剧", "台剧", "泰剧", "海外剧"
+    ]
 
     TOP_PINNED_KEYWORDS = [
         "4k", "夸克", "阿里", "uc网盘", "豆瓣", "索尼", "360", "暴风",
@@ -357,15 +364,22 @@ def main():
         clean_name = re.sub(r'^\[.*?\]\s*', '', raw_name)
         priority = get_site_priority(clean_name, s.get("api", ""))
 
+        # 动态提取并合并分类
+        original_cats = s.get("categories")
+        if isinstance(original_cats, list) and len(original_cats) > 0:
+            assigned_cats = original_cats
+        else:
+            assigned_cats = COMPREHENSIVE_CATEGORIES
+
         c_site = {
             "key": s.get("key", clean_name),
             "name": f"[{cost}ms] {clean_name}",
             "type": s.get("type", 1),
             "api": s.get("api", ""),
-            "searchable": 1,
-            "quickSearch": 1,
-            "filterable": 1,
-            "categories": STD_CATEGORIES,
+            "searchable": s.get("searchable", 1),
+            "quickSearch": s.get("quickSearch", 1),
+            "filterable": s.get("filterable", 1),
+            "categories": assigned_cats,
             "_priority": priority,
             "_cost": cost
         }
