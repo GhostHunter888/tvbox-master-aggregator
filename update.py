@@ -11,6 +11,7 @@ import urllib.parse
 import urllib.request
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
+# 强制开启 Python 实时无缓冲日志输出
 sys.stdout.reconfigure(line_buffering=True) if hasattr(sys.stdout, 'reconfigure') else None
 
 WORK_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -35,16 +36,23 @@ HEADERS = {
 
 def fetch_text(url, timeout=12):
     try:
+        print(f"      [FETCH] 请求: {url}")
         req = urllib.request.Request(url, headers=HEADERS)
         with urllib.request.urlopen(req, timeout=timeout, context=SSL_CTX) as resp:
-            return resp.read().decode("utf-8", errors="ignore")
-    except Exception:
+            content = resp.read().decode("utf-8", errors="ignore")
+            print(f"      [FETCH] 成功获取: {url} (长度: {len(content)} bytes)")
+            return content
+    except Exception as e:
+        print(f"      [FETCH] 失败: {url} -> 错误: {e}")
         return ""
 
 def is_blacklisted(text):
     if not text: return False
     lower_text = str(text).lower()
-    return any(kw in lower_text for kw in SEX_KEYWORDS)
+    for kw in SEX_KEYWORDS:
+        if kw in lower_text:
+            return True, kw
+    return False, ""
 
 def parse_json_safely(content):
     if not content: return None
@@ -85,57 +93,96 @@ UPSTREAM_REPO_ENDPOINTS = [
 ]
 
 def sync_upstream_generated_data():
-    print("[1/4] 动态拉取开源数据源...", flush=True)
+    print("[1/4] === 开始拉取并解析开源数据源 ===")
     raw_sites, raw_lives, raw_parses, spider_jars = [], [], [], []
     for url in UPSTREAM_REPO_ENDPOINTS:
         content = fetch_text(url)
         data = parse_json_safely(content)
         if not data: continue
+
         if isinstance(data, list):
             for item in data:
                 if isinstance(item, dict):
                     api = item.get("api") or item.get("url")
-                    name = item.get("name", "")
-                    if api and not is_blacklisted(name) and not is_blacklisted(str(api)):
+                    name = item.get("name", "未命名")
+                    if api:
+                        is_black, kw = is_blacklisted(name)
+                        is_black_api, kw_api = is_blacklisted(str(api))
+                        if is_black or is_black_api:
+                            print(f"      [过滤] 拦截违规站点 (JSON List): 名称='{name}' API='{api}' 命中敏感词: {kw or kw_api}")
+                            continue
+                        print(f"      [提取] 解析到站点: {name}")
                         raw_sites.append({"name": name, "api": str(api), "type": item.get("type", 1)})
         elif isinstance(data, dict):
             spider = data.get("spider", "")
             if spider and ("github" in spider.lower() or "jsdelivr" in spider.lower()):
                 spider_jars.append(spider)
             for s in (data.get("sites") or []):
-                if s.get("api") and not is_blacklisted(s.get("name")) and not is_blacklisted(str(s.get("api"))):
+                api = s.get("api")
+                name = s.get("name", "未命名")
+                if api:
+                    is_black, kw = is_blacklisted(name)
+                    is_black_api, kw_api = is_blacklisted(str(api))
+                    if is_black or is_black_api:
+                        print(f"      [过滤] 拦截违规站点 (JSON Dict): 名称='{name}' API='{api}' 命中敏感词: {kw or kw_api}")
+                        continue
+                    print(f"      [提取] 解析到站点: {name}")
                     raw_sites.append(s)
             raw_lives.extend(data.get("lives") or [])
             raw_parses.extend(data.get("parses") or [])
-    print(f"  └─ 实时获取到 {len(raw_sites)} 个基础站点接口", flush=True)
+
+    print(f"  └─ 开源源同步完成，合计提取到 {len(raw_sites)} 个基础站点接口\n")
     return raw_sites, raw_lives, raw_parses, spider_jars
 
 def sync_web_sources():
-    print("[2/4] 动态解析网页资源 (zzzypro.com & clbug.com)...", flush=True)
+    print("[2/4] === 开始解析动态网页资源 (zzzypro.com & clbug.com) ===")
     web_sites = []
     html = fetch_text("https://www.zzzypro.com/")
     if html:
         part = html.split("❶影视资源")[1] if "❶影视资源" in html else html
         if "❷X站资源" in part: part = part.split("❷X站资源")[0]
+
         for raw_url, name in re.findall(r'<a[^>]+data-url=["\']([^"\']+)["\'][^>]*>.*?<strong>([^<]+)</strong>', part, re.I):
             name, raw_url = name.strip(), raw_url.strip().rstrip("/")
-            if not is_blacklisted(name) and not is_blacklisted(raw_url):
-                api_url = f"{'https://' if not raw_url.startswith('http') else ''}{raw_url}/api.php/provide/vod/"
-                web_sites.append({"name": name, "api": api_url, "type": 1})
+            is_black, kw = is_blacklisted(name)
+            is_black_api, kw_api = is_blacklisted(raw_url)
+            if is_black or is_black_api:
+                print(f"      [过滤] 拦截违规站点 (zzzypro): 名称='{name}' 命中敏感词: {kw or kw_api}")
+                continue
+
+            api_url = f"{'https://' if not raw_url.startswith('http') else ''}{raw_url}/api.php/provide/vod/"
+            print(f"      [提取] 解析到网页采集站: {name}")
+            web_sites.append({"name": name, "api": api_url, "type": 1})
 
     clbug_html = fetch_text("https://tvbox.clbug.com/user.php")
     if clbug_html:
         c_part = clbug_html.split("X站")[0] if "X站" in clbug_html else clbug_html
         for name, url in zip(re.findall(r'<td class="td-name">([^<]+)</td>', c_part), re.findall(r'data-url="([^"]+)"', c_part)):
             name, url = name.strip(), url.strip().replace("&amp;", "&")
-            if url and not url.startswith("#") and not is_blacklisted(name) and not is_blacklisted(url):
-                if url.endswith(".json") or "json" in url:
-                    sub_data = parse_json_safely(fetch_text(url))
-                    if isinstance(sub_data, dict):
-                        for s in (sub_data.get("sites") or []):
-                            if s.get("api") and not is_blacklisted(s.get("name")) and not is_blacklisted(s.get("api")):
-                                web_sites.append(s)
-    print(f"  └─ 网页动态提取获取到 {len(web_sites)} 个新站源", flush=True)
+            if not url or url.startswith("#"): continue
+
+            is_black, kw = is_blacklisted(name)
+            is_black_api, kw_api = is_blacklisted(url)
+            if is_black or is_black_api:
+                print(f"      [过滤] 拦截违规站点 (clbug): 名称='{name}' 命中敏感词: {kw or kw_api}")
+                continue
+
+            if url.endswith(".json") or "json" in url:
+                sub_data = parse_json_safely(fetch_text(url))
+                if isinstance(sub_data, dict):
+                    for s in (sub_data.get("sites") or []):
+                        s_name = s.get("name", "未命名")
+                        s_api = s.get("api")
+                        if s_api:
+                            is_b1, k1 = is_blacklisted(s_name)
+                            is_b2, k2 = is_blacklisted(str(s_api))
+                            if is_b1 or is_b2:
+                                print(f"      [过滤] 拦截违规站点 (clbug子JSON): 名称='{s_name}' 命中敏感词: {k1 or k2}")
+                                continue
+                            print(f"      [提取] 解析到网页 JSON 子站点: {s_name}")
+                            web_sites.append(s)
+
+    print(f"  └─ 网页动态解析完成，合计获取到 {len(web_sites)} 个新站源\n")
     return web_sites
 
 def check_api_alive(site):
@@ -146,30 +193,51 @@ def check_api_alive(site):
         t0 = time.time()
         with urllib.request.urlopen(req, timeout=5, context=SSL_CTX) as resp:
             if resp.status == 200:
-                site["_cost"] = int((time.time() - t0) * 1000)
+                cost = int((time.time() - t0) * 1000)
+                site["_cost"] = cost
+                print(f"      [测速-通过] {site['name']} ({cost}ms)")
                 return site
-    except: pass
+    except Exception as e:
+        print(f"      [测速-失败] {site['name']} | URL: {api} | 错误: {e}")
+        pass
     return None
 
 def apply_master_cleaning(all_sites):
-    print("[3/4] 执行数据清洗与物理去重 (接口联通性与存活验证)...", flush=True)
+    print("[3/4] === 执行深度物理去重与联通性测速 ===")
     unique_sites = {}
+    unique_names = set()
 
     for s in all_sites:
         api = s.get("api", "")
-        if not api or is_blacklisted(s.get("name", "")) or is_blacklisted(str(api)):
+        raw_name = s.get("name", "")
+        if not api: continue
+
+        is_b1, k1 = is_blacklisted(raw_name)
+        is_b2, k2 = is_blacklisted(str(api))
+        if is_b1 or is_b2:
+            continue
+
+        clean_name = re.sub(r'^\[.*?\]\s*', '', raw_name)
+        if not clean_name:
             continue
 
         try:
             domain = urllib.parse.urlparse(str(api)).netloc
+            domain = re.sub(r'^(www|api|cj|vip|v|jx)\.', '', domain)
         except:
             domain = str(api)
 
-        if domain not in unique_sites:
+        if domain not in unique_sites and clean_name not in unique_names:
+            print(f"      [去重-保留] {clean_name} (主域名: {domain})")
+            s["_clean_name"] = clean_name
             unique_sites[domain] = s
+            unique_names.add(clean_name)
+        else:
+            print(f"      [去重-剔除] 发现重复内容: {clean_name} (主域名: {domain})")
 
     candidates = list(unique_sites.values())
-    print(f"  ├─ 归一去重后待测站点总数: {len(candidates)} 个", flush=True)
+    print(f"\n  ├─ 归一去重完毕，最终进入并发测速池站点总数: {len(candidates)} 个")
+    print(f"  ├─ 开始多线程并发测速，抛弃失效接口...")
 
     alive_sites = []
     with ThreadPoolExecutor(max_workers=20) as executor:
@@ -177,11 +245,11 @@ def apply_master_cleaning(all_sites):
             if res.result(): alive_sites.append(res.result())
 
     alive_sites.sort(key=lambda x: x.get("_cost", 9999))
-    print(f"  └─ 联通测试存活可用站点: {len(alive_sites)} 个", flush=True)
+    print(f"  └─ 联通测试存活可用站点: {len(alive_sites)} 个\n")
     return alive_sites
 
 def export_router_rules(sites):
-    print("[4/4] 导出 PassWall / Clash 国内直连域名规则策略...", flush=True)
+    print("[4/4] === 导出 PassWall / Clash 国内直连域名规则策略 ===")
     domains = set(["raw.githubusercontent.com", "cdn.jsdelivr.net", "fastly.jsdelivr.net"])
     for s in sites:
         if s.get("api"):
@@ -197,10 +265,26 @@ def export_router_rules(sites):
         f.write("# TVBox 视频源 Clash 直连规则集 (DOMAIN-SUFFIX 格式)\npayload:\n")
         for d in sorted_domains: f.write(f"  - DOMAIN-SUFFIX,{d}\n")
 
+def build_multi_store():
+    """重新构建符合标准的顶级分类多仓"""
+    multi_stores = [
+        {"sourceName": "🚀 [主推] 全网纯净采集大一统", "sourceUrl": "https://raw.githubusercontent.com/haygcao/tvbox-master-aggregator/main/tvbox.json"},
+        {"sourceName": "💎 [旗舰] 饭太硬精选仓", "sourceUrl": "https://raw.githubusercontent.com/FongMi/CatVodSpider/main/json/config.json"},
+        {"sourceName": "💎 [旗舰] 肥猫精选仓", "sourceUrl": "https://cdn.jsdelivr.net/gh/Lightconer/tvbox-ysc-config@main/output/feimao.json"},
+        {"sourceName": "💎 [旗舰] 欧歌专仓", "sourceUrl": "https://cdn.jsdelivr.net/gh/Lightconer/tvbox-ysc-config@main/output/ouge.json"},
+        {"sourceName": "🔥 [高阶] FongMi 官方仓", "sourceUrl": "https://raw.githubusercontent.com/FongMi/CatVodSpider/main/json/config.json"},
+        {"sourceName": "🔥 [聚合] 王二小专仓", "sourceUrl": "https://cdn.jsdelivr.net/gh/Lightconer/tvbox-ysc-config@main/output/wangerxiao.json"},
+        {"sourceName": "🔥 [聚合] 高天流云配置", "sourceUrl": "https://raw.githubusercontent.com/gaotianliuyun/gao/master/js.json"},
+        {"sourceName": "✨ [4K] 蓝光专线仓", "sourceUrl": "https://cdn.jsdelivr.net/gh/Lightconer/tvbox-ysc-config@main/output/4k.json"}
+    ]
+    with open(os.path.join(WORK_DIR, "tvbox_multi.json"), "w", encoding="utf-8") as f:
+        json.dump({"storeHouse": multi_stores}, f, ensure_ascii=False, indent=2)
+    print(f"[OK] 生成顶级分类多仓: tvbox_multi.json (共 {len(multi_stores)} 大分类)")
+
 def main():
-    print("==================================================", flush=True)
-    print(f" TVBox 资源全量整合与自动化清洗引擎启动 ({time.strftime('%Y-%m-%d %H:%M:%S')})", flush=True)
-    print("==================================================", flush=True)
+    print("==================================================")
+    print(f" TVBox 资源全量整合与自动化清洗引擎启动 ({time.strftime('%Y-%m-%d %H:%M:%S')})")
+    print("==================================================\n")
 
     upstream_sites, upstream_lives, upstream_parses, spider_jars = sync_upstream_generated_data()
     web_sites = sync_web_sources()
@@ -216,8 +300,7 @@ def main():
     clean_sites = []
     for s in cleaned_alive_sites:
         cost = s.pop("_cost", 0)
-        raw_name = s.get("name", "")
-        clean_name = re.sub(r'^\[.*?\]\s*', '', raw_name)
+        clean_name = s.pop("_clean_name", s.get("name", ""))
 
         assigned_cats = s.get("categories", [])
         if not isinstance(assigned_cats, list) or len(assigned_cats) == 0:
@@ -259,29 +342,18 @@ def main():
             {"name": "lz", "hosts": ["lz"], "regex": ["#EXT-X-DISCONTINUITY"]},
             {"name": "ff", "hosts": ["ff"], "regex": ["#EXT-X-DISCONTINUITY"]}
         ],
-        "note": "本配置由 TVBox 资源整合引擎自动生成。"
+        "note": "本配置由 TVBox 资源全量整合引擎自动生成。"
     }
 
     with open(os.path.join(WORK_DIR, "tvbox.json"), "w", encoding="utf-8") as f:
         json.dump(master_config, f, ensure_ascii=False, indent=2)
-    print(f"\n[OK] 生成主单仓配置文件: tvbox.json ({len(clean_sites)} 个纯净站点)", flush=True)
+    print(f"\n[OK] 生成整合主配置文件: tvbox.json ({len(clean_sites)} 个纯净站点)", flush=True)
 
-    multi_stores = []
-    for s in clean_sites:
-        multi_stores.append({
-            "sourceName": s["name"],
-            "sourceUrl": s["api"]
-        })
-    multi_config = {
-        "storeHouse": multi_stores
-    }
-    multi_json_path = os.path.join(WORK_DIR, "tvbox_multi.json")
-    with open(multi_json_path, "w", encoding="utf-8") as f:
-        json.dump(multi_config, f, ensure_ascii=False, indent=2)
-    print(f"[OK] 恢复多仓配置文件: tvbox_multi.json ({len(multi_stores)} 个独立仓库)", flush=True)
+    build_multi_store()
 
     export_router_rules(clean_sites)
-    print("\n[4/4] 完成！", flush=True)
+
+    print("\n[5/5] 完成！所有产物已同步写入仓库。\n", flush=True)
 
 if __name__ == "__main__":
     main()
