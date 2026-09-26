@@ -4,6 +4,10 @@ on:
   schedule:
     - cron: '0 */6 * * *'  # 每 6 小时自动运行一次 (00:00, 06:00, 12:00, 18:00 UTC)
   workflow_dispatch:        # 支持在 GitHub 页面手动触发运行
+  push:
+    paths:
+      - 'update.py'        # 当修改并 Push update.py 时自动触发执行
+      - '.github/workflows/update.yml'
 
 # 赋予 GitHub Actions 写权限 (允许自动 Push 生成的配置文件)
 permissions:
