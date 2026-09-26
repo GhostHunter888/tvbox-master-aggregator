@@ -1,0 +1,396 @@
+{
+  "storeHouse": [
+    {
+      "sourceName": "[2852ms] 夸克┃网盘搜索",
+      "sourceUrl": "https://so.yinpai.xyz/api.php?type=quark"
+    },
+    {
+      "sourceName": "[79ms] 💥豆瓣",
+      "sourceUrl": "https://www.agit.ai/fantaiying/dr_py/raw/branch/main/libs/drpy2.min.js"
+    },
+    {
+      "sourceName": "[683ms] 豆瓣资源",
+      "sourceUrl": "https://dbzy.tv/api.php/provide/vod"
+    },
+    {
+      "sourceName": "[809ms] 豆瓣采集2",
+      "sourceUrl": "https://caiji.dbzy5.com/api.php/provide/vod/from/dbm3u8/at/json/"
+    },
+    {
+      "sourceName": "[91ms] 影视 • 索尼[直连]",
+      "sourceUrl": "https://suoniapi.com/api.php/provide/vod/at/xml/"
+    },
+    {
+      "sourceName": "[129ms] 索尼-闪电",
+      "sourceUrl": "https://xsd.sdzyapi.com/api.php/provide/vod"
+    },
+    {
+      "sourceName": "[389ms] 360资源ZZ",
+      "sourceUrl": "https://360zyzz.com/api.php/provide/vod"
+    },
+    {
+      "sourceName": "[476ms] 🦚360┃采集",
+      "sourceUrl": "https://360zy.com/api.php/provide/vod?"
+    },
+    {
+      "sourceName": "[369ms] 暴风影视",
+      "sourceUrl": "http://by.bfzyapi.com/api.php/provide/vod/at/xml"
+    },
+    {
+      "sourceName": "[697ms] 暴风资源2",
+      "sourceUrl": "http://bf.xoxowin86cisyap.com/api.php/provide/vod"
+    },
+    {
+      "sourceName": "[63ms] 影视 • 非凡[直连]",
+      "sourceUrl": "http://ffzy.tv/api.php/provide/vod/"
+    },
+    {
+      "sourceName": "[475ms] 🐝非凡资源",
+      "sourceUrl": "http://cj.ffzyapi.com/api.php/provide/vod/?ac=list"
+    },
+    {
+      "sourceName": "[543ms] 非凡资源2",
+      "sourceUrl": "http://ffzy5.tv/api.php/provide/vod"
+    },
+    {
+      "sourceName": "[867ms] 非凡资源",
+      "sourceUrl": "http://api.ffzyapi.com/api.php/provide/vod/?ac=list"
+    },
+    {
+      "sourceName": "[296ms] 影视 • 极速[直连]",
+      "sourceUrl": "https://jszyapi.com/api.php/provide/vod/?ac=list"
+    },
+    {
+      "sourceName": "[180ms] 🍏光速",
+      "sourceUrl": "https://api.guangsuapi.com/api.php/provide/vod/"
+    },
+    {
+      "sourceName": "[139ms] 天涯资源",
+      "sourceUrl": "https://tyyszyapi.com/api.php/provide/vod/at/?ac=list"
+    },
+    {
+      "sourceName": "[144ms] 影视 • 天涯",
+      "sourceUrl": "http://tyyszy.com/api.php/provide/vod"
+    },
+    {
+      "sourceName": "[804ms] 爱奇艺资源",
+      "sourceUrl": "https://iqiyizyapi.com/api.php/provide/vod"
+    },
+    {
+      "sourceName": "[148ms] 🎀红牛┃采集",
+      "sourceUrl": "https://www.hongniuzy2.com/api.php/provide/vod/"
+    },
+    {
+      "sourceName": "[52ms] 无尽ME",
+      "sourceUrl": "https://api.wujinapi.me/api.php/provide/vod"
+    },
+    {
+      "sourceName": "[78ms] 无尽CC",
+      "sourceUrl": "https://api.wujinapi.cc/api.php/provide/vod"
+    },
+    {
+      "sourceName": "[123ms] 🍏无尽",
+      "sourceUrl": "https://api.wujinapi.com/api.php/provide/vod/"
+    },
+    {
+      "sourceName": "[149ms] 无尽NET",
+      "sourceUrl": "https://api.wujinapi.net/api.php/provide/vod"
+    },
+    {
+      "sourceName": "[35ms] 最大资源",
+      "sourceUrl": "https://api.zuidapi.com/api.php/provide/vod"
+    },
+    {
+      "sourceName": "[55ms] U酷资源",
+      "sourceUrl": "https://api.ukuapi88.com/api.php/provide/vod/at/xmlsea"
+    },
+    {
+      "sourceName": "[83ms] 幸资源",
+      "sourceUrl": "https://xzybb1.com/api.php/provide/vod/at/xml"
+    },
+    {
+      "sourceName": "[91ms] 🍏牛牛",
+      "sourceUrl": "https://api.niuniuzy.me/api.php/provide/vod/"
+    },
+    {
+      "sourceName": "[95ms] 💥丨爱看2k丨微广",
+      "sourceUrl": "https://ikunzyapi.com/api.php/provide/vod/from/ikm3u8/"
+    },
+    {
+      "sourceName": "[101ms] 🍊越南",
+      "sourceUrl": "https://vnzyz.com/api.php/provide/vod"
+    },
+    {
+      "sourceName": "[103ms] 色播[js]",
+      "sourceUrl": "https://raw.githubusercontent.com/fish2018/lib/main/js/dr_py/js/sebo.js"
+    },
+    {
+      "sourceName": "[109ms] 🍊精东",
+      "sourceUrl": "http://chujia.cc/api.php/provide/vod/from/m3u8/"
+    },
+    {
+      "sourceName": "[113ms] 快车资源",
+      "sourceUrl": "https://caiji.kuaichezy.org/api.php/provide/vod/?ac=list"
+    },
+    {
+      "sourceName": "[131ms] 🍊19",
+      "sourceUrl": "https://19q.cc/api.php/provide/vod"
+    },
+    {
+      "sourceName": "[138ms] 🍏无印",
+      "sourceUrl": "https://api.wsyzy.net/api.php/provide/vod/"
+    },
+    {
+      "sourceName": "[143ms] 闪电API",
+      "sourceUrl": "https://sdzyapi.com/api.php/provide/vod"
+    },
+    {
+      "sourceName": "[151ms] 🍊色逼",
+      "sourceUrl": "https://apilsbzy1.com/api.php/provide/vod/at/json"
+    },
+    {
+      "sourceName": "[152ms] 影视 • 尤酷[直连]",
+      "sourceUrl": "https://api.ukuapi.com/api.php/provide/vod/?ac=list"
+    },
+    {
+      "sourceName": "[157ms] 🍏OK",
+      "sourceUrl": "https://api.okzyw.net/api.php/provide/vod"
+    },
+    {
+      "sourceName": "[160ms] 鸭鸭资源2",
+      "sourceUrl": "https://yayazy2.com/api.php/provide/vod/at/xml"
+    },
+    {
+      "sourceName": "[164ms] 🍊CK",
+      "sourceUrl": "https://ckzy.me/api.php/provide/vod/"
+    },
+    {
+      "sourceName": "[164ms] 🍏最大",
+      "sourceUrl": "http://zuidazy.me/api.php/provide/vod/"
+    },
+    {
+      "sourceName": "[174ms] 闪电资源",
+      "sourceUrl": "https://shandianzy.com/api.php/provide/vod/at/xml"
+    },
+    {
+      "sourceName": "[176ms] 淫水机资源(已修复)",
+      "sourceUrl": "https://www.xrbsp.com/api/xml.php"
+    },
+    {
+      "sourceName": "[178ms] 🚄快车┃影视",
+      "sourceUrl": "https://caiji.kczyapi.com/api.php/provide/vod/"
+    },
+    {
+      "sourceName": "[186ms] 🧿gay┃资源",
+      "sourceUrl": "https://slapibf.com/api.php/provide/vod/?ac=list"
+    },
+    {
+      "sourceName": "[195ms] 🍏鸭鸭",
+      "sourceUrl": "https://cj.yayazy.net/api.php/provide/vod"
+    },
+    {
+      "sourceName": "[200ms] 🔞PGX电影",
+      "sourceUrl": "https://www.pgxdy.com/api/xml.php"
+    },
+    {
+      "sourceName": "[206ms] 美少女资源(已修复)",
+      "sourceUrl": "https://www.msnii.com/api/xml.php"
+    },
+    {
+      "sourceName": "[207ms] 💥有声绘本(少儿)",
+      "sourceUrl": "https://gh-proxy.com/raw.githubusercontent.com/gaotianliuyun/gao/master/lib/drpy2.min.js"
+    },
+    {
+      "sourceName": "[213ms] 影视 • 量子[直连]",
+      "sourceUrl": "https://cj.lziapi.com/api.php/provide/vod/"
+    },
+    {
+      "sourceName": "[213ms] 🍏西瓜",
+      "sourceUrl": "https://caiji.xgzyapi.com/api.php/provide/vod/"
+    },
+    {
+      "sourceName": "[214ms] 香奶儿资源(已修复)",
+      "sourceUrl": "https://www.gdlsp.com/api/xml.php"
+    },
+    {
+      "sourceName": "[216ms] 海外看(墙外)",
+      "sourceUrl": "https://haiwaikan.com/api.php/provide/vod"
+    },
+    {
+      "sourceName": "[238ms] 荐片P2P",
+      "sourceUrl": "https://gitlab.com/fantaiying/ext/-/raw/main/drpy2.min.js"
+    },
+    {
+      "sourceName": "[256ms] 🍏火狐",
+      "sourceUrl": "https://hhzyapi.com/api.php/provide/vod/at/json"
+    },
+    {
+      "sourceName": "[257ms] 🍏樱花",
+      "sourceUrl": "https://m3u8.apiyhzy.com/api.php/provide/vod/"
+    },
+    {
+      "sourceName": "[260ms] 🍏速播",
+      "sourceUrl": "https://subocaiji.com/api.php/provide/vod/"
+    },
+    {
+      "sourceName": "[267ms] 🍎高清┃2K",
+      "sourceUrl": "https://api.1080zyku.com/inc/apijson.php"
+    },
+    {
+      "sourceName": "[271ms] Emby丨JS",
+      "sourceUrl": "https://17264.kstore.space/Emby.js"
+    },
+    {
+      "sourceName": "[297ms] 影视 • 电影天堂",
+      "sourceUrl": "http://caiji.dyttzyapi.com/api.php/provide/vod"
+    },
+    {
+      "sourceName": "[307ms] 🍊大奶",
+      "sourceUrl": "https://apidanaizi.com/api.php/provide/vod"
+    },
+    {
+      "sourceName": "[307ms] 👖裤佬丨永乐丨JS",
+      "sourceUrl": "https://mpimg.cn/down.php/0338609bd59d7b27226f5a269ec97936.js"
+    },
+    {
+      "sourceName": "[358ms] 🐧腾腾┃JX",
+      "sourceUrl": "http://rihou.cc:88/js/drpy2.min.js"
+    },
+    {
+      "sourceName": "[381ms] 魔都资源",
+      "sourceUrl": "https://www.mdzyapi.com/api.php/provide/vod/?ac=list"
+    },
+    {
+      "sourceName": "[419ms] 钛金影视",
+      "sourceUrl": "https://gh-proxy.org/https://raw.github.com/tly824/tvbox/master/lib/drpy2.min.js"
+    },
+    {
+      "sourceName": "[423ms] 🍊极品",
+      "sourceUrl": "https://jipinvip.com/api.php/provide/vod/"
+    },
+    {
+      "sourceName": "[423ms] 旺旺资源",
+      "sourceUrl": "https://api.wwzy.tv/api.php/provide/vod/?ac=list"
+    },
+    {
+      "sourceName": "[449ms] 🍊柚子资源",
+      "sourceUrl": "https://api.yzzy-api.com/inc/api.php"
+    },
+    {
+      "sourceName": "[450ms] 🧿凤凰┃影视",
+      "sourceUrl": "http://fhapi9.com/api.php/provide/vod/"
+    },
+    {
+      "sourceName": "[469ms] 影视 • 暴風[直连]",
+      "sourceUrl": "https://bfzyapi.com/api.php/provide/vod/?ac=list"
+    },
+    {
+      "sourceName": "[526ms] 哔哩｜X",
+      "sourceUrl": "http://nn.4688888.xyz/js/drpy2.min.js"
+    },
+    {
+      "sourceName": "[545ms] 奶香 | 采集",
+      "sourceUrl": "https://naixxzy.com/api.php/provide/vod/"
+    },
+    {
+      "sourceName": "[546ms] 🍊奶香🪜",
+      "sourceUrl": "https://Naixxzy.com/api.php/provide/vod/"
+    },
+    {
+      "sourceName": "[547ms] 新浪资源",
+      "sourceUrl": "https://api.xinlangapi.com/xinlangapi.php/provide/vod/at/xml/"
+    },
+    {
+      "sourceName": "[556ms] 🍏虎牙",
+      "sourceUrl": "https://www.huyaapi.com/api.php/provide/vod/from/hym3u8/at/json"
+    },
+    {
+      "sourceName": "[666ms] 金鹰影视",
+      "sourceUrl": "https://jyzyapi.com/provide/vod/from/jinyingm3u8/at/xml/"
+    },
+    {
+      "sourceName": "[688ms] 🧿正品┃影视",
+      "sourceUrl": "https://lbapi9.com/api.php/provide/vod/"
+    },
+    {
+      "sourceName": "[690ms] 猫眼影视",
+      "sourceUrl": "https://api.maoyanapi.top/api.php/provide/vod/from/mym3u8/at/json"
+    },
+    {
+      "sourceName": "[700ms] 🌾去看动漫",
+      "sourceUrl": "https://www.yingm.cc/dm/js/drpy.min.js"
+    },
+    {
+      "sourceName": "[712ms] 🔮星空┃影视",
+      "sourceUrl": "https://api.tiankongapi.com/api.php/provide/vod/"
+    },
+    {
+      "sourceName": "[754ms] 访问网站【api.starlink.fan】获取最新接口",
+      "sourceUrl": "http://124.223.214.31:8/api/lib/drpy2.min.js"
+    },
+    {
+      "sourceName": "[827ms] 🍊蝙蝠",
+      "sourceUrl": "http://api.11bat.com/api.php/provide/vod/"
+    },
+    {
+      "sourceName": "[887ms] 芒果TV[追剧]",
+      "sourceUrl": "https://file.icve.com.cn/file_doc/249/899/3E7E0C8A023B624CEC6BDCC200F06F02.js"
+    },
+    {
+      "sourceName": "[935ms] 影视 • 卧龙资源[直连]",
+      "sourceUrl": "https://wolongzyw.com/api.php/provide/vod/?ac=list"
+    },
+    {
+      "sourceName": "[987ms] 🍊精品🪜",
+      "sourceUrl": "https://www.jingpinx.com//api.php/provide/vod/"
+    },
+    {
+      "sourceName": "[1014ms] 🌼如意┃影视🌼",
+      "sourceUrl": "http://cj.rycjapi.com/api.php/provide/vod"
+    },
+    {
+      "sourceName": "[1039ms] 🍏魔都",
+      "sourceUrl": "https://www.moduzy.com/api.php/provide/vod"
+    },
+    {
+      "sourceName": "[1092ms] 采集集合+",
+      "sourceUrl": "http://zhangqun1818.serv00.net/cj/cjjh.php"
+    },
+    {
+      "sourceName": "[1094ms] 追剧吧",
+      "sourceUrl": "https://zjuba.vip/api.php/provide/vod"
+    },
+    {
+      "sourceName": "[1111ms] ️​雷子",
+      "sourceUrl": "https://pan.29o.cn/down.php/2897f8eeef055ff1cde206111571d8fd.py"
+    },
+    {
+      "sourceName": "[1229ms] 沙鱼 | 采集",
+      "sourceUrl": "https://shayuapi.com/api.php/provide/vod/"
+    },
+    {
+      "sourceName": "[1270ms] 🍏茅台",
+      "sourceUrl": "https://caiji.maotaizy.cc/api.php/provide/vod/from/mtm3u8/at/josn"
+    },
+    {
+      "sourceName": "[1419ms] 🧡┃初恋┃官源",
+      "sourceUrl": "https://video.adminqt.cn/api.php/provide/vod/"
+    },
+    {
+      "sourceName": "[1633ms] 🍏星球🪜",
+      "sourceUrl": "https://www.ysxq.cc/api.php/provide/vod"
+    },
+    {
+      "sourceName": "[1787ms] 📚┃儿童┃启蒙",
+      "sourceUrl": "https://gh-proxy.net/https://raw.githubusercontent.com/fantaiying7/EXT/refs/heads/main/drpy2.min.js"
+    },
+    {
+      "sourceName": "[1822ms] 影视 • 建安",
+      "sourceUrl": "http://154.219.117.232:9981/jacloudapi.php/provide/vod"
+    },
+    {
+      "sourceName": "[4836ms] 芒果 | 采集",
+      "sourceUrl": "https://mgzyz1.com/api.php/provide/vod/"
+    }
+  ]
+}

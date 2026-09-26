@@ -75,7 +75,13 @@ UPSTREAM_REPO_ENDPOINTS = [
     "https://dxawi.github.io/0/0.json",
     "https://raw.githubusercontent.com/mymine/CatVodSpider/main/json/config.json",
     "https://raw.githubusercontent.com/cluntop/tvbox/main/tvbox.json",
-    "https://raw.githubusercontent.com/cluntop/tvbox/main/json/config.json"
+    "https://raw.githubusercontent.com/cluntop/tvbox/main/json/config.json",
+    "https://raw.githubusercontent.com/25175/tvyuan/master/tvbox_full.json",
+    "https://raw.githubusercontent.com/25175/tvyuan/master/tvbox.json",
+    "https://raw.githubusercontent.com/25175/tvbox-dc/master/dc_full.json",
+    "https://raw.githubusercontent.com/25175/tvbox-dc/master/sources_pool.json",
+    "https://raw.githubusercontent.com/25175/ziyuanzhan/master/docs/data/sources.json",
+    "https://raw.githubusercontent.com/25175/ziyuanzhan/master/docs/data/latest.json"
 ]
 
 def sync_upstream_generated_data():
@@ -146,34 +152,21 @@ def check_api_alive(site):
     return None
 
 def apply_master_cleaning(all_sites):
-    print("[3/4] 执行数据清洗与深度物理去重 (接口联通性与名称合并)...", flush=True)
+    print("[3/4] 执行数据清洗与物理去重 (接口联通性与存活验证)...", flush=True)
     unique_sites = {}
-    unique_names = set()
 
     for s in all_sites:
         api = s.get("api", "")
-        raw_name = s.get("name", "")
-        if not api or is_blacklisted(raw_name) or is_blacklisted(str(api)):
-            continue
-
-        # 深度清洗名称：去除品牌和垃圾后缀，实现真正的合并去重
-        clean_name = re.sub(r'^\[.*?\]\s*', '', raw_name)
-        clean_name = re.sub(r'(资源|采集|闪电|影视|网|站|线路|接口|专线|秒播|蓝光|高清|专区|官方|备用|\d+|-|!|！)+$', '', clean_name).strip()
-        clean_name = re.sub(r'^(新|大)', '', clean_name).strip()
-        if not clean_name:
+        if not api or is_blacklisted(s.get("name", "")) or is_blacklisted(str(api)):
             continue
 
         try:
             domain = urllib.parse.urlparse(str(api)).netloc
-            domain = re.sub(r'^(www|api|cj|vip|v|jx)\.', '', domain)
         except:
             domain = str(api)
 
-        # 通过主域名 AND 净化后的名称进行严格去重，确保没有重复的"豆瓣"等
-        if domain not in unique_sites and clean_name not in unique_names:
-            s["_clean_name"] = clean_name
+        if domain not in unique_sites:
             unique_sites[domain] = s
-            unique_names.add(clean_name)
 
     candidates = list(unique_sites.values())
     print(f"  ├─ 归一去重后待测站点总数: {len(candidates)} 个", flush=True)
@@ -183,7 +176,6 @@ def apply_master_cleaning(all_sites):
         for res in as_completed([executor.submit(check_api_alive, site) for site in candidates]):
             if res.result(): alive_sites.append(res.result())
 
-    # 完全按测速排序 (延迟 ms 从小到大)，移除硬编码的 top_pinned
     alive_sites.sort(key=lambda x: x.get("_cost", 9999))
     print(f"  └─ 联通测试存活可用站点: {len(alive_sites)} 个", flush=True)
     return alive_sites
@@ -216,18 +208,17 @@ def main():
     all_raw_sites = upstream_sites + web_sites
     cleaned_alive_sites = apply_master_cleaning(all_raw_sites)
 
-    # 科学的分类排序：将电影、电视剧、综艺等核心前置，纪录片、体育、戏曲等后置
     COMPREHENSIVE_CATEGORIES = [
-        "电影", "电视剧", "国产剧", "综艺", "动漫", "韩剧", "美剧", "日剧", "港剧", "台剧", "泰剧", "海外剧",
-        "短剧", "纪录片", "体育", "音乐", "解说", "游戏", "戏曲", "少儿"
+        "电影", "电视剧", "国产剧", "少儿", "动漫", "韩剧", "美剧", "日剧", "港剧", "台剧", "泰剧", "海外剧",
+        "综艺", "纪录片", "短剧", "体育", "音乐", "解说", "游戏", "戏曲"
     ]
 
     clean_sites = []
     for s in cleaned_alive_sites:
         cost = s.pop("_cost", 0)
-        clean_name = s.pop("_clean_name", s.get("name", ""))
+        raw_name = s.get("name", "")
+        clean_name = re.sub(r'^\[.*?\]\s*', '', raw_name)
 
-        # 提取原厂分类，若无则补充完整的分类
         assigned_cats = s.get("categories", [])
         if not isinstance(assigned_cats, list) or len(assigned_cats) == 0:
             assigned_cats = COMPREHENSIVE_CATEGORIES
@@ -245,7 +236,6 @@ def main():
 
     DEFAULT_SPIDER = "https://cdn.jsdelivr.net/gh/CatVod/CatVodSpider@main/jar/custom_spider.jar"
 
-    # 直播与解析去重合并
     seen_lives, unique_lives = set(), []
     for l in [{"name": "IPTV国内直连", "type": 0, "url": "https://raw.githubusercontent.com/Guovin/iptv-api/gd/output/result.m3u"}] + upstream_lives:
         url = l.get("url")
@@ -269,12 +259,26 @@ def main():
             {"name": "lz", "hosts": ["lz"], "regex": ["#EXT-X-DISCONTINUITY"]},
             {"name": "ff", "hosts": ["ff"], "regex": ["#EXT-X-DISCONTINUITY"]}
         ],
-        "note": "本配置由 TVBox 资源全量整合引擎自动生成。"
+        "note": "本配置由 TVBox 资源整合引擎自动生成。"
     }
 
     with open(os.path.join(WORK_DIR, "tvbox.json"), "w", encoding="utf-8") as f:
         json.dump(master_config, f, ensure_ascii=False, indent=2)
-    print(f"\n[OK] 生成整合主配置文件: tvbox.json ({len(clean_sites)} 个纯净站点)", flush=True)
+    print(f"\n[OK] 生成主单仓配置文件: tvbox.json ({len(clean_sites)} 个纯净站点)", flush=True)
+
+    multi_stores = []
+    for s in clean_sites:
+        multi_stores.append({
+            "sourceName": s["name"],
+            "sourceUrl": s["api"]
+        })
+    multi_config = {
+        "storeHouse": multi_stores
+    }
+    multi_json_path = os.path.join(WORK_DIR, "tvbox_multi.json")
+    with open(multi_json_path, "w", encoding="utf-8") as f:
+        json.dump(multi_config, f, ensure_ascii=False, indent=2)
+    print(f"[OK] 恢复多仓配置文件: tvbox_multi.json ({len(multi_stores)} 个独立仓库)", flush=True)
 
     export_router_rules(clean_sites)
     print("\n[4/4] 完成！", flush=True)
