@@ -1,41 +1,41 @@
-# TVBox Multi-Source Aggregation and Automated Cleaning Engine
+# TVBox 资源全量整合与策略定时更新引擎
 
-This repository is an independent TVBox configuration and routing rule generation system. Running on GitHub Actions cloud, it achieves multi-source dynamic collection, automated deduplication, category normalization, and routing strategy extraction.
-
----
-
-## 📖 System Architecture & Core Features
-
-### 1. Multi-Source Integration & Deduplication
-- Automatically parses multi-channel interface data and extracts underlying CMS collection endpoints.
-- Implements a domain-based deduplication algorithm to eliminate cross-channel redundant sites and achieve unified resource merging.
-- Performs high-concurrency connectivity testing and latency evaluation on upstream sites to automatically generate optimized priority lists.
-
-### 2. Content Safety Filtering
-- Built-in keyword filtering mechanism to comprehensively identify and intercept non-compliant, low-quality, or adult content sources and channel categories, ensuring output data compliance.
-
-### 3. Routing Strategy & Rule Extraction
-- Automatically extracts active site APIs and related CDN domains to generate proxy-compatible rule files:
-  - **`domains_direct.txt`**: Domain direct whitelist for PassWall, SmartDNS, MosDNS, etc.
-  - **`clash_rules.yaml`**: `DOMAIN-SUFFIX` format strategy configuration for Clash.
-
-### 4. Standardized Dependencies
-- External dependencies referenced in configurations (such as Spider crawler modules) uniformly use official GitHub Raw and CDN mirror services to ensure access reliability and stability.
+本项目为一个独立的 TVBox 接口配置与路由规则生成系统。通过运行于 GitHub Actions 云端，实现多数据源的**动态采集、自动化去重、分类归一化与路由策略提取**。
 
 ---
 
-## 🔗 Configuration Subscription URLs
+## 📖 系统架构与核心特性
 
-- **Full Integrated Configuration**: `https://raw.githubusercontent.com/haygcao/tvbox-master-aggregator/main/tvbox.json`
-- **Compatible Multi-Store Configuration**: `https://raw.githubusercontent.com/haygcao/tvbox-master-aggregator/main/tvbox_multi.json`
-- **PassWall Direct Domain Whitelist**: `https://raw.githubusercontent.com/haygcao/tvbox-master-aggregator/main/domains_direct.txt`
-- **Clash Ruleset**: `https://raw.githubusercontent.com/haygcao/tvbox-master-aggregator/main/clash_rules.yaml`
+### 1. 多源接口整合与去重 (Integration & Deduplication)
+- 自动化解析多渠道接口数据，提取底层 CMS 采集站 Endpoint。
+- 采用基于主域名的去重算法，剔除跨渠道重复站点，实现接口资源的统一归并。
+- 对上游站点进行高并发连通性测试与延迟评估，自动生成优化后的优先级列表。
+
+### 2. 内容安全过滤 (Content Filtering)
+- 内置词库过滤机制，全面识别并拦截违规、低俗或不合规的内容源与频道分类，确保输出数据的规范性。
+
+### 3. 路由策略与规则提取 (Routing Rule Extraction)
+- 自动提取存活站点 API 及相关 CDN 域名，生成适配不同代理环境的规则文件：
+  - **`domains_direct.txt`**：适用于 PassWall、SmartDNS、MosDNS 等系统的域名直连白名单。
+  - **`clash_rules.yaml`**：适用于 Clash 规则集的 `DOMAIN-SUFFIX` 格式策略配置。
+
+### 4. 依赖资源标准化 (Standardized Dependencies)
+- 接口配置中引用的外部依赖（如 Spider 爬虫模块）统一使用 GitHub 官方 Raw 与 CDN 镜像服务，保证访问的可靠性与稳定性。
 
 ---
 
-## 🤝 Credits & Acknowledgments
+## 🔗 配置订阅地址范例
 
-The automated integration and updating of this system rely on data support from the following open-source projects and resource navigation platforms, with sincere gratitude:
+- **全量整合配置**：`https://raw.githubusercontent.com/<username>/<repository>/main/tvbox.json`
+- **兼容仓配置**：`https://raw.githubusercontent.com/<username>/<repository>/main/tvbox_multi.json`
+- **PassWall 域名直连白名单**：`https://raw.githubusercontent.com/<username>/<repository>/main/domains_direct.txt`
+- **Clash 规则集**：`https://raw.githubusercontent.com/<username>/<repository>/main/clash_rules.yaml`
+
+---
+
+## 🤝 数据源与致谢 (Credits & Acknowledgments)
+
+本系统的自动整合与更新依赖于以下开源项目与资源导航平台的数据支持，特此表达致谢：
 
 - **FongMi / CatVodSpider** (`https://github.com/FongMi/CatVodSpider`)
 - **gaotianliuyun** (`https://github.com/gaotianliuyun/gao`)
@@ -43,6 +43,6 @@ The automated integration and updating of this system rely on data support from 
 - **liu673cn / box** (`https://github.com/liu673cn/box`)
 - **Lightconer / tvbox-ysc-config** (`https://github.com/Lightconer/tvbox-ysc-config`)
 - **youhunwl / TVAPP** (`https://github.com/youhunwl/TVAPP`)
-- **zzzypro.com** & **clbug.com** resource platforms
+- **zzzypro.com** 与 **clbug.com** 资源平台
 
-*Note: This repository only provides automated data extraction, testing, and rule generation services. Relevant data property rights belong to the original authors or providers.*
+*说明：本仓库仅提供自动化数据提取、检测及规则生成服务，相关数据产权归属于原作者或提供方。*
