@@ -1,4 +1,4 @@
-# TVBox 视频源国内直连域名列表 (PassWall / SmartDNS 专用)
+# TVBox 视频源国内直连域名列表
 1080zyku.com
 11bat.com
 124.223.214.31
@@ -10,6 +10,7 @@
 Naixxzy.com
 afasu.com
 agit.ai
+alist.xn--z7x900a.live
 apidanaizi.com
 apilsbzy1.com
 bf.xoxowin86cisyap.com
@@ -21,6 +22,7 @@ caiji.kczyapi.com
 caiji.kuaichezy.org
 caiji.maotaizy.cc
 caiji.xgzyapi.com
+cdn.jsdmirror.com
 chujia.cc
 ckzy.me
 ffzy.tv
@@ -46,6 +48,7 @@ hongniuzy2.com
 huyaapi.com
 ikunzyapi.com
 iqiyizyapi.com
+jihulab.com
 jingpinx.com
 jipinvip.com
 jszyapi.com
@@ -62,6 +65,7 @@ niuniuzy.me
 okzyw.net
 pan.szfx.top
 pgxdy.com
+rihou.vip
 rycjapi.com
 sdzyapi.com
 shandianzy.com
@@ -69,6 +73,7 @@ shayuapi.com
 slapibf.com
 so.yinpai.xyz
 subocaiji.com
+subocj.com
 suoniapi.com
 tiankongapi.com
 tyyszy.com
@@ -83,9 +88,11 @@ wujinapi.com
 wujinapi.me
 wujinapi.net
 wwzy.tv
+xh1.xn--yetu07f.icu
 xinlangapi.com
 xrbsp.com
 xsd.sdzyapi.com
+xzcjz.com
 xzybb1.com
 yayazy.net
 yayazy2.com

@@ -1,12 +1,40 @@
 {
-  "storeHouse": [
+  "urls": [
     {
-      "sourceName": "🚀 [主推] 全网纯净普通大一统采集",
-      "sourceUrl": "https://raw.githubusercontent.com/haygcao/tvbox-master-aggregator/main/tvbox.json"
+      "name": "🚀 [主推] 全网纯净采集大一统",
+      "url": "https://raw.githubusercontent.com/haygcao/tvbox-master-aggregator/main/tvbox.json"
     },
     {
-      "sourceName": "🔥 [高阶] 全网聚合优质 JS/JAR 爬虫大全",
-      "sourceUrl": "https://raw.githubusercontent.com/haygcao/tvbox-master-aggregator/main/tvbox_advanced.json"
+      "name": "🔥 [高阶] 全网聚合 JS/JAR 爬虫源",
+      "url": "https://raw.githubusercontent.com/haygcao/tvbox-master-aggregator/main/tvbox_advanced.json"
+    },
+    {
+      "name": "💎 [旗舰] 饭太硬精选仓",
+      "url": "https://raw.githubusercontent.com/FongMi/CatVodSpider/main/json/config.json"
+    },
+    {
+      "name": "💎 [旗舰] 肥猫精选仓",
+      "url": "https://cdn.jsdelivr.net/gh/Lightconer/tvbox-ysc-config@main/output/feimao.json"
+    },
+    {
+      "name": "💎 [旗舰] 欧歌专仓",
+      "url": "https://cdn.jsdelivr.net/gh/Lightconer/tvbox-ysc-config@main/output/ouge.json"
+    },
+    {
+      "name": "🔥 [高阶] FongMi 官方仓",
+      "url": "https://raw.githubusercontent.com/FongMi/CatVodSpider/main/json/config.json"
+    },
+    {
+      "name": "🔥 [聚合] 王二小专仓",
+      "url": "https://cdn.jsdelivr.net/gh/Lightconer/tvbox-ysc-config@main/output/wangerxiao.json"
+    },
+    {
+      "name": "🔥 [聚合] 高天流云配置",
+      "url": "https://raw.githubusercontent.com/gaotianliuyun/gao/master/js.json"
+    },
+    {
+      "name": "✨ [4K] 蓝光专线仓",
+      "url": "https://cdn.jsdelivr.net/gh/Lightconer/tvbox-ysc-config@main/output/4k.json"
     }
   ]
 }

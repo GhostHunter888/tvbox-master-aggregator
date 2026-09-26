@@ -1,15 +1,17 @@
-# TVBox 视频源 Clash 直连规则集 (DOMAIN-SUFFIX 格式)
+# TVBox 视频源 Clash 直连规则集
 payload:
   - DOMAIN-SUFFIX,1080zyku.com
   - DOMAIN-SUFFIX,11bat.com
   - DOMAIN-SUFFIX,124.223.214.31
   - DOMAIN-SUFFIX,154.219.117.232
-  - DOMAIN-SUFFIX,17264.kstore.space
   - DOMAIN-SUFFIX,19q.cc
   - DOMAIN-SUFFIX,360zy.com
   - DOMAIN-SUFFIX,360zyzz.com
+  - DOMAIN-SUFFIX,523zyw.me
   - DOMAIN-SUFFIX,Naixxzy.com
+  - DOMAIN-SUFFIX,afasu.com
   - DOMAIN-SUFFIX,agit.ai
+  - DOMAIN-SUFFIX,alist.xn--z7x900a.live
   - DOMAIN-SUFFIX,apidanaizi.com
   - DOMAIN-SUFFIX,apilsbzy1.com
   - DOMAIN-SUFFIX,bf.xoxowin86cisyap.com
@@ -21,24 +23,31 @@ payload:
   - DOMAIN-SUFFIX,caiji.kuaichezy.org
   - DOMAIN-SUFFIX,caiji.maotaizy.cc
   - DOMAIN-SUFFIX,caiji.xgzyapi.com
+  - DOMAIN-SUFFIX,cdn.jsdmirror.com
   - DOMAIN-SUFFIX,chujia.cc
   - DOMAIN-SUFFIX,ckzy.me
-  - DOMAIN-SUFFIX,dbzy.tv
   - DOMAIN-SUFFIX,ffzy.tv
   - DOMAIN-SUFFIX,ffzy5.tv
   - DOMAIN-SUFFIX,ffzyapi.com
   - DOMAIN-SUFFIX,fhapi9.com
   - DOMAIN-SUFFIX,file.icve.com.cn
+  - DOMAIN-SUFFIX,file.zhangyichi.dev
   - DOMAIN-SUFFIX,gdlsp.com
   - DOMAIN-SUFFIX,gh-proxy.com
   - DOMAIN-SUFFIX,gh-proxy.net
   - DOMAIN-SUFFIX,gh-proxy.org
+  - DOMAIN-SUFFIX,ghfast.top
+  - DOMAIN-SUFFIX,ghp.ci
+  - DOMAIN-SUFFIX,git.yylx.win
+  - DOMAIN-SUFFIX,gitee.com
   - DOMAIN-SUFFIX,gitlab.com
   - DOMAIN-SUFFIX,guangsuapi.com
   - DOMAIN-SUFFIX,haiwaikan.com
   - DOMAIN-SUFFIX,hhzyapi.com
+  - DOMAIN-SUFFIX,home.jundie.top
   - DOMAIN-SUFFIX,hongniuzy2.com
   - DOMAIN-SUFFIX,huyaapi.com
+  - DOMAIN-SUFFIX,ikunzyapi.com
   - DOMAIN-SUFFIX,iqiyizyapi.com
   - DOMAIN-SUFFIX,jihulab.com
   - DOMAIN-SUFFIX,jingpinx.com
@@ -52,15 +61,12 @@ payload:
   - DOMAIN-SUFFIX,mdzyapi.com
   - DOMAIN-SUFFIX,mgzyz1.com
   - DOMAIN-SUFFIX,moduzy.com
-  - DOMAIN-SUFFIX,mpimg.cn
   - DOMAIN-SUFFIX,msnii.com
-  - DOMAIN-SUFFIX,naixxzy.com
   - DOMAIN-SUFFIX,niuniuzy.me
-  - DOMAIN-SUFFIX,nn.4688888.xyz
   - DOMAIN-SUFFIX,okzyw.net
-  - DOMAIN-SUFFIX,pan.29o.cn
+  - DOMAIN-SUFFIX,pan.szfx.top
   - DOMAIN-SUFFIX,pgxdy.com
-  - DOMAIN-SUFFIX,rihou.cc
+  - DOMAIN-SUFFIX,rihou.vip
   - DOMAIN-SUFFIX,rycjapi.com
   - DOMAIN-SUFFIX,sdzyapi.com
   - DOMAIN-SUFFIX,shandianzy.com
@@ -68,12 +74,14 @@ payload:
   - DOMAIN-SUFFIX,slapibf.com
   - DOMAIN-SUFFIX,so.yinpai.xyz
   - DOMAIN-SUFFIX,subocaiji.com
+  - DOMAIN-SUFFIX,subocj.com
   - DOMAIN-SUFFIX,suoniapi.com
   - DOMAIN-SUFFIX,tiankongapi.com
   - DOMAIN-SUFFIX,tyyszy.com
   - DOMAIN-SUFFIX,tyyszyapi.com
   - DOMAIN-SUFFIX,ukuapi.com
   - DOMAIN-SUFFIX,ukuapi88.com
+  - DOMAIN-SUFFIX,vnzyz.com
   - DOMAIN-SUFFIX,wolongzyw.com
   - DOMAIN-SUFFIX,wsyzy.net
   - DOMAIN-SUFFIX,wujinapi.cc
@@ -81,16 +89,16 @@ payload:
   - DOMAIN-SUFFIX,wujinapi.me
   - DOMAIN-SUFFIX,wujinapi.net
   - DOMAIN-SUFFIX,wwzy.tv
+  - DOMAIN-SUFFIX,xh1.xn--yetu07f.icu
   - DOMAIN-SUFFIX,xinlangapi.com
   - DOMAIN-SUFFIX,xrbsp.com
   - DOMAIN-SUFFIX,xsd.sdzyapi.com
+  - DOMAIN-SUFFIX,xzcjz.com
   - DOMAIN-SUFFIX,xzybb1.com
   - DOMAIN-SUFFIX,yayazy.net
   - DOMAIN-SUFFIX,yayazy2.com
-  - DOMAIN-SUFFIX,yingm.cc
   - DOMAIN-SUFFIX,ysxq.cc
   - DOMAIN-SUFFIX,yzzy-api.com
-  - DOMAIN-SUFFIX,zhangqun1818.serv00.net
   - DOMAIN-SUFFIX,zjuba.vip
   - DOMAIN-SUFFIX,zuidapi.com
   - DOMAIN-SUFFIX,zuidazy.me
