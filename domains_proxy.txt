@@ -1,4 +1,2 @@
 # TVBox 视频源强制代理域名列表 (含 GitHub/JS 依赖及需翻墙节点)
-cdn.jsdelivr.net
-fastly.jsdelivr.net
 raw.githubusercontent.com

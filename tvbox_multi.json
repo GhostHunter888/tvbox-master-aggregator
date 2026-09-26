@@ -1,36 +1,12 @@
 {
   "storeHouse": [
     {
-      "sourceName": "🚀 [主推] 全网纯净采集大一统",
+      "sourceName": "🚀 [主推] 全网纯净普通大一统采集",
       "sourceUrl": "https://raw.githubusercontent.com/haygcao/tvbox-master-aggregator/main/tvbox.json"
     },
     {
-      "sourceName": "💎 [旗舰] 饭太硬精选仓",
-      "sourceUrl": "https://raw.githubusercontent.com/FongMi/CatVodSpider/main/json/config.json"
-    },
-    {
-      "sourceName": "💎 [旗舰] 肥猫精选仓",
-      "sourceUrl": "https://cdn.jsdelivr.net/gh/Lightconer/tvbox-ysc-config@main/output/feimao.json"
-    },
-    {
-      "sourceName": "💎 [旗舰] 欧歌专仓",
-      "sourceUrl": "https://cdn.jsdelivr.net/gh/Lightconer/tvbox-ysc-config@main/output/ouge.json"
-    },
-    {
-      "sourceName": "🔥 [高阶] FongMi 官方仓",
-      "sourceUrl": "https://raw.githubusercontent.com/FongMi/CatVodSpider/main/json/config.json"
-    },
-    {
-      "sourceName": "🔥 [聚合] 王二小专仓",
-      "sourceUrl": "https://cdn.jsdelivr.net/gh/Lightconer/tvbox-ysc-config@main/output/wangerxiao.json"
-    },
-    {
-      "sourceName": "🔥 [聚合] 高天流云配置",
-      "sourceUrl": "https://raw.githubusercontent.com/gaotianliuyun/gao/master/js.json"
-    },
-    {
-      "sourceName": "✨ [4K] 蓝光专线仓",
-      "sourceUrl": "https://cdn.jsdelivr.net/gh/Lightconer/tvbox-ysc-config@main/output/4k.json"
+      "sourceName": "🔥 [高阶] 全网聚合优质 JS/JAR 爬虫大全",
+      "sourceUrl": "https://raw.githubusercontent.com/haygcao/tvbox-master-aggregator/main/tvbox_advanced.json"
     }
   ]
 }
