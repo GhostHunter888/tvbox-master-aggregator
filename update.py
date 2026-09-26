@@ -293,7 +293,7 @@ def export_router_rules(sites):
                 domain = re.sub(r'^(www|api|cj|vip|v|jx|m|wap|app)\.', '', domain)
 
                 if domain:
-                    # 判断源名称中是否显式标注了需要代理的字样，或者是 github/jsdelivr 等源
+                    # 只要是包含 github/jsdelivr 等代码托管/CDN的，统统划归代理名单
                     if "代理" in name or "翻墙" in name or "科学" in name or "科学上网" in name or "github" in domain or "jsdelivr" in domain:
                         domains_proxy.add(domain)
                     else:
@@ -342,11 +342,21 @@ def build_multi_store(cleaned_alive_sites):
             advanced_spiders.append(s)
 
     # 将这个提纯出的所有高阶源打包写入一个独立的聚合配置中
+    # 强制修正：由于国内网络访问 raw.githubusercontent.com 必定报错网络连接失败
+    # 所以把 Advanced 仓里的默认 Spider 全面替换为走 jsdelivr CDN 代理加速的链接
     advanced_config = {
         "spider": "https://cdn.jsdelivr.net/gh/CatVod/CatVodSpider@main/jar/custom_spider.jar",
         "sites": advanced_spiders,
         "note": "本仓库包含全网去重聚合的所有高阶 JS/JAR 专属爬虫源"
     }
+
+    # 解决高阶仓顶部没有分类的问题
+    COMPREHENSIVE_CATEGORIES = [
+        "电影", "电视剧", "国产剧", "动漫", "韩剧", "美剧", "日剧", "港剧", "台剧", "泰剧", "海外剧",
+        "综艺", "纪录片", "短剧", "少儿", "体育", "音乐", "解说", "游戏", "戏曲"
+    ]
+    if advanced_spiders and "categories" not in advanced_spiders[0]:
+        advanced_spiders[0]["categories"] = COMPREHENSIVE_CATEGORIES
 
     with open(os.path.join(WORK_DIR, "tvbox_advanced.json"), "w", encoding="utf-8") as f:
         json.dump(advanced_config, f, ensure_ascii=False, indent=2)
