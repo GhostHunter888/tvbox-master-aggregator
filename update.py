@@ -443,9 +443,16 @@ def main():
 
         clean_sites.append(c_site)
 
-    # 对于完全没有 categories 或 classes 的站点，不进行干预
-    # 让 TVBox 客户端默认读取站点自身原始接口中的真实分类，从而防止“推荐列表为空”的异常
-    # 彻底移除在代码中强行给第一个站点加 STD_CLASSES 的错误逻辑
+    # TVBox 核心逻辑：首页导航栏的分类选项完全来自于列表中的【第一个站点 (sites[0])】
+    # 当第一个站点没有配置 categories 列表时，TVBox 启动时首页就会直接显示【无分类 / 没有category】！
+    # 必须且仅必须为列表第一个站点 (sites[0]) 赋予全量 categories 列表，确保首页菜单秒出！
+    COMPREHENSIVE_CATEGORIES = [
+        "电影", "电视剧", "国产剧", "少儿", "动漫", "韩剧", "美剧", "日剧", "港剧", "台剧", "泰剧", "海外剧",
+        "综艺", "纪录片", "短剧", "体育", "音乐", "解说", "游戏", "戏曲"
+    ]
+    if clean_sites:
+        if "categories" not in clean_sites[0] or not clean_sites[0]["categories"]:
+            clean_sites[0]["categories"] = COMPREHENSIVE_CATEGORIES
 
     # =======================================================================
     # 动态抓取合并全局配置项 (lives, parses, rules, flags, ads, wallpaper, warning)
