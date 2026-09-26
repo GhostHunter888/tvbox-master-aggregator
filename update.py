@@ -281,7 +281,7 @@ def export_router_rules(sites):
     print("[4/4] === 导出 PassWall / Clash 规则策略 (直连与代理分离) ===")
 
     domains_direct = set()
-    domains_proxy = set(["raw.githubusercontent.com", "cdn.jsdelivr.net", "fastly.jsdelivr.net"])
+    domains_proxy = set()
 
     for s in sites:
         api = s.get("api", "")
@@ -328,20 +328,37 @@ def export_router_rules(sites):
     print(f"  ├─ 导出 {len(sorted_direct)} 个直连域名 (国内接口)")
     print(f"  └─ 导出 {len(sorted_proxy)} 个强制代理域名 (含 GitHub/JS 依赖及需翻墙节点)")
 
-def build_multi_store():
+def build_multi_store(cleaned_alive_sites):
+    """
+    智能聚合多仓：
+    将所有高阶爬虫源（即带有 JS/JAR/EXT 解析的源）独立提取为一个专门的高阶多仓，
+    把相同类型或相同特征的高阶源进行物理去重合并，不再死板地引用饭太硬/肥猫的原始链接！
+    """
+    advanced_spiders = []
+
+    # 遍历洗炼后的全量站源，把所有含有 ext、jar 或特定 playerType 的高级爬虫源抽离出来
+    for s in cleaned_alive_sites:
+        if "ext" in s or "jar" in s or s.get("type") == 3 or "js" in str(s.get("name", "")).lower():
+            advanced_spiders.append(s)
+
+    # 将这个提纯出的所有高阶源打包写入一个独立的聚合配置中
+    advanced_config = {
+        "spider": "https://cdn.jsdelivr.net/gh/CatVod/CatVodSpider@main/jar/custom_spider.jar",
+        "sites": advanced_spiders,
+        "note": "本仓库包含全网去重聚合的所有高阶 JS/JAR 专属爬虫源"
+    }
+
+    with open(os.path.join(WORK_DIR, "tvbox_advanced.json"), "w", encoding="utf-8") as f:
+        json.dump(advanced_config, f, ensure_ascii=False, indent=2)
+
+    # 重新构建多仓机制
     multi_stores = [
-        {"sourceName": "🚀 [主推] 全网纯净采集大一统", "sourceUrl": "https://raw.githubusercontent.com/haygcao/tvbox-master-aggregator/main/tvbox.json"},
-        {"sourceName": "💎 [旗舰] 饭太硬精选仓", "sourceUrl": "https://raw.githubusercontent.com/FongMi/CatVodSpider/main/json/config.json"},
-        {"sourceName": "💎 [旗舰] 肥猫精选仓", "sourceUrl": "https://cdn.jsdelivr.net/gh/Lightconer/tvbox-ysc-config@main/output/feimao.json"},
-        {"sourceName": "💎 [旗舰] 欧歌专仓", "sourceUrl": "https://cdn.jsdelivr.net/gh/Lightconer/tvbox-ysc-config@main/output/ouge.json"},
-        {"sourceName": "🔥 [高阶] FongMi 官方仓", "sourceUrl": "https://raw.githubusercontent.com/FongMi/CatVodSpider/main/json/config.json"},
-        {"sourceName": "🔥 [聚合] 王二小专仓", "sourceUrl": "https://cdn.jsdelivr.net/gh/Lightconer/tvbox-ysc-config@main/output/wangerxiao.json"},
-        {"sourceName": "🔥 [聚合] 高天流云配置", "sourceUrl": "https://raw.githubusercontent.com/gaotianliuyun/gao/master/js.json"},
-        {"sourceName": "✨ [4K] 蓝光专线仓", "sourceUrl": "https://cdn.jsdelivr.net/gh/Lightconer/tvbox-ysc-config@main/output/4k.json"}
+        {"sourceName": "🚀 [主推] 全网纯净普通大一统采集", "sourceUrl": "https://raw.githubusercontent.com/haygcao/tvbox-master-aggregator/main/tvbox.json"},
+        {"sourceName": "🔥 [高阶] 全网聚合优质 JS/JAR 爬虫大全", "sourceUrl": "https://raw.githubusercontent.com/haygcao/tvbox-master-aggregator/main/tvbox_advanced.json"}
     ]
     with open(os.path.join(WORK_DIR, "tvbox_multi.json"), "w", encoding="utf-8") as f:
         json.dump({"storeHouse": multi_stores}, f, ensure_ascii=False, indent=2)
-    print(f"[OK] 生成顶级分类多仓: tvbox_multi.json (共 {len(multi_stores)} 大分类)")
+    print(f"[OK] 生成智能分类多仓: tvbox_multi.json (共 {len(multi_stores)} 大分类)")
 
 def main():
     print("==================================================")
@@ -441,7 +458,7 @@ def main():
         json.dump(master_config, f, ensure_ascii=False, indent=2)
     print(f"\n[OK] 生成整合主配置文件: tvbox.json ({len(clean_sites)} 个纯净站点)", flush=True)
 
-    build_multi_store()
+    build_multi_store(clean_sites)
     export_router_rules(clean_sites)
 
     with open(os.path.join(WORK_DIR, "sources.txt"), "w", encoding="utf-8") as f:
