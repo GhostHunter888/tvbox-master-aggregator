@@ -1,22 +1,14 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
-专门用于抓取和处理 ziyuanzhan Monitor 数据的子脚本。
-运行后将数据输出为 /tmp_data/monitor_sites.json 供主引擎合并。
-"""
-import json
-import os
-import ssl
-import urllib.request
+import json, os, ssl, urllib.request
 
 SSL_CTX = ssl.create_default_context()
 SSL_CTX.check_hostname = False
 SSL_CTX.verify_mode = ssl.CERT_NONE
-
 HEADERS = {"User-Agent": "Mozilla/5.0"}
-OUT_FILE = os.path.join(os.path.dirname(os.path.dirname(__file__)), "tmp_data", "monitor_sites.json")
+OUT_FILE = os.path.join(os.path.dirname(os.path.dirname(__file__)), "tmp_data", "ziyuanzhan_sites.json")
 
-MONITOR_URLS = [
+URLS = [
     "https://raw.githubusercontent.com/25175/ziyuanzhan/master/docs/data/sources.json",
     "https://raw.githubusercontent.com/25175/ziyuanzhan/master/docs/data/latest.json"
 ]
@@ -24,8 +16,7 @@ MONITOR_URLS = [
 def main():
     os.makedirs(os.path.dirname(OUT_FILE), exist_ok=True)
     sites = []
-
-    for url in MONITOR_URLS:
+    for url in URLS:
         try:
             req = urllib.request.Request(url, headers=HEADERS)
             with urllib.request.urlopen(req, timeout=10, context=SSL_CTX) as resp:
@@ -33,17 +24,10 @@ def main():
                 if isinstance(data, list):
                     for item in data:
                         if isinstance(item, dict) and (item.get("api") or item.get("url")):
-                            sites.append({
-                                "name": item.get("name", "未命名"),
-                                "api": item.get("api") or item.get("url"),
-                                "type": 1
-                            })
-        except Exception as e:
-            print(f"[Monitor] Fetch error from {url}: {e}")
-
+                            sites.append({"name": item.get("name", "未命名"), "api": item.get("api") or item.get("url"), "type": 1})
+        except: pass
     with open(OUT_FILE, "w", encoding="utf-8") as f:
         json.dump(sites, f, ensure_ascii=False)
-    print(f"[Monitor] Successfully fetched {len(sites)} sites from Monitor.")
+    print(f"[ziyuanzhan] Fetched {len(sites)} sites.")
 
-if __name__ == "__main__":
-    main()
+if __name__ == "__main__": main()

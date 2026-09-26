@@ -6,11 +6,16 @@ SSL_CTX = ssl.create_default_context()
 SSL_CTX.check_hostname = False
 SSL_CTX.verify_mode = ssl.CERT_NONE
 HEADERS = {"User-Agent": "Mozilla/5.0"}
-OUT_FILE = os.path.join(os.path.dirname(os.path.dirname(__file__)), "tmp_data", "tvbox_dc_sites.json")
+OUT_FILE = os.path.join(os.path.dirname(os.path.dirname(__file__)), "tmp_data", "github_singles_sites.json")
 
 URLS = [
-    "https://raw.githubusercontent.com/25175/tvbox-dc/master/dc_full.json",
-    "https://raw.githubusercontent.com/25175/tvbox-dc/master/sources_pool.json"
+    "https://raw.githubusercontent.com/gaotianliuyun/gao/master/js.json",
+    "https://raw.githubusercontent.com/Yoursmile7/TVBox/main/XC.json",
+    "https://raw.githubusercontent.com/liu673cn/box/main/m.json",
+    "https://raw.githubusercontent.com/xiaolong69/tv/main/1.json",
+    "https://raw.githubusercontent.com/xyq254245/xyqonlinerule/main/XYQTVBox.json",
+    "https://raw.githubusercontent.com/guot55/YGBH/main/vip2.json",
+    "https://dxawi.github.io/0/0.json"
 ]
 
 def main():
@@ -21,16 +26,11 @@ def main():
             req = urllib.request.Request(url, headers=HEADERS)
             with urllib.request.urlopen(req, timeout=10, context=SSL_CTX) as resp:
                 data = json.loads(resp.read().decode('utf-8', 'ignore'), strict=False)
-                if isinstance(data, dict):
-                    if "sites" in data:
-                        sites.extend(data["sites"])
-                    else:
-                        for k, v in data.items():
-                            if isinstance(v, dict) and "url" in v:
-                                sites.append({"name": v.get("name", "未命名"), "api": v["url"], "type": 1})
+                if isinstance(data, dict) and "sites" in data:
+                    sites.extend(data["sites"])
         except: pass
     with open(OUT_FILE, "w", encoding="utf-8") as f:
         json.dump(sites, f, ensure_ascii=False)
-    print(f"[tvbox-dc] Fetched {len(sites)} sites.")
+    print(f"[GitHub-Singles] Fetched {len(sites)} sites.")
 
 if __name__ == "__main__": main()
