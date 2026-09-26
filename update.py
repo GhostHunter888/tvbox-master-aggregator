@@ -278,25 +278,55 @@ def apply_master_cleaning(all_sites):
     return alive_sites
 
 def export_router_rules(sites):
-    print("[4/4] === 导出 PassWall / Clash 国内直连域名规则策略 ===")
-    domains = set()
+    print("[4/4] === 导出 PassWall / Clash 规则策略 (直连与代理分离) ===")
+
+    domains_direct = set()
+    domains_proxy = set(["raw.githubusercontent.com", "cdn.jsdelivr.net", "fastly.jsdelivr.net"])
+
     for s in sites:
-        if s.get("api"):
+        api = s.get("api", "")
+        name = s.get("name", "")
+        if api:
             try:
-                domain = urllib.parse.urlparse(str(s["api"])).netloc.split(":")[0]
+                # 获取净域名并移除常见 API 前缀，实现真正的泛化域名直连
+                domain = urllib.parse.urlparse(str(api)).netloc.split(":")[0]
                 domain = re.sub(r'^(www|api|cj|vip|v|jx|m|wap|app)\.', '', domain)
-                if domain and "github" not in domain and "jsdelivr" not in domain:
-                    domains.add(domain)
+
+                if domain:
+                    # 判断源名称中是否显式标注了需要代理的字样，或者是 github/jsdelivr 等源
+                    if "代理" in name or "翻墙" in name or "科学" in name or "科学上网" in name or "github" in domain or "jsdelivr" in domain:
+                        domains_proxy.add(domain)
+                    else:
+                        domains_direct.add(domain)
             except: pass
-    sorted_domains = sorted(list(domains))
 
-    with open(os.path.join(WORK_DIR, "domains_direct.txt"), "w", encoding="utf-8") as f:
+    sorted_direct = sorted(list(domains_direct))
+    sorted_proxy = sorted(list(domains_proxy))
+
+    # ================= 导出直连白名单 =================
+    passwall_direct_path = os.path.join(WORK_DIR, "domains_direct.txt")
+    with open(passwall_direct_path, "w", encoding="utf-8") as f:
         f.write("# TVBox 视频源国内直连域名列表 (PassWall / SmartDNS 专用)\n")
-        for d in sorted_domains: f.write(f"{d}\n")
+        for d in sorted_direct: f.write(f"{d}\n")
 
-    with open(os.path.join(WORK_DIR, "clash_rules.yaml"), "w", encoding="utf-8") as f:
+    clash_direct_path = os.path.join(WORK_DIR, "clash_rules_direct.yaml")
+    with open(clash_direct_path, "w", encoding="utf-8") as f:
         f.write("# TVBox 视频源 Clash 直连规则集 (DOMAIN-SUFFIX 格式)\npayload:\n")
-        for d in sorted_domains: f.write(f"  - DOMAIN-SUFFIX,{d}\n")
+        for d in sorted_direct: f.write(f"  - DOMAIN-SUFFIX,{d}\n")
+
+    # ================= 导出强制代理名单 =================
+    passwall_proxy_path = os.path.join(WORK_DIR, "domains_proxy.txt")
+    with open(passwall_proxy_path, "w", encoding="utf-8") as f:
+        f.write("# TVBox 视频源强制代理域名列表 (含 GitHub/JS 依赖及需翻墙节点)\n")
+        for d in sorted_proxy: f.write(f"{d}\n")
+
+    clash_proxy_path = os.path.join(WORK_DIR, "clash_rules_proxy.yaml")
+    with open(clash_proxy_path, "w", encoding="utf-8") as f:
+        f.write("# TVBox 视频源 Clash 强制代理规则集 (DOMAIN-SUFFIX 格式)\npayload:\n")
+        for d in sorted_proxy: f.write(f"  - DOMAIN-SUFFIX,{d}\n")
+
+    print(f"  ├─ 导出 {len(sorted_direct)} 个直连域名 (国内接口)")
+    print(f"  └─ 导出 {len(sorted_proxy)} 个强制代理域名 (含 GitHub/JS 依赖及需翻墙节点)")
 
 def build_multi_store():
     multi_stores = [
