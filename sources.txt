@@ -1,452 +1,320 @@
-# TVBox 纯净全量资源汇总 (2026-09-27 04:42:53)
+# 2026-09-27 11:10:48
 
-[18ms|稳] 影视 • 极速[直连]
-https://jszyapi.com/api.php/provide/vod/
+[49ms] 我的
+https://raw.githubusercontent.com/fanmingming/live/main/tv/m3u/ipv6.m3u
 
-[20ms|稳] 💥┃火狐2K┃有广
-https://hhzyapi.com/api.php/provide/vod/
+[56ms] 多个多仓
+http://raw.liucn.cc/box/dc.txt
 
-[22ms|稳] 影视 • 暴風[直连]
-https://bfzyapi.com/api.php/provide/vod/
+[57ms] 11
+https://cdn.jsdelivr.net/gh/liu673cn/box@main/m.json
 
-[23ms|稳] 豪华资源
-https://hhzyapi.com/api.php/provide/vod
+[84ms] feimao
+https://cdn.jsdelivr.net/gh/Lightconer/tvbox-ysc-config@main/output/feimao.json
 
-[24ms|稳] 🍏暴风
-https://bfzyapi.com/api.php/provide/vod/
+[86ms] dxawi
+https://dxawi.github.io/0/0.json
 
-[29ms|稳] 光速资源
-http://api.guangsuapi.com/api.php/provide/vod
+[97ms] 我的
+https://iptv-org.github.io/iptv/categories/news.m3u
 
-[31ms|稳] 🎊索尼┃资源
-https://suoniapi.com/api.php/provide/vod/from/snm3u8/
+[99ms] guot55
+https://raw.githubusercontent.com/guot55/YGBH/main/vip2.json
 
-[42ms|稳] 🎀光速┃采集
-http://api.guangsuapi.com/api.php/provide/vod/
+[104ms] 王二小放牛娃
+https://www.xn--4kq62z5rby2qupq9ub.top/
 
-[47ms|稳] 极速资源
+[105ms] 111
+https://raw.githubusercontent.com/wwb521/live/refs/heads/main/video.json
+
+[108ms] 香雅情
+https://raw.githubusercontent.com/xyq254245/xyqonlinerule/main/XYQTVBox.json
+
+[111ms] apple
+https://raw.githubusercontent.com/supermeguo/BoxRes/main/Myuse/catcr.json
+
+[111ms] okay
+https://raw.githubusercontent.com/songlees355-wq/okay/main/tvbox.json
+
+[113ms] zy
+https://raw.githubusercontent.com/PickPunk/TVbox-ZYplayer/refs/heads/main/ZY.json
+
+[114ms] xyq
+https://raw.githubusercontent.com/xyq254245/xyqonlinerule/main/XYQTVBox.json
+
+[115ms] vv
+https://qist.wyfc.qzz.io/jsm.json
+
+[115ms] CatVodSpider
+https://raw.githubusercontent.com/FongMi/CatVodSpider/main/json/config.json
+
+[119ms] wangerxiao
+https://cdn.jsdelivr.net/gh/Lightconer/tvbox-ysc-config@main/output/wangerxiao.json
+
+[126ms] https://raw.githubusercontent.com/Guovin/iptv-api/gd/output/ipv6/result.m3u
+https://raw.githubusercontent.com/Guovin/iptv-api/gd/output/ipv6/result.m3u
+
+[127ms] 宝盒VIP
+https://raw.githubusercontent.com/guot55/YGBH/main/vip2.json
+
+[129ms] 荐片
+https://tv.203511.xyz/0821.json
+
+[133ms] TvBox 单仓
+https://gh-proxy.com/https://raw.githubusercontent.com/1771245847/TvBox/master/tvbox.json
+
+[137ms] 我
+https://dxawi.github.io/0/0.json
+
+[143ms] TvBox 多仓
+https://gh-proxy.com/https://raw.githubusercontent.com/1771245847/TvBox/master/tvbox.txt
+
+[152ms] ok
+https://gist.githubusercontent.com/ph7368/20ee6c7b64d77d82f8f4162cdd04ad61/raw/gistfile1.txt
+
+[162ms] https://clun.top/fun.json
+https://clun.top/fun.json
+
+[172ms] gaotianliuyun
+https://raw.githubusercontent.com/gaotianliuyun/gao/master/js.json
+
+[172ms] xiaolong69
+https://raw.githubusercontent.com/xiaolong69/tv/main/1.json
+
+[177ms] 45
+https://gitlab.com/noimank/tvbox/-/raw/main/tvboxmuti.json
+
+[184ms] Noimank · 多仓
+https://gh-proxy.com/https://raw.githubusercontent.com/noimank/tvbox/master/tvboxmuti.json
+
+[185ms] 饭太硬
+https://qist.wyfc.qzz.io/fty.json
+
+[185ms] 潇洒
+https://qist.wyfc.qzz.io/xiaosa/api.json
+
+[218ms] ok
+https://raw.liucn.cc/box/m.json
+
+[248ms] 我的
+https://gh-proxy.org/raw.githubusercontent.com/bin1site1/bin1site1.github.io/refs/heads/main/OS.json
+
+[252ms] 4k
+https://cdn.jsdelivr.net/gh/Lightconer/tvbox-ysc-config@main/output/4k.json
+
+[253ms] ouge
+https://cdn.jsdelivr.net/gh/Lightconer/tvbox-ysc-config@main/output/ouge.json
+
+[255ms] noimank
+https://gitlab.com/noimank/tvbox/-/raw/main/tvbox1.json
+
+[258ms] 11
+https://ghfast.top/raw.githubusercontent.com/yigedashu/xwck/refs/heads/main/shiba1.txt
+
+[289ms] 01
+https://pz.v88.qzz.io?format=2&source=full
+
+[300ms] 帆帆帆帆
+https://cyuan.netlify.app/tvbox/lives/18+/18+2023.txt
+
+[311ms] liu673cn
+https://raw.githubusercontent.com/liu673cn/box/main/m.json
+
+[321ms] 高级的很
+https://gh-proxy.org/https://raw.githubusercontent.com/n3rddd/N3RD/master/JN/lemj.json
+
+[327ms] 牛儿
+https://9280.kstore.space/wex.json
+
+[337ms] 我的
+https://teach.link/7BgCf8
+
+[344ms] 小盒子4K
+http://xhztv.top/4k.json
+
+[346ms] liu123
+http://xhztv.top/dc
+
+[363ms] 我的
+https://gh-proxy.org/https://raw.githubusercontent.com/ggrrttyyiii/CatVodSpider/refs/heads/main/json/demo.json
+
+[368ms] 拾光多仓
+http://xmbjm.fh4u.org/dc.txt
+
+[384ms] https://9280.kstore.space/wex.json
+https://9280.kstore.space/wex.json
+
+[384ms] 广东体育
+https://epg.pw/stream/7b470f9fc5c305db0c8622117b7b25ca00eb35ba3e93e865cf0ff9df5c736681.m3u8
+
+[397ms] 00000
+https://d.kstore.dev/download/14782/%E5%BD%B1%E8%A7%86%E4%BB%93.json
+
+[400ms] 极速
 https://jszyapi.com/api.php/provide/vod/at/json
 
-[55ms|稳] 🎀极速┃采集
-https://jszyapi.com/api.php/provide/vod/
+[418ms] 影视仓2
+http://Link3.cc/uuccc
 
-[56ms|稳] 最大资源
-https://api.zuidapi.com/api.php/provide/vod
+[426ms] 11
+http://a.nxog.top/m/111.php?ou=%E5%85%AC%E4%BC%97%E5%8F%B7%E6%AC%A7%E6%AD%8Capp&mz=index&jar=index&123&b=tv
 
-[57ms|稳] 🦜索尼┃采集
-https://suoniapi.com/api.php/provide/vod
+[427ms] 大嗷呜
+https://9763.kstore.vip/aowu.json
 
-[70ms|稳] 索尼
-https://suoniapi.com/api.php/provide/vod/
+[432ms] 5
+https://gh-proxy.org/https://raw.github.com/tly824/TM-TY/main/8.10.json
 
-[80ms|稳] 🧿量子┃资源
-https://cj.lziapi.com/api.php/provide/vod/
+[439ms] 直播
+https://mpimg.cn/text.php?hash=aeada10283cf466c508e6b05b5a11719
 
-[106ms|稳] U酷影视
-https://api.ukuapi88.com/api.php/provide/vod/from/ukm3u8/at/xml
+[443ms] 謳歌
+http://tv.nxog.top/
 
-[106ms|稳] 幸资源
-https://xzybb1.com/api.php/provide/vod/at/xml
+[455ms] 饭太硬
+http://fty.888484.xyz/tv
 
-[106ms|稳] 无尽ME
-https://api.wujinapi.me/api.php/provide/vod
+[473ms] 1
+https://9280.kstore.vip/aiwex.json
 
-[108ms|稳] 影视 • 索尼[直连]
-https://suoniapi.com/api.php/provide/vod/at/xml/
+[479ms] 猎人IPTV
+https://github.com/xisohi/CHINA-IPTV
 
-[124ms|稳] iKun资源
-https://ikunzyapi.com/api.php/provide/vod/at/xml
+[493ms] 饭太硬
+http://fty.333232.xyz/tv
 
-[144ms|稳] 🍏牛牛
-https://api.niuniuzy.me/api.php/provide/vod/
+[516ms] 欧拉
+http://tv.nxog.top
 
-[150ms|稳] 非凡资源2
-http://ffzy5.tv/api.php/provide/vod
+[519ms] 饭太硬
+http://fty.xxooo.cf/tv
 
-[152ms|稳] 天涯API
-https://tyyszyapi.com/api.php/provide/vod
+[543ms] 1
+http://xtvantsc.xyz/4gtv.json
 
-[154ms|稳] 海外看(墙外)
-https://haiwaikan.com/api.php/provide/vod
+[558ms] 月光宝盒
+https://jihulab.com/ygbh1/box/-/raw/main/dcang/dc2.json
 
-[159ms|稳] (良)量子资源
-http://cj.lziapi.com/api.php/provide/vod/
+[585ms] 牛二
+https://9280.kstore.space/newwex.json
 
-[159ms|稳] 🍏最大
-http://zuidazy.me/api.php/provide/vod/
+[606ms] 王二小
+https://9280.kstore.vip/newwex.json
 
-[161ms|稳] 🍏天堂
-http://caiji.dyttzyapi.com/api.php/provide/vod/from/dyttm3u8/at/json
+[618ms] 嘎嘎好
+https://pastebin.com/raw/gtbKvnE1
 
-[161ms|稳] 🍊19
-https://19q.cc/api.php/provide/vod
+[620ms] http://www.xn--sss604efuw.net/tv
+http://www.xn--sss604efuw.net/tv
 
-[163ms|稳] 🚄快车┃影视
-https://caiji.kczyapi.com/api.php/provide/vod/
+[688ms] tv
+https://www.252035.xyz/z/FongMi.json
 
-[165ms|稳] 🦚量子┃采集
-https://cj.lziapi.com/api.php/provide/vod/at/xml/
+[693ms] 王二小接口
+http://tvbox.xn--4kq62z5rby2qupq9ub.top/
 
-[165ms|稳] 鸭鸭资源2
-https://yayazy2.com/api.php/provide/vod/at/xml
+[694ms] 1
+http://8.138.7.223/tv.txt
 
-[169ms|稳] 影视 • 非凡[直连]
-http://ffzy.tv/api.php/provide/vod/
+[699ms] 少儿频道
+https://jihulab.com/ymz1231/xymz/-/raw/main/ymshaoer
 
-[178ms|稳] 🔰金鹰┃影视
-https://jyzyapi.com/provide/vod/
+[702ms] PG
+https://www.252035.xyz/p/jsm.json
 
-[179ms|稳] 暴风
-https://bfzyapi.com/api.php/provide/vod
+[714ms] 装歌
+https://tv.nxog.top/m/111.php
 
-[186ms|稳] 🥣爱坤┃影视
-https://ikunzyapi.com/api.php/provide/vod/from/ikm3u8/at/json
+[715ms] 哦
+https://a.nxog.top?mm=328&ou=%E8%A3%85%F0%9F%85%B1
 
-[193ms|稳] 🍊精东
-http://chujia.cc/api.php/provide/vod/from/m3u8/
+[716ms] 123
+http://47.96.82.41:5188/rose/18/xgg.json
 
-[198ms|稳] 🍊色逼
-https://apilsbzy1.com/api.php/provide/vod/at/json
+[730ms] 软件
+http://47.96.82.41:5188/api.json
 
-[209ms|稳] 🍏新浪
-https://api.xinlangapi.com/xinlangapi.php/provide/vod/
+[885ms] tvbox放飞
+https://jinenge.us.kg/app/tvbox/tvbox.json
 
-[213ms|稳] 🍏无印
-https://api.wsyzy.net/api.php/provide/vod/
+[1015ms] uuccc
+http://xn--5mqx81b535a.com/
 
-[213ms|稳] 鸭鸭资源
-https://cj.yayazy.net/api.php/provide/vod/
+[1050ms] 影视仓
+http://影视仓.com/
 
-[218ms|稳] 🍏旺旺
-https://tyyszyapi.com/api.php/provide/vod/
+[1052ms] https://www.ls660.com/TV/feimao.json
+https://www.ls660.com/TV/feimao.json
 
-[219ms|稳] 牛牛资源
-https://api.niuniuzy.me/api.php/provide/vod/at/xml
+[1191ms] |号线路
+https://cnb.cool/srka/aow/-/git/raw/main/config
 
-[223ms|稳] 索尼-闪电
-https://xsd.sdzyapi.com/api.php/provide/vod
+[1216ms] 直播电视IPV4
+https://live.zbds.top/tv/iptv4.txt
 
-[226ms|稳] 🎥┃量子┃资源
-https://cj.lziapi.com/api.php/provide/vod/
+[1280ms] 俊哥接口
+http://home.jundie.top:81/top98.json
 
-[227ms|稳] 影视 • 电影天堂
-http://caiji.dyttzyapi.com/api.php/provide/vod
+[1338ms] 王二小放牛娃
+http://tv.999888987.xyz
 
-[230ms|稳] 无尽NET
-https://api.wujinapi.net/api.php/provide/vod
+[1390ms] zwz
+https://api.starlink.fan/api/FwaII1.json
 
-[231ms|稳] IK
-https://ikunzyapi.com/api.php/provide/vod/from/ikm3u8/
+[1512ms] hhh
+https://www.iyouhun.com/tv/fty
 
-[235ms|稳] 🎥┃索尼┃资源
-https://suoniapi.com/api.php/provide/vod/
+[1570ms] 我的TV接口
+http://z.qiqiv.cn/123.txt
 
-[235ms|稳] 无尽CC
-https://api.wujinapi.cc/api.php/provide/vod
+[1573ms] xn--6orr3pi6g9uu
+http://xn--6orr3pi6g9uu.top/
 
-[239ms|稳] 天涯资源
-https://tyyszyapi.com/api.php/provide/vod/at/xml/
+[1595ms] 接口
+https://700sjro44343.vicp.fun/vip/vip/duo.txt
 
-[240ms|稳] 🍏鸭鸭
-https://cj.yayazy.net/api.php/provide/vod
+[1708ms] 1
+https://700sjro44343.vicp.fun/240731/one/duo.txt
 
-[243ms|稳] 🍊CK
-https://ckzy.me/api.php/provide/vod/
+[1767ms] 宝盒接口
+http://宝盒接口.top
 
-[244ms|稳] 闪电API
-https://sdzyapi.com/api.php/provide/vod
+[1821ms] 摸鱼主用二
+https://xn--ihqu10cn4c.xn--v4q818bf34b.cc
 
-[253ms|稳] 闪电资源
-https://shandianzy.com/api.php/provide/vod/at/xml
+[1830ms] 1
+https://700sjro44343.vicp.fun/vip/vip/tv.json
 
-[263ms|稳] 🎥┃红牛┃资源
-https://www.hongniuzy2.com/api.php/provide/vod/
+[1834ms] 接口
+https://android.lushunming.qzz.io/json/index.json
 
-[265ms|稳] 🍏OK
-https://api.okzyw.net/api.php/provide/vod
+[1876ms] 金鹰
+http://550.3vcn.work/wdjyys.json
 
-[271ms|稳] 快车
-https://caiji.kuaichezy.org/api.php/provide/vod/
+[1886ms] 二月红接口
+https://700sjro44343.vicp.fun/eggp/0211/tv.json
 
-[273ms|稳] 🐓┃爱坤┃资源
-https://ikunzyapi.com/api.php/provide/vod
+[1933ms] 新接口
+https://www.iyouhun.com/tv/wex
 
-[275ms|稳] U酷资源
-https://api.ukuapi88.com/api.php/provide/vod/at/xmlsea
+[1949ms] 【8月8日】最新【影视仓】高清【1080P】高速接口地址【支持弹幕】
+http://124.223.214.31:16/8888
 
-[281ms|稳] 无水印
-https://api.wsyzy.net/api.php/provide/vod/
+[1981ms] 御制(无采集)-加速
+https://yqx.imgos.cn/yqx/tv/yqx2.json
 
-[287ms|稳] 影视 • 天涯
-http://tyyszy.com/api.php/provide/vod
+[2282ms] https://700sjro44343.vicp.fun/eggp/0615/tv.php
+https://700sjro44343.vicp.fun/eggp/0615/tv.php
 
-[293ms|稳] 红牛云
-https://www.hongniuzy2.com/api.php/provide/vod/from/hnyun/at/xml/
+[2404ms] my interface
+http://124.223.214.31:8/api.json
 
-[299ms|稳] 🎥┃光速┃资源
-https://api.guangsuapi.com/api.php/provide/vod/
+[2541ms] 游魂多仓
+https://www.iyouhun.com/tv/dc
 
-[299ms|稳] 🔞PGX电影
-https://www.pgxdy.com/api/xml.php
+[2630ms] GG影视
+https://raw.giteeusercontent.com/junge8888/little-second-brother-999/raw/master/aiwex.json
 
-[300ms|稳] 🍏火狐
-https://hhzyapi.com/api.php/provide/vod/at/json
-
-[304ms|稳] 🍏无尽
-https://api.wujinapi.com/api.php/provide/vod/
-
-[312ms|稳] 🧿gay┃资源
-https://slapibf.com/api.php/provide/vod/
-
-[316ms|稳] 极速
-https://jszyapi.com/api.php/provide/vod/from/jsyun/at/xml
-
-[324ms|稳] 速播资源
-https://subocaiji.com/api.php/provide/vod/from/subyun/at/json
-
-[325ms|稳] 🍏速播
-https://subocaiji.com/api.php/provide/vod/
-
-[330ms|稳] U酷
-https://api.ukuapi88.com/api.php/provide/vod/
-
-[330ms|稳] 🍏360
-https://360zyzz.com/api.php/provide/vod
-
-[338ms|稳] 🍏优酷
-https://api.ukuapi.com/api.php/provide/vod/
-
-[356ms|稳] 牛牛
-https://api.niuniuzy.me/api.php/provide/vod/from/nnm3u8/at/xml
-
-[358ms|稳] 360资源
-https://360zy.com/api.php/provide/vod/at/json
-
-[358ms|稳] 🍏樱花
-https://m3u8.apiyhzy.com/api.php/provide/vod/
-
-[368ms|稳] 影视 • 尤酷[直连]
-https://api.ukuapi.com/api.php/provide/vod/
-
-[383ms|稳] 牛牛影视
-https://api.niuniuzy.me/api.php/provide/vod/from/nnm3u8/at/json
-
-[397ms|稳] 淫水机资源(已修复)
-https://www.xrbsp.com/api/xml.php
-
-[403ms|稳] 豪华
-https://hhzyapi.com/api.php/provide/vod/from/hhyun/at/xml
-
-[419ms|稳] 🍏西瓜
-https://caiji.xgzyapi.com/api.php/provide/vod/
-
-[425ms|稳] 🍊大奶
-https://apidanaizi.com/api.php/provide/vod
-
-[430ms|稳] OK资源
-http://api.okzyw.net/api.php/provide/vod/from/okm3u8/at/xml
-
-[439ms|稳] 旺旺资源
-https://api.wwzy.tv/api.php/provide/vod/
-
-[448ms|稳] 影视 • 建安
-http://154.219.117.232:9981/jacloudapi.php/provide/vod
-
-[470ms|稳] 美少女资源(已修复)
-https://www.msnii.com/api/xml.php
-
-[482ms|稳] 魔都
-https://www.mdzyapi.com/api.php/provide/vod/
-
-[484ms|稳] 新浪资源
-https://api.xinlangapi.com/xinlangapi.php/provide/vod/at/xml/
-
-[485ms|稳] 360┃直连
-https://360zy.com/api.php/provide/vod/
-
-[487ms|稳] 香奶儿资源(已修复)
-https://www.gdlsp.com/api/xml.php
-
-[508ms|稳] 金鹰影视
-https://jyzyapi.com/provide/vod/from/jinyingm3u8/at/xml/
-
-[553ms|稳] 暴风影视
-http://by.bfzyapi.com/api.php/provide/vod/at/xml
-
-[556ms|稳] 豆瓣采集
-https://caiji.dbzy5.com/api.php/provide/vod/at/xml/
-
-[563ms|稳] 电影天堂
-http://caiji.dyttzyapi.com/api.php/provide/vod/at/xml/
-
-[586ms|稳] 🧿凤凰┃影视
-http://fhapi9.com/api.php/provide/vod/
-
-[590ms|稳] 🍊极品
-https://jipinvip.com/api.php/provide/vod/
-
-[603ms|稳] 🍏虎牙
-https://www.huyaapi.com/api.php/provide/vod/from/hym3u8/at/json
-
-[605ms|稳] 🆕非凡┃资源
-http://cj.ffzyapi.com/api.php/provide/vod/
-
-[611ms|稳] 影视 • 卧龙资源[直连]
-https://wolongzyw.com/api.php/provide/vod/
-
-[615ms|稳] 🔮星空┃影视
-https://api.tiankongapi.com/api.php/provide/vod/
-
-[621ms|稳] 🔥量子🔥
-https://cj.lziapi.com/api.php/provide/vod/from/liangzi/at/xml/
-
-[621ms|稳] 非凡资源
-http://api.ffzyapi.com/api.php/provide/vod/
-
-[623ms|稳] 🌈琥珀┃影视
-https://www.huyaapi.com/api.php/provide/vod/from/hym3u8
-
-[649ms|稳] 豆瓣资源
-https://caiji.dbzy5.com/api.php/provide/vod/at/josn/
-
-[655ms|稳] 🍏非凡
-https://cj.ffzyapi.com/api.php/provide/vod/
-
-[660ms|稳] 🍎高清┃2K
-https://api.1080zyku.com/inc/apijson.php
-
-[671ms|稳] 新浪云
-https://api.xinlangapi.com/xinlangapi.php/provide/vod/from/xlyun/at/xml/
-
-[672ms|稳] 🍚玛丽┃秒播
-https://360zy.com/api.php/provide/vod
-
-[696ms|稳] 光速云
-https://api.guangsuapi.com/api.php/provide/vod/from/gsyun/at/xml/
-
-[702ms|稳] 柚子影视
-https://api.yzzy-api.com/inc/api.php/provide/vod/at/xml
-
-[715ms|稳] 精品 | 采集
-https://www.jingpinx.com/api.php/provide/vod/
-
-[720ms|稳] 🎥┃豪华┃资源
-https://hhzyapi.com/api.php/provide/vod/
-
-[739ms|稳] 🧡┃初恋┃官源
-https://video.adminqt.cn/api.php/provide/vod/
-
-[742ms|稳] 虎牙云
-https://www.huyaapi.com/api.php/provide/vod/from/hyyun/at/xml/
-
-[746ms|稳] 量子影视
-https://cj.lziapi.com/api.php/provide/vod/from/lzm3u8/at/xml/
-
-[796ms|稳] 湿妹 | 采集
-http://www.afasu.com/api/xml.php
-
-[798ms|稳] 🧿正品┃影视
-https://lbapi9.com/api.php/provide/vod/
-
-[799ms|稳] 🍊精品🪜
-https://www.jingpinx.com//api.php/provide/vod/
-
-[838ms|稳] 🍏猫眼
-https://api.maoyanapi.top/api.php/provide/vod
-
-[845ms|稳] 🍊奶香🪜
-https://Naixxzy.com/api.php/provide/vod/
-
-[862ms|稳] 猫眼影视
-https://api.maoyanapi.top/api.php/provide/vod/from/mym3u8/at/json
-
-[876ms|稳] 🦚360┃采集
-https://360zy.com/api.php/provide/vod?
-
-[888ms|稳] 🍊越南
-https://vnzyz.com/api.php/provide/vod
-
-[975ms|稳] 非凡影视
-https://api.ffzyapi.com/api.php/provide/vod/from/ffm3u8/at/xml/
-
-[1010ms|稳] 🍊蝙蝠
-http://api.11bat.com/api.php/provide/vod/
-
-[1033ms|稳] 🍏如意
-https://cj.rycjapi.com/api.php/provide/vod
-
-[1046ms|稳] 移动┃网盘搜索
-https://so.yinpai.xyz/api.php?type=mobile
-
-[1047ms|稳] 迅雷┃网盘搜索
-https://so.yinpai.xyz/api.php?type=xunlei
-
-[1052ms|稳] 123┃网盘搜索
-https://so.yinpai.xyz/api.php?type=123
-
-[1058ms|稳] UC┃网盘搜索
-https://so.yinpai.xyz/api.php?type=uc
-
-[1063ms|稳] 百度┃网盘搜索
-https://so.yinpai.xyz/api.php?type=baidu
-
-[1064ms|稳] 阿里┃网盘搜索
-https://so.yinpai.xyz/api.php?type=aliyun
-
-[1068ms|稳] 天翼┃网盘推送
-https://so.yinpai.xyz/api.php?type=tianyi
-
-[1069ms|稳] 夸克┃网盘搜索
-https://so.yinpai.xyz/api.php?type=quark
-
-[1070ms|稳] 芒果 | 采集
-https://mgzyz1.com/api.php/provide/vod/
-
-[1158ms|稳] 爱奇艺资源
-https://iqiyizyapi.com/api.php/provide/vod
-
-[1170ms|稳] 茅台影视
-https://caiji.maotaizy.cc/api.php/provide/vod/from/mtm3u8/at/json
-
-[1231ms|稳] 豆瓣采集2
-https://caiji.dbzy5.com/api.php/provide/vod/from/dbm3u8/at/json/
-
-[1302ms|稳] 追剧吧
-https://zjuba.vip/api.php/provide/vod
-
-[1372ms|稳] 沙鱼 | 采集
-https://shayuapi.com/api.php/provide/vod/
-
-[1425ms|稳] 🍭非凡┃采集
-http://cj.ffzyapi.com/api.php/provide/vod/at/xml/
-
-[1433ms|稳] 🍏魔都
-https://www.moduzy.com/api.php/provide/vod
-
-[1477ms|稳] 豆瓣采集3
-https://caiji.dbzy5.com/api.php/provide/vod/at/json/
-
-[1617ms|稳] 🍏茅台
-https://caiji.maotaizy.cc/api.php/provide/vod/from/mtm3u8/at/josn
-
-[1633ms|稳] 非凡
-http://api.ffzyapi.com/api.php/provide/vod/from/feifan/at/xml/
-
-[1822ms|稳] 如意云
-https://cj.rycjapi.com/api.php/provide/vod/from/ruyi/at/xml/
-
-[1917ms|稳] 豆瓣影视
-https://caiji.dbzy5.com/api.php/provide/vod/from/dbm3u8/at/xml/
-
-[1961ms|稳] 🍏星球🪜
-https://www.ysxq.cc/api.php/provide/vod
-
-[2043ms|稳] 暴风资源2
-http://bf.xoxowin86cisyap.com/api.php/provide/vod
-
-[2154ms|稳] 茅台资源
-https://caiji.maotaizy.cc/api.php/provide/vod/at/josn/
-
-[2428ms|稳] 速播
-https://subocj.com/api.php/provide/vod/from/subyun/at/json
+[4492ms] 2
+https://gitee.com/fuleishu/fulei/raw/master/fuleixyx.json
 
