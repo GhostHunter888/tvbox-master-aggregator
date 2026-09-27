@@ -1,2 +1,1 @@
 # TVBox 视频源强制代理域名列表
-raw.githubusercontent.com

@@ -1,14 +1,12 @@
 # TVBox 视频源国内直连域名列表 (PassWall / SmartDNS 专用)
 1080zyku.com
 11bat.com
-124.223.214.31
 154.219.117.232
 19q.cc
 360zy.com
 360zyzz.com
 Naixxzy.com
 afasu.com
-agit.ai
 apidanaizi.com
 apilsbzy1.com
 bf.xoxowin86cisyap.com
@@ -26,18 +24,14 @@ ffzy.tv
 ffzy5.tv
 ffzyapi.com
 fhapi9.com
-file.icve.com.cn
 gdlsp.com
-gh-proxy.com
-gh-proxy.net
-gh-proxy.org
-gitlab.com
 guangsuapi.com
 haiwaikan.com
 hhzyapi.com
 hongniuzy2.com
 huyaapi.com
 ikunzyapi.com
+iqiyizyapi.com
 jingpinx.com
 jipinvip.com
 jszyapi.com
@@ -47,6 +41,7 @@ lziapi.com
 m3u8.apiyhzy.com
 maoyanapi.top
 mdzyapi.com
+mgzyz1.com
 moduzy.com
 msnii.com
 niuniuzy.me

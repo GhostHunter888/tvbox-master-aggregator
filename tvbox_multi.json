@@ -1,9 +1,13 @@
 {
-  "spider": "https://raw.githubusercontent.com/FongMi/CatVodSpider/main/jar/custom_spider.jar",
   "sites": [
     {
       "name": "🚀 [主推] 全网纯净采集大一统",
       "url": "https://raw.githubusercontent.com/haygcao/tvbox-master-aggregator/main/tvbox.json",
+      "type": 0
+    },
+    {
+      "name": "🔥 [全量] 包含全网 JS/JAR 高阶单仓",
+      "url": "https://raw.githubusercontent.com/haygcao/tvbox-master-aggregator/main/tvbox_full.json",
       "type": 0
     },
     {
@@ -48,6 +52,10 @@
       "url": "https://raw.githubusercontent.com/haygcao/tvbox-master-aggregator/main/tvbox.json"
     },
     {
+      "name": "🔥 [全量] 包含全网 JS/JAR 高阶单仓",
+      "url": "https://raw.githubusercontent.com/haygcao/tvbox-master-aggregator/main/tvbox_full.json"
+    },
+    {
       "name": "💎 [旗舰] 饭太硬精选仓",
       "url": "https://raw.githubusercontent.com/FongMi/CatVodSpider/main/json/config.json"
     },
@@ -80,6 +88,10 @@
     {
       "name": "🚀 [主推] 全网纯净采集大一统",
       "url": "https://raw.githubusercontent.com/haygcao/tvbox-master-aggregator/main/tvbox.json"
+    },
+    {
+      "name": "🔥 [全量] 包含全网 JS/JAR 高阶单仓",
+      "url": "https://raw.githubusercontent.com/haygcao/tvbox-master-aggregator/main/tvbox_full.json"
     },
     {
       "name": "💎 [旗舰] 饭太硬精选仓",
