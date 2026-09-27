@@ -2,19 +2,17 @@
 # -*- coding: utf-8 -*-
 """
 =============================================================================
- TVBox Master 资源聚合引擎 (1:1 完美吸收 tvyuan 与 my-tvbox 参考库成熟架构)
+ TVBox Master 资源聚合引擎 (根据用户提供的标准 1:1 示例库全量重构)
 =============================================================================
-参考库（tvyuan/update.py & my-tvbox/check.py）成熟生成规则：
-  1. tvbox.json (主单仓/纯净版)：
-     - 仅包含测速最快、存活通畅的 MacCMS 纯采集 HTTP 站（严格剔除 csp_ 爬虫与乱码站）；
-     - 清理 API URL 尾部 ac=list 参数，彻底杜绝双问号死锁；
-     - spider 设为 ""，防止图片伪装包导致 TVBox 内核崩塌，保证全站原生 Category 秒级完整展示；
-  2. tvbox_full.json (全量单仓版)：
-     - 包含全网 300+ 站点（含 type:3 JS/JAR 专属高阶爬虫源），且每个爬虫源独立绑定原厂 Jar；
-  3. tvbox_multi.json (多仓版)：
-     - 同时支持 stores、urls 和 sites (type:0) 三重标准协议；
-  4. domains_direct.txt & clash_rules_direct.yaml：
-     - 提取接口净域名，生成路由器与 PassWall / Clash 直连策略。
+根据用户示范库完全对齐的 1:1 结构：
+  1. 准确判断 XML 与 JSON 接口的 type 类型：
+     - 所有带有 xml / at/xml/ 结尾的 API 接口，强制设置 type: 0；
+     - 普通 JSON 接口保持 type: 1，自定义爬虫保持 type: 3；
+  2. 完整的全局配置增强：
+     - 加入标准 ijk 解码参数 (软解码/硬解码)；
+     - 加入全量平台解析 flags (youku, qq, iqiyi 等)；
+     - 加入全量黑名单广告域名 ads；
+  3. 保留并兜底每个站点的 categories 数组，确保 100% 出现分类菜单！
 =============================================================================
 """
 
@@ -32,7 +30,6 @@ sys.stdout.reconfigure(line_buffering=True) if hasattr(sys.stdout, 'reconfigure'
 
 WORK_DIR = os.path.dirname(os.path.abspath(__file__))
 
-# 彻底过滤低俗/成人/18+ 内容
 SEX_KEYWORDS = [
     "x站", "18+", "色情", "伦理", "成人", "福利", "三级", "激情", "av",
     "杏吧", "极品x", "免费x", "嘿嘿", "火速", "红楼", "优优", "天美",
@@ -91,7 +88,6 @@ def parse_json_safely(content):
     return None
 
 def clean_api_url(api):
-    """参考库规范：剔除 api URL 尾部的 ac=list/detail 参数，保留标准根路径，杜绝双问号死锁"""
     if not api: return ""
     api = str(api).strip()
     api = re.sub(r'[\?&]ac=(list|detail|videolist|vod).*$', '', api, flags=re.I)
@@ -148,7 +144,7 @@ def sync_upstream_generated_data():
     return raw_sites, raw_lives, raw_parses, spider_jars
 
 def sync_web_sources():
-    print("[2/4] 解析网页导航源 (zzzypro.com & clbug.com)...", flush=True)
+    print("[2/4] 解析网页导航源...", flush=True)
     web_sites = []
     html = fetch_text("https://www.zzzypro.com/")
     if html:
@@ -176,11 +172,9 @@ def sync_web_sources():
     return web_sites
 
 def check_maccms_alive(site):
-    """参考库 my-tvbox/check.py & tvyuan/update.py 标准：主单仓仅测速与保留 MacCMS 纯采集 HTTP 接口"""
     api = clean_api_url(site.get("api", ""))
     stype = site.get("type", 1)
 
-    # 严格过滤非 HTTP、相对路径或 csp_ 节点（属于全量版，不计入主单仓）
     if not api.startswith("http") or api.startswith("csp_") or stype == 3:
         return None
 
@@ -225,7 +219,6 @@ def apply_master_cleaning(all_sites):
         for res in as_completed([executor.submit(check_maccms_alive, site) for site in candidates]):
             if res.result(): alive_sites.append(res.result())
 
-    # 按测速从小到大排序 (确保最快、最稳定的真实 HTTP API 排在最前面)
     alive_sites.sort(key=lambda x: x.get("_cost", 9999))
     print(f"  └─ 联通测试存活可用 MacCMS 纯采集站点: {len(alive_sites)} 个\n", flush=True)
     return alive_sites
@@ -268,11 +261,7 @@ def export_router_rules(sites):
         f.write("# TVBox 视频源 Clash 强制代理规则集 (DOMAIN-SUFFIX 格式)\npayload:\n")
         for d in sorted_proxy: f.write(f"  - DOMAIN-SUFFIX,{d}\n")
 
-    print(f"  ├─ 导出 {len(sorted_direct)} 个直连域名")
-    print(f"  └─ 导出 {len(sorted_proxy)} 个代理域名")
-
 def build_multi_store():
-    """按参考库标准的多仓协议生成 tvbox_multi.json"""
     multi_sites = [
         {"name": "🚀 [主推] 全网纯净采集大一统", "url": "https://raw.githubusercontent.com/haygcao/tvbox-master-aggregator/main/tvbox.json", "type": 0},
         {"name": "🔥 [全量] 包含全网 JS/JAR 高阶单仓", "url": "https://raw.githubusercontent.com/haygcao/tvbox-master-aggregator/main/tvbox_full.json", "type": 0},
@@ -292,7 +281,6 @@ def build_multi_store():
     }
     with open(os.path.join(WORK_DIR, "tvbox_multi.json"), "w", encoding="utf-8") as f:
         json.dump(multi_config, f, ensure_ascii=False, indent=2)
-    print(f"[OK] 生成多仓配置文件: tvbox_multi.json", flush=True)
 
 def main():
     print("==================================================", flush=True)
@@ -312,7 +300,10 @@ def main():
         "recordable", "vipUrl", "flag", "parse", "jx", "url"
     ]
 
-    # 1. 1:1 参考 tvyuan/update.py 生成 tvbox.json（主单仓/简洁版：全量最快纯采集 HTTP 站，无 spider 障碍）
+    STANDARD_CATEGORIES = [
+        "国产剧", "港台剧", "日韩剧", "欧美剧", "泰剧", "综艺", "动作片", "喜剧片", "爱情片", "科幻片", "动漫"
+    ]
+
     clean_sites = []
     for s in cleaned_alive_sites:
         clean_name = s.pop("_clean_name", s.get("name", ""))
@@ -324,11 +315,22 @@ def main():
 
         c_site["key"] = clean_name
         c_site["name"] = f"[{cost}ms|稳] {clean_name}"
-        c_site["type"] = s.get("type", 1)
-        c_site["api"] = s.get("_clean_api", s.get("api", ""))
+
+        # 核心判定：带 xml / at/xml 的接口，强制 type: 0；标准 JSON 接口保持 type: 1
+        raw_api = s.get("_clean_api", s.get("api", ""))
+        if "xml" in raw_api.lower() or "at/xml" in raw_api.lower():
+            c_site["type"] = 0
+        else:
+            c_site["type"] = s.get("type", 1)
+
+        c_site["api"] = raw_api
         c_site["searchable"] = 1
         c_site["quickSearch"] = 1
         c_site["filterable"] = 0
+
+        # 1:1 按照用户示范结构，为每个站点配备 categories 数组，确保 100% 出现分类！
+        if "categories" not in c_site or not c_site["categories"]:
+            c_site["categories"] = STANDARD_CATEGORIES
 
         clean_sites.append(c_site)
 
@@ -340,19 +342,86 @@ def main():
             unique_lives.append(l)
 
     seen_parses, unique_parses = set(), []
-    for p in [{"name": "并发VIP解析", "type": 1, "url": "https://api.json.pro/api/?url="}] + upstream_parses:
+    for p in [{"name": "解析1", "type": 0, "url": "https://api.json.pro/api/?url="}] + upstream_parses:
         url = p.get("url")
         if url and url not in seen_parses:
             seen_parses.add(url)
             unique_parses.append(p)
 
-    # 1:1 遵循 tvyuan：简洁主单仓 spider 设为 ""，全靠 100% 极速 HTTP API，分类瞬间全展示！
+    # 用户示范标准的完整旗舰全局配置 (flags, ijk, ads)
+    DEFAULT_FLAGS = [
+        "youku", "qq", "iqiyi", "qiyi", "letv", "sohu", "tudou", "pptv", "mgtv", "wasu"
+    ]
+
+    DEFAULT_IJK = [
+        {
+            "group": "软解码",
+            "options": [
+                {"category": 4, "name": "opensles", "value": "0"},
+                {"category": 4, "name": "overlay-format", "value": "842225234"},
+                {"category": 4, "name": "framedrop", "value": "1"},
+                {"category": 4, "name": "soundtouch", "value": "1"},
+                {"category": 4, "name": "start-on-prepared", "value": "1"},
+                {"category": 1, "name": "http-detect-range-support", "value": "0"},
+                {"category": 1, "name": "fflags", "value": "fastseek"},
+                {"category": 2, "name": "skip_loop_filter", "value": "48"},
+                {"category": 4, "name": "reconnect", "value": "1"},
+                {"category": 4, "name": "max-buffer-size", "value": "5242880"},
+                {"category": 4, "name": "enable-accurate-seek", "value": "0"},
+                {"category": 4, "name": "mediacodec", "value": "0"},
+                {"category": 4, "name": "mediacodec-auto-rotate", "value": "0"},
+                {"category": 4, "name": "mediacodec-handle-resolution-change", "value": "0"},
+                {"category": 4, "name": "mediacodec-hevc", "value": "0"}
+            ]
+        },
+        {
+            "group": "硬解码",
+            "options": [
+                {"category": 4, "name": "opensles", "value": "0"},
+                {"category": 4, "name": "overlay-format", "value": "842225234"},
+                {"category": 4, "name": "framedrop", "value": "1"},
+                {"category": 4, "name": "soundtouch", "value": "1"},
+                {"category": 4, "name": "start-on-prepared", "value": "1"},
+                {"category": 1, "name": "http-detect-range-support", "value": "0"},
+                {"category": 1, "name": "fflags", "value": "fastseek"},
+                {"category": 2, "name": "skip_loop_filter", "value": "48"},
+                {"category": 4, "name": "reconnect", "value": "1"},
+                {"category": 4, "name": "max-buffer-size", "value": "5242880"},
+                {"category": 4, "name": "enable-accurate-seek", "value": "0"},
+                {"category": 4, "name": "mediacodec", "value": "1"},
+                {"category": 4, "name": "mediacodec-auto-rotate", "value": "1"},
+                {"category": 4, "name": "mediacodec-handle-resolution-change", "value": "1"},
+                {"category": 4, "name": "mediacodec-hevc", "value": "1"}
+            ]
+        }
+    ]
+
+    DEFAULT_ADS = [
+        "mimg.0c1q0l.cn", "www.googletagmanager.com", "www.google-analytics.com",
+        "mc.usihnbcq.cn", "mg.g1mm3d.cn", "mscs.svaeuzh.cn", "cnzz.hhttm.top",
+        "tp.vinuxhome.com", "cnzz.mmstat.com", "www.baihuillq.com", "s23.cnzz.com",
+        "z3.cnzz.com", "c.cnzz.com", "stj.v1vo.top", "z12.cnzz.com", "img.mosflower.cn",
+        "tips.gamevvip.com", "ehwe.yhdtns.com", "xdn.cqqc3.com", "www.jixunkyy.cn",
+        "sp.chemacid.cn", "hm.baidu.com", "s9.cnzz.com", "z6.cnzz.com", "um.cavuc.com",
+        "mav.mavuz.com", "wofwk.aoidf3.com", "z5.cnzz.com", "xc.hubeijieshikj.cn",
+        "tj.tianwenhu.com", "xg.gars57.cn", "k.jinxiuzhilv.com", "cdn.bootcss.com",
+        "ppl.xunzhuo123.com", "xomk.jiangjunmh.top", "img.xunzhuo123.com", "z1.cnzz.com",
+        "s13.cnzz.com", "xg.huataisangao.cn", "z7.cnzz.com", "xg.huataisangao.cn",
+        "z2.cnzz.com", "s96.cnzz.com", "q11.cnzz.com", "thy.dacedsfa.cn", "xg.whsbpw.cn",
+        "s19.cnzz.com", "z8.cnzz.com", "s4.cnzz.com", "f5w.as12df.top", "ae01.alicdn.com",
+        "www.92424.cn", "k.wudejia.com", "vivovip.mmszxc.top", "qiu.xixiqiu.com",
+        "cdnjs.hnfenxun.com", "cms.qdwght.com"
+    ]
+
     master_config = {
         "spider": "",
         "wallpaper": "https://bing.img.run/1920x1080.php",
         "sites": clean_sites,
         "lives": unique_lives,
         "parses": unique_parses,
+        "flags": DEFAULT_FLAGS,
+        "ijk": DEFAULT_IJK,
+        "ads": DEFAULT_ADS,
         "note": "本配置由 TVBox 资源全量整合引擎自动生成。"
     }
 
@@ -360,7 +429,6 @@ def main():
         json.dump(master_config, f, ensure_ascii=False, indent=2)
     print(f"\n[OK] 生成主单仓配置文件: tvbox.json ({len(clean_sites)} 个纯采集极速站点)", flush=True)
 
-    # 2. 1:1 参考 tvyuan 生成 tvbox_full.json (全量版，包含爬虫源 + 最佳爬虫 JAR)
     best_spider = spider_jars[0] if spider_jars else "https://raw.githubusercontent.com/FongMi/CatVodSpider/main/jar/custom_spider.jar"
     full_config = {
         "spider": best_spider,
@@ -368,6 +436,9 @@ def main():
         "sites": all_raw_sites,
         "lives": unique_lives,
         "parses": unique_parses,
+        "flags": DEFAULT_FLAGS,
+        "ijk": DEFAULT_IJK,
+        "ads": DEFAULT_ADS,
         "note": "本配置包含全网所有的采集站与高阶爬虫站。"
     }
     with open(os.path.join(WORK_DIR, "tvbox_full.json"), "w", encoding="utf-8") as f:
@@ -381,7 +452,7 @@ def main():
         for s in clean_sites:
             f.write(f"{s['name']}\n{s['api']}\n\n")
 
-    print("\n[5/5] 完成！1:1 参考库标准产物已写入仓库。\n", flush=True)
+    print("\n[5/5] 完成！1:1 对齐用户示范结构落操完成。\n", flush=True)
 
 if __name__ == "__main__":
     main()
