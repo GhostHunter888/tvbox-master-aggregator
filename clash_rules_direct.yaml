@@ -39,7 +39,6 @@ payload:
   - DOMAIN-SUFFIX,hongniuzy2.com
   - DOMAIN-SUFFIX,huyaapi.com
   - DOMAIN-SUFFIX,ikunzyapi.com
-  - DOMAIN-SUFFIX,iqiyizyapi.com
   - DOMAIN-SUFFIX,jingpinx.com
   - DOMAIN-SUFFIX,jipinvip.com
   - DOMAIN-SUFFIX,jszyapi.com
@@ -70,6 +69,7 @@ payload:
   - DOMAIN-SUFFIX,ukuapi.com
   - DOMAIN-SUFFIX,ukuapi88.com
   - DOMAIN-SUFFIX,video.adminqt.cn
+  - DOMAIN-SUFFIX,vnzyz.com
   - DOMAIN-SUFFIX,wolongzyw.com
   - DOMAIN-SUFFIX,wsyzy.net
   - DOMAIN-SUFFIX,wujinapi.cc
