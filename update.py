@@ -2,16 +2,14 @@
 # -*- coding: utf-8 -*-
 """
 =============================================================================
- TVBox 资源全量整合更新引擎 (独立 m3u8 视频流 CDN 提取与精确域名直连版)
+ TVBox 资源全量整合更新引擎 (全量播放 CDN/网页播放页域名提取直连版)
 =============================================================================
-重点逻辑修正：
-  1. 单仓 (tvbox.json) 顶层 spider 设为 ""：
-     - OK资源 (sites[0]) 是 MacCMS 接口，本身不需要全局 Spider JAR 包！
-     - 设置 spider: "" 避免 TVBox 启动时企图下载全局 JAR 包导致崩塌；
-  2. 独立视频流 CDN 域名提取 (做软路由 PassWall / Clash 的 Direct 域名直连)：
-     - 自动请求各 MacCMS 站点的 vod/detail 详情；
-     - 抓取真实视频播放物理地址 (如 v13.rstuuv.com、wsyzym3u8.com) 的根域名；
-     - 将这些真实的切片播放 CDN 域名合并计入 domains_direct.txt 与 clash_rules_direct.yaml！
+重点逻辑落操：
+  1. 单仓 (tvbox.json) 顶层 spider 设为 ""，首站 OK资源 (sites[0]) 完美秒加载；
+  2. 独立全量播放域名提取：
+     - 不仅提取 m3u8，全量抓取 vod_play_url 中的 MP4、直播及 jimaoys95.com 网页播放页域名；
+     - 合并导出至 domains_direct.txt 与 clash_rules_direct.yaml，实现软路由播放全直连！
+  3. 原封不动全量合并上游 17+ 开源仓库，仅通过 SEX_KEYWORDS 隔离 18+ 低俗内容。
 =============================================================================
 """
 
@@ -30,7 +28,7 @@ sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), "script
 try:
     from extract_stream_domains import extract_stream_cdn_domains
 except ImportError:
-    def extract_stream_cdn_domains(sites, max_sites=20): return set()
+    def extract_stream_cdn_domains(sites, max_sites=30): return set()
 
 sys.stdout.reconfigure(line_buffering=True) if hasattr(sys.stdout, 'reconfigure') else None
 
@@ -39,7 +37,6 @@ CF_PROXY = os.environ.get("CF_PROXY", "")  # Cloudflare Worker 代理地址
 
 # =========================================================
 # 【零层配置】用户提供的最高层门面节点（镇守 sites[0]）
-# 此节点为 MacCMS 采集站，不需要任何外部全局 Spider JAR 包！
 # =========================================================
 ROOT_TOP_SITE = {
     "key": "OK资源",
@@ -173,19 +170,19 @@ def export_router_rules(sites):
                         domains_direct.add(domain)
             except Exception: pass
 
-    # 重点改进：调用专用的 extract_stream_cdn_domains 从测试响应中解析真实的 m3u8 视频流 CDN 域名！
-    cdn_domains = extract_stream_cdn_domains(sites, max_sites=20)
+    # 调用专用的 extract_stream_cdn_domains 全量抓取包含播放页与切片的真实播放 CDN 域名！
+    cdn_domains = extract_stream_cdn_domains(sites, max_sites=30)
     domains_direct.update(cdn_domains)
 
     sorted_direct = sorted(list(domains_direct))
     sorted_proxy = sorted(list(domains_proxy))
 
     with open(os.path.join(WORK_DIR, "domains_direct.txt"), "w", encoding="utf-8") as f:
-        f.write("# TVBox 视频源与真实 M3U8 播放 CDN 国内直连域名列表\n")
+        f.write("# TVBox 视频源、网页播放页与 M3U8/MP4 播放 CDN 国内直连域名列表\n")
         for d in sorted_direct: f.write(f"{d}\n")
 
     with open(os.path.join(WORK_DIR, "clash_rules_direct.yaml"), "w", encoding="utf-8") as f:
-        f.write("# TVBox 视频源与真实 M3U8 播放 CDN Clash 直连规则集\npayload:\n")
+        f.write("# TVBox 视频源、网页播放页与 M3U8/MP4 播放 CDN Clash 直连规则集\npayload:\n")
         for d in sorted_direct: f.write(f"  - DOMAIN-SUFFIX,{d}\n")
 
     with open(os.path.join(WORK_DIR, "domains_proxy.txt"), "w", encoding="utf-8") as f:
@@ -221,7 +218,7 @@ def main():
     for gname, gurl in UPSTREAM_REPO_ENDPOINTS:
         sources.append((gname, gurl))
 
-    print(f"  [合并] 收集到 {len(sources)} 个源，开始执行精确 API 去重与原封不动合并...")
+    print(f"  [合并] 收集到 {len(sources)} 个源，开始执行 API 去重与全量合并...")
 
     all_sites = [ROOT_TOP_SITE]  # 门面节点置顶
     all_lives, all_parses = [], []
@@ -280,9 +277,8 @@ def main():
             u = p.get("url", "")
             if u: all_parses.append(p)
 
-    print(f"  └─ 去重合并完成，总计收录唯一有效站点: {len(all_sites)} 个")
+    print(f"  └─ 合并完成，总计收录唯一有效站点: {len(all_sites)} 个")
 
-    # 2. 全局配置 (ijk, ads, flags)
     DEFAULT_FLAGS = ["youku", "qq", "iqiyi", "qiyi", "letv", "sohu", "tudou", "pptv", "mgtv", "wasu"]
     DEFAULT_IJK = [
         {"group": "软解码", "options": [{"category": 4, "name": "opensles", "value": "0"}, {"category": 4, "name": "overlay-format", "value": "842225234"}, {"category": 4, "name": "framedrop", "value": "1"}, {"category": 4, "name": "soundtouch", "value": "1"}, {"category": 4, "name": "start-on-prepared", "value": "1"}, {"category": 1, "name": "http-detect-range-support", "value": "0"}, {"category": 1, "name": "fflags", "value": "fastseek"}, {"category": 2, "name": "skip_loop_filter", "value": "48"}, {"category": 4, "name": "reconnect", "value": "1"}, {"category": 4, "name": "max-buffer-size", "value": "5242880"}, {"category": 4, "name": "enable-accurate-seek", "value": "0"}, {"category": 4, "name": "mediacodec", "value": "0"}, {"category": 4, "name": "mediacodec-auto-rotate", "value": "0"}, {"category": 4, "name": "mediacodec-handle-resolution-change", "value": "0"}, {"category": 4, "name": "mediacodec-hevc", "value": "0"}]},
@@ -292,8 +288,8 @@ def main():
         "mimg.0c1q0l.cn", "www.googletagmanager.com", "www.google-analytics.com", "mc.usihnbcq.cn", "mg.g1mm3d.cn", "mscs.svaeuzh.cn", "cnzz.hhttm.top", "tp.vinuxhome.com", "cnzz.mmstat.com", "www.baihuillq.com", "s23.cnzz.com", "z3.cnzz.com", "c.cnzz.com", "stj.v1vo.top", "z12.cnzz.com", "img.mosflower.cn", "tips.gamevvip.com", "ehwe.yhdtns.com", "xdn.cqqc3.com", "www.jixunkyy.cn", "sp.chemacid.cn", "hm.baidu.com", "s9.cnzz.com", "z6.cnzz.com", "um.cavuc.com", "mav.mavuz.com", "wofwk.aoidf3.com", "z5.cnzz.com", "xc.hubeijieshikj.cn", "tj.tianwenhu.com", "xg.gars57.cn", "k.jinxiuzhilv.com", "cdn.bootcss.com", "ppl.xunzhuo123.com", "xomk.jiangjunmh.top", "img.xunzhuo123.com", "z1.cnzz.com", "s13.cnzz.com", "xg.huataisangao.cn", "z7.cnzz.com", "xg.huataisangao.cn", "z2.cnzz.com", "s96.cnzz.com", "q11.cnzz.com", "thy.dacedsfa.cn", "xg.whsbpw.cn", "s19.cnzz.com", "z8.cnzz.com", "s4.cnzz.com", "f5w.as12df.top", "ae01.alicdn.com", "www.92424.cn", "k.wudejia.com", "vivovip.mmszxc.top", "qiu.xixiqiu.com", "cdnjs.hnfenxun.com", "cms.qdwght.com"
     ]
 
-    # 注意：主单仓 (tvbox.json) 的顶层 spider 设为 ""！
-    # 因为 sites[0] 是 OK资源 (MacCMS 接口)，不需要任何全局 Spider 包，避免下载引发崩塌！
+    best_spider = max(spider_jars, key=spider_jars.get) if spider_jars else "https://raw.githubusercontent.com/FongMi/CatVodSpider/main/jar/custom_spider.jar"
+
     master_config = {
         "spider": "",
         "wallpaper": "https://bing.img.run/1920x1080.php",
@@ -308,24 +304,11 @@ def main():
 
     with open(os.path.join(WORK_DIR, "tvbox.json"), "w", encoding="utf-8") as f:
         json.dump(master_config, f, ensure_ascii=False, indent=2)
-    print(f"[OK] 生成主单仓配置文件: tvbox.json (spider设为'', 首站为OK资源, 共 {len(all_sites)} 个有效站点)")
+    print(f"[OK] 生成主单仓配置文件: tvbox.json ({len(all_sites)} 个唯一有效站点)")
 
-    best_spider = max(spider_jars, key=spider_jars.get) if spider_jars else "https://raw.githubusercontent.com/FongMi/CatVodSpider/main/jar/custom_spider.jar"
-    full_config = {
-        "spider": best_spider,
-        "wallpaper": "https://bing.img.run/1920x1080.php",
-        "sites": all_sites,
-        "lives": all_lives,
-        "parses": all_parses,
-        "flags": DEFAULT_FLAGS,
-        "ijk": DEFAULT_IJK,
-        "ads": DEFAULT_ADS,
-        "note": "本配置包含全网所有的采集站与高阶爬虫站。"
-    }
     with open(os.path.join(WORK_DIR, "tvbox_full.json"), "w", encoding="utf-8") as f:
-        json.dump(full_config, f, ensure_ascii=False, indent=2)
+        json.dump(master_config, f, ensure_ascii=False, indent=2)
 
-    # 4. 生成 tvbox_multi.json (多仓版)
     multi_stores = [{"sourceName": name, "sourceUrl": url} for name, url, _ in [(n, u, 0) for n, u in sources]]
     multi = {
         "urls": [{"name": m["sourceName"], "url": m["sourceUrl"]} for m in multi_stores],
@@ -334,14 +317,15 @@ def main():
     }
     with open(os.path.join(WORK_DIR, "tvbox_multi.json"), "w", encoding="utf-8") as f:
         json.dump(multi, f, ensure_ascii=False, indent=2)
+    print(f"[OK] 生成多仓配置文件: tvbox_multi.json")
 
-    # 5. 导出路由器直连与代理规则（包含真实 M3U8 切片 CDN 域名）
+    # 导出路由器规则与全量播放流域名
     export_router_rules(all_sites)
     with open(os.path.join(WORK_DIR, "sources.txt"), "w", encoding="utf-8") as f:
         f.write(f"# {ts}\n\n")
         for s in all_sites: f.write(f"{s['name']}\n{s.get('api', '')}\n\n")
 
-    print(f"\n[{time.strftime('%Y-%m-%d %H:%M:%S')}] 视频流 CDN 解析与规则导出更新完成!")
+    print(f"\n[{time.strftime('%Y-%m-%d %H:%M:%S')}] 去重合并更新完成!")
     return 0
 
 if __name__ == "__main__":
