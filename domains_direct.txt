@@ -1,18 +1,13 @@
 # TVBox 视频源国内直连域名列表
-11bat.com
-19q.cc
-Naixxzy.com
-apidanaizi.com
-apilsbzy1.com
-caiji.maotaizy.cc
-ckzy.me
-fhapi9.com
-gdlsp.com
+dbzy.tv
+guangsuapi.com
+hhzyapi.com
+hongniuzy2.com
 huyaapi.com
-jingpinx.com
-lbapi9.com
-naixxzy.com
-shayuapi.com
-slapibf.com
+ikunzyapi.com
+jyzyapi.com
+okzyw.net
+subocaiji.com
 wsyzy.net
+xinlangapi.com
 xrbsp.com
