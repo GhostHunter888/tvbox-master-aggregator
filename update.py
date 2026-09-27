@@ -160,15 +160,24 @@ def sync_web_sources():
     print(f"  └─ 获取到 {len(web_sites)} 个新站源", flush=True)
     return web_sites
 
+def is_garbled_name(name):
+    """检测并剔除乱码/非法字符节点"""
+    if not name: return True
+    # 含有常见乱码 Unicode 字符块 (如西里尔字母/杂乱符号)
+    if re.search(r'[рҹв”еҗҲйӣҶзҒ«]', name):
+        return True
+    return False
+
 def check_api_alive(site):
-    api = site.get("api", "")
+    api = str(site.get("api", ""))
     stype = site.get("type", 1)
-    # 对于带有 ext、jar 或 type=3 的高级 JS 爬虫，免检直通
-    if stype == 3 or "ext" in site or "jar" in site or "js" in str(site.get("name", "")).lower():
-        site["_cost"] = 10
+
+    # 对无 HTTP 协议或以 csp_ 开头的自定义爬虫源赋予正常考量，置于普通 API 之后
+    if not api.startswith("http") or api.startswith("csp_"):
+        site["_cost"] = 2500  # 赋予较大延迟，确保排在真实 MacCMS HTTP 接口之后
         return site
 
-    test_url = str(api).rstrip("/") + ("&ac=list" if "?" in str(api) else "?ac=list")
+    test_url = api.rstrip("/") + ("&ac=list" if "?" in api else "?ac=list")
     try:
         req = urllib.request.Request(test_url, headers=HEADERS)
         t0 = time.time()
@@ -191,7 +200,8 @@ def apply_master_cleaning(all_sites):
             continue
 
         clean_name = re.sub(r'^\[.*?\]\s*', '', raw_name).strip()
-        if not clean_name: continue
+        if not clean_name or is_garbled_name(clean_name):
+            continue
 
         api_key = str(api).lower().strip()
         if api_key not in unique_sites and clean_name not in unique_names:
@@ -207,7 +217,7 @@ def apply_master_cleaning(all_sites):
         for res in as_completed([executor.submit(check_api_alive, site) for site in candidates]):
             if res.result(): alive_sites.append(res.result())
 
-    # 按测速从小到大排序
+    # 按测速从小到大排序 (确保最快、最稳定的真实 HTTP API 排在最前面，即 sites[0])
     alive_sites.sort(key=lambda x: x.get("_cost", 9999))
     print(f"  └─ 联通测试存活可用站点: {len(alive_sites)} 个\n", flush=True)
     return alive_sites
