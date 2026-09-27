@@ -3,7 +3,7 @@
   "sites": [
     {
       "key": "无水印",
-      "name": "[10120KB/s|822ms|稳] 无水印",
+      "name": "[4179KB/s|733ms|稳] 无水印",
       "type": 1,
       "api": "https://api.wsyzy.net/api.php/provide/vod/",
       "searchable": 1,
@@ -12,7 +12,7 @@
     },
     {
       "key": "👖裤佬丨采集",
-      "name": "[9945KB/s|728ms|稳] 👖裤佬丨采集",
+      "name": "[3783KB/s|928ms|稳] 👖裤佬丨采集",
       "type": 1,
       "api": "https://api.wsyzy.net/api.php/provide/vod",
       "searchable": 1,
@@ -20,17 +20,8 @@
       "filterable": 0
     },
     {
-      "key": "无水印",
-      "name": "[3203KB/s|871ms|稳] 无水印",
-      "type": 1,
-      "api": "https://api.wsyzy.net/api.php/provide/vod/",
-      "searchable": 1,
-      "quickSearch": 1,
-      "filterable": 0
-    },
-    {
       "key": "🍊19",
-      "name": "[2262KB/s|329ms|稳] 🍊19",
+      "name": "[2836KB/s|365ms|稳] 🍊19",
       "type": 1,
       "api": "https://19q.cc/api.php/provide/vod",
       "searchable": 1,
@@ -38,8 +29,17 @@
       "filterable": 0
     },
     {
+      "key": "无水印",
+      "name": "[2567KB/s|844ms|稳] 无水印",
+      "type": 1,
+      "api": "https://api.wsyzy.net/api.php/provide/vod/",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 0
+    },
+    {
       "key": "烂大街",
-      "name": "[1946KB/s|2383ms|稳] 烂大街",
+      "name": "[1647KB/s|2227ms|稳] 烂大街",
       "type": 1,
       "api": "https://www.huyaapi.com/api.php/provide/vod/",
       "searchable": 1,
@@ -47,44 +47,26 @@
       "filterable": 0
     },
     {
-      "key": "🍏茅台",
-      "name": "[1901KB/s|2221ms|稳] 🍏茅台",
+      "key": "🍊极品",
+      "name": "[1196KB/s|580ms|稳] 🍊极品",
       "type": 1,
-      "api": "https://caiji.maotaizy.cc/api.php/provide/vod/from/mtm3u8/at/josn",
+      "api": "https://jipinvip.com/api.php/provide/vod/",
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 0
     },
     {
-      "key": "金鹰影视",
-      "name": "[1847KB/s|2051ms|稳] 金鹰影视",
+      "key": "淫水机资源(已修复)",
+      "name": "[1152KB/s|684ms|稳] 淫水机资源(已修复)",
       "type": 0,
-      "api": "https://jyzyapi.com/provide/vod/from/jinyingm3u8/at/xml/",
-      "searchable": 1,
-      "quickSearch": 1,
-      "filterable": 0
-    },
-    {
-      "key": "🎀红牛┃采集",
-      "name": "[1628KB/s|3138ms|稳] 🎀红牛┃采集",
-      "type": 1,
-      "api": "https://www.hongniuzy2.com/api.php/provide/vod/",
-      "searchable": 1,
-      "quickSearch": 1,
-      "filterable": 0
-    },
-    {
-      "key": "香奶儿",
-      "name": "[1603KB/s|385ms|稳] 香奶儿",
-      "type": 0,
-      "api": "https://www.gdlsp.com/api/xml.php",
+      "api": "https://www.xrbsp.com/api/xml.php",
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 0
     },
     {
       "key": "豆瓣影视",
-      "name": "[1510KB/s|821ms|稳] 豆瓣影视",
+      "name": "[1121KB/s|1074ms|稳] 豆瓣影视",
       "type": 0,
       "api": "https://caiji.dbzy5.com/api.php/provide/vod/from/dbm3u8/at/xml/",
       "searchable": 1,
@@ -93,7 +75,7 @@
     },
     {
       "key": "豆瓣采集2",
-      "name": "[1438KB/s|1068ms|稳] 豆瓣采集2",
+      "name": "[1112KB/s|1319ms|稳] 豆瓣采集2",
       "type": 1,
       "api": "https://caiji.dbzy5.com/api.php/provide/vod/from/dbm3u8/at/json/",
       "searchable": 1,
@@ -101,8 +83,26 @@
       "filterable": 0
     },
     {
+      "key": "香奶儿资源(已修复)",
+      "name": "[1087KB/s|634ms|稳] 香奶儿资源(已修复)",
+      "type": 0,
+      "api": "https://www.gdlsp.com/api/xml.php",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 0
+    },
+    {
+      "key": "🍏魔都",
+      "name": "[1078KB/s|647ms|稳] 🍏魔都",
+      "type": 1,
+      "api": "https://www.moduzy.com/api.php/provide/vod",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 0
+    },
+    {
       "key": "豆瓣资源",
-      "name": "[1362KB/s|1100ms|稳] 豆瓣资源",
+      "name": "[1077KB/s|1213ms|稳] 豆瓣资源",
       "type": 1,
       "api": "https://caiji.dbzy5.com/api.php/provide/vod/at/josn/",
       "searchable": 1,
@@ -110,34 +110,47 @@
       "filterable": 0
     },
     {
-      "key": "🍏金鹰",
-      "name": "[1354KB/s|4689ms|稳] 🍏金鹰",
-      "type": 1,
-      "api": "https://jyzyapi.com/provide/vod/",
-      "searchable": 1,
-      "quickSearch": 1,
-      "filterable": 0
-    },
-    {
-      "key": "豆瓣采集3",
-      "name": "[1154KB/s|1200ms|稳] 豆瓣采集3",
-      "type": 1,
-      "api": "https://caiji.dbzy5.com/api.php/provide/vod/at/json/",
-      "searchable": 1,
-      "quickSearch": 1,
-      "filterable": 0
-    },
-    {
-      "key": "豆瓣采集",
-      "name": "[1117KB/s|976ms|稳] 豆瓣采集",
+      "key": "金鹰影视",
+      "name": "[1007KB/s|2463ms|稳] 金鹰影视",
       "type": 0,
-      "api": "https://caiji.dbzy5.com/api.php/provide/vod/at/xml/",
+      "api": "https://jyzyapi.com/provide/vod/from/jinyingm3u8/at/xml/",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 0
+    },
+    {
+      "key": "茅台影视",
+      "name": "[960KB/s|858ms|稳] 茅台影视",
+      "type": 1,
+      "api": "https://caiji.maotaizy.cc/api.php/provide/vod/from/mtm3u8/at/json",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 0
+    },
+    {
+      "key": "奶香 | 采集",
+      "name": "[927KB/s|627ms|稳] 奶香 | 采集",
+      "type": 1,
+      "api": "https://naixxzy.com/api.php/provide/vod/",
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 0
     }
   ],
   "lives": [
+    {
+      "name": "Kimentanm",
+      "type": 0,
+      "url": "https://ghfast.top/https://raw.githubusercontent.com/Kimentanm/aptv/master/m3u/iptv.m3u",
+      "playerType": 2
+    },
+    {
+      "name": "综合直播",
+      "type": 0,
+      "playerType": 2,
+      "url": "https://ghfast.top/https://raw.githubusercontent.com/develop202/migu_video/refs/heads/main/interface.txt",
+      "ua": "bingcha/1.1 (mianfeifenxiang) "
+    },
     {
       "name": "Kimentanm",
       "type": 0,
@@ -178,37 +191,43 @@
       "logo": "https://live.fanmingming.com/tv/{name}.png"
     },
     {
-      "name": "成人直播",
+      "name": "欧歌",
       "type": 0,
-      "url": "https://raw.bgithub.xyz/wwb521/live/refs/heads/main/selive.txt",
-      "playerType": 2
+      "url": "https://xn--dkw0c.v.nxog.top/m/tv/没了?ou=33c",
+      "epg": "http://cdn.1678520.xyz/epg/?ch={name}&date={date}",
+      "logo": "https://gitee.com/mytv-android/myTVlogo/raw/main/img/{name}.png",
+      "playerType": 2,
+      "timeout": 10
     },
     {
-      "name": "LIVE",
+      "name": "冰茶",
       "type": 0,
-      "url": "https://gh-proxy.com/https://raw.githubusercontent.com/wwb521/live/refs/heads/main/tv.m3u",
-      "playerType": 1,
-      "epg": "http://epg.51zmt.top:8000/api/diyp/?ch={name}&date={date}",
-      "logo": "https://live.fanmingming.com/tv/{name}.png"
-    },
-    {
-      "name": "LIVE_fan",
-      "type": 0,
-      "url": "https://gh-proxy.com/https://raw.githubusercontent.com/wwb521/live/main/tv.m3u",
-      "playerType": 1,
-      "epg": "http://epg.51zmt.top:8000/api/diyp/?ch={name}&date={date}",
-      "logo": "https://live.fanmingming.com/tv/{name}.png"
-    },
-    {
-      "name": "LIVE_home",
-      "type": 0,
-      "url": "https://raw.githubusercontent.com/joevess/IPTV/refs/heads/main/home.m3u8",
-      "playerType": 1,
-      "epg": "http://epg.51zmt.top:8000/api/diyp/?ch={name}&date={date}",
-      "logo": "https://live.fanmingming.com/tv/{name}.png"
+      "playerType": 2,
+      "url": "https://bc.188766.xyz/?ip=&json=true",
+      "ua": "bingcha/1.1(mianfeifenxiang)"
     }
   ],
   "parses": [
+    {
+      "name": "王",
+      "type": 1,
+      "url": "http://122.228.84.103:7777/api/?key=4Dk5tdayvY6NZufEMG&url="
+    },
+    {
+      "name": "二",
+      "type": 1,
+      "url": "http://110.42.7.182:880/api/?key=7e84f07dc78fbb3406d64a1ab7d966b3&url="
+    },
+    {
+      "name": "小",
+      "type": 1,
+      "url": "http://43.136.176.188:91/api/?key=4ef232e96172b0bda78d393c695fe7c4&url="
+    },
+    {
+      "name": "帅",
+      "type": 1,
+      "url": "http://pan.qiaoji8.com/tvbox/neibu.php?url="
+    },
     {
       "name": "JsonиҒҡеҗҲ",
       "type": 3,
@@ -260,106 +279,14 @@
       }
     },
     {
-      "name": "Json并发",
-      "type": 2,
-      "url": "Parallel"
+      "name": "失败手动换",
+      "type": "1",
+      "url": "https://by1.nxog.eu.org/jx.php?ou=33c&mz=0&url="
     },
     {
-      "name": "Json轮询",
-      "type": 2,
-      "url": "Sequence"
-    },
-    {
-      "name": "全能[①]",
-      "type": 0,
-      "url": "https://jx.255tv.cn/api/?key=3t4CoYwM7x73KDaBAE&url="
-    },
-    {
-      "name": "全能[③]",
-      "type": 0,
-      "url": "https://jx.zhanlangbu.com/?url=",
-      "ext": {
-        "header": {
-          "User-Agent": "okhttp/4.1.0"
-        },
-        "flag": [
-          "qq",
-          "腾讯",
-          "qiyi",
-          "爱奇艺",
-          "奇艺",
-          "youku",
-          "优酷",
-          "mgtv",
-          "芒果",
-          "letv",
-          "乐视",
-          "pptv",
-          "PPTV",
-          "sohu",
-          "bilibili",
-          "哔哩哔哩",
-          "哔哩"
-        ]
-      }
-    },
-    {
-      "name": "鸿途手动解析",
-      "type": 0,
-      "url": "https://h5.freejson.xyz/player/?url=",
-      "ext": {
-        "header": {
-          "User-Agent": "okhttp/4.1.0"
-        },
-        "flag": [
-          "qq",
-          "腾讯",
-          "qiyi",
-          "爱奇艺",
-          "奇艺",
-          "youku",
-          "优酷",
-          "mgtv",
-          "芒果",
-          "letv",
-          "乐视",
-          "pptv",
-          "PPTV",
-          "sohu",
-          "bilibili",
-          "哔哩哔哩",
-          "哔哩"
-        ]
-      }
-    },
-    {
-      "name": "鸿途手动解析2",
-      "type": 0,
-      "url": "https://h5.freejson.xyz/player/analysis.php?v=",
-      "ext": {
-        "header": {
-          "User-Agent": "okhttp/4.1.0"
-        },
-        "flag": [
-          "qq",
-          "腾讯",
-          "qiyi",
-          "爱奇艺",
-          "奇艺",
-          "youku",
-          "优酷",
-          "mgtv",
-          "芒果",
-          "letv",
-          "乐视",
-          "pptv",
-          "PPTV",
-          "sohu",
-          "bilibili",
-          "哔哩哔哩",
-          "哔哩"
-        ]
-      }
+      "name": "-关注-",
+      "type": 1,
+      "url": "https://by1.nxog.eu.org/jx.php?ou=33c&mz=1&url="
     }
   ]
 }
