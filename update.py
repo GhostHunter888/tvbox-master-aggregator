@@ -286,6 +286,13 @@ def build_multi_store():
         json.dump(multi_config, f, ensure_ascii=False, indent=2)
     print(f"[OK] 生成多仓配置文件: tvbox_multi.json", flush=True)
 
+def clean_api_url(api):
+    """清理 API URL，剥离尾部多余的 ac=list/detail 参数，防止 TVBox 发起请求时双问号死锁导致 0 分类"""
+    if not api: return ""
+    api = str(api).strip()
+    api = re.sub(r'[\?&]ac=(list|detail|videolist|vod).*$', '', api, flags=re.I)
+    return api
+
 def main():
     print("==================================================", flush=True)
     print(f" TVBox 资源全量整合与自动化清洗引擎启动 ({time.strftime('%Y-%m-%d %H:%M:%S')})", flush=True)
@@ -318,6 +325,10 @@ def main():
         if "searchable" not in c_site: c_site["searchable"] = 1
         if "quickSearch" not in c_site: c_site["quickSearch"] = 1
         if "filterable" not in c_site: c_site["filterable"] = 1
+
+        # 核心：防死锁清理！剥离所有 ?ac=list 多余参数，保证 TVBox 切换主页站点时能正常获取分类
+        if "api" in c_site and isinstance(c_site["api"], str) and c_site["api"].startswith("http"):
+            c_site["api"] = clean_api_url(c_site["api"])
 
         clean_sites.append(c_site)
 
