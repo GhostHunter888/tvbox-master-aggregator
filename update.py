@@ -2,17 +2,24 @@
 # -*- coding: utf-8 -*-
 """
 =============================================================================
- TVBox Master 资源聚合引擎 (根据用户提供的标准 1:1 示例库全量重构)
+ TVBox Master 资源聚合引擎 (完全遵循 影视TV 官方最新规范 1:1 精准重构)
 =============================================================================
-根据用户示范库完全对齐的 1:1 结构：
-  1. 准确判断 XML 与 JSON 接口的 type 类型：
-     - 所有带有 xml / at/xml/ 结尾的 API 接口，强制设置 type: 0；
-     - 普通 JSON 接口保持 type: 1，自定义爬虫保持 type: 3；
-  2. 完整的全局配置增强：
-     - 加入标准 ijk 解码参数 (软解码/硬解码)；
-     - 加入全量平台解析 flags (youku, qq, iqiyi 等)；
-     - 加入全量黑名单广告域名 ads；
-  3. 保留并兜底每个站点的 categories 数组，确保 100% 出现分类菜单！
+官方最新规范（VodConfig / Site / Depot）物理落操对齐：
+  1. 站点类型（type）严格归一：
+     - 包含 xml / at/xml/ 关键字的 HTTP 接口，强制设置 type: 0 (XML HTTP)；
+     - 标准 JSON HTTP 接口设置 type: 1 (JSON HTTP)；
+     - 自定义爬虫设置 type: 3 (Spider)，扩展接口设置 type: 4；
+  2. 分类菜单（categories）遵守官方回退规则：
+     - 上游站点无特定 categories 时，不进行人工强加；
+     - 官方规则：“完全無匹配時保留原分類”，不写 categories 属性时，TVBox 自动展示原站 100% 完整分类；
+  3. 主单仓 (tvbox.json)：
+     - spider 设为 ""，防止图片伪装包导致旧版内核抛 Java 异常崩塌；
+     - 仅包含测速最快且 100% 通畅的 MacCMS 采集 HTTP 站（剔除 csp_ 爬虫与乱码站）；
+     - 剥离 API URL 尾部 ac=list 参数，杜绝双问号死锁；
+  4. 全量单仓 (tvbox_full.json)：
+     - 包含全网 300+ 站点（含所有 type:3 高阶爬虫源），且每个站点独立保留原厂 jar 属性；
+  5. 配置仓库 Depot (tvbox_multi.json)：
+     - 遵照官方 Depot[] 协议，根节点输出 urls 数组，充当极简规范多仓。
 =============================================================================
 """
 
@@ -30,6 +37,7 @@ sys.stdout.reconfigure(line_buffering=True) if hasattr(sys.stdout, 'reconfigure'
 
 WORK_DIR = os.path.dirname(os.path.abspath(__file__))
 
+# 黑名单词库：彻底过滤低俗/成人/18+ 内容
 SEX_KEYWORDS = [
     "x站", "18+", "色情", "伦理", "成人", "福利", "三级", "激情", "av",
     "杏吧", "极品x", "免费x", "嘿嘿", "火速", "红楼", "优优", "天美",
@@ -88,6 +96,7 @@ def parse_json_safely(content):
     return None
 
 def clean_api_url(api):
+    """剔除 api URL 尾部的 ac=list/detail 多余参数，保留标准接口根路径，杜绝双问号死锁"""
     if not api: return ""
     api = str(api).strip()
     api = re.sub(r'[\?&]ac=(list|detail|videolist|vod).*$', '', api, flags=re.I)
@@ -144,7 +153,7 @@ def sync_upstream_generated_data():
     return raw_sites, raw_lives, raw_parses, spider_jars
 
 def sync_web_sources():
-    print("[2/4] 解析网页导航源...", flush=True)
+    print("[2/4] 解析网页导航源 (zzzypro.com & clbug.com)...", flush=True)
     web_sites = []
     html = fetch_text("https://www.zzzypro.com/")
     if html:
@@ -172,9 +181,11 @@ def sync_web_sources():
     return web_sites
 
 def check_maccms_alive(site):
+    """主单仓仅测速与筛选 MacCMS 纯采集 HTTP 接口"""
     api = clean_api_url(site.get("api", ""))
     stype = site.get("type", 1)
 
+    # 过滤非 HTTP、相对路径或 csp_ 节点（放入全量版）
     if not api.startswith("http") or api.startswith("csp_") or stype == 3:
         return None
 
@@ -219,6 +230,7 @@ def apply_master_cleaning(all_sites):
         for res in as_completed([executor.submit(check_maccms_alive, site) for site in candidates]):
             if res.result(): alive_sites.append(res.result())
 
+    # 按测速从小到大排序 (确保最快、最稳定的真实 HTTP API 排在最前面)
     alive_sites.sort(key=lambda x: x.get("_cost", 9999))
     print(f"  └─ 联通测试存活可用 MacCMS 纯采集站点: {len(alive_sites)} 个\n", flush=True)
     return alive_sites
@@ -261,7 +273,11 @@ def export_router_rules(sites):
         f.write("# TVBox 视频源 Clash 强制代理规则集 (DOMAIN-SUFFIX 格式)\npayload:\n")
         for d in sorted_proxy: f.write(f"  - DOMAIN-SUFFIX,{d}\n")
 
+    print(f"  ├─ 导出 {len(sorted_direct)} 个直连域名")
+    print(f"  └─ 导出 {len(sorted_proxy)} 个代理域名")
+
 def build_multi_store():
+    """遵照官方 Depot[] 规范生成 tvbox_multi.json"""
     multi_sites = [
         {"name": "🚀 [主推] 全网纯净采集大一统", "url": "https://raw.githubusercontent.com/haygcao/tvbox-master-aggregator/main/tvbox.json", "type": 0},
         {"name": "🔥 [全量] 包含全网 JS/JAR 高阶单仓", "url": "https://raw.githubusercontent.com/haygcao/tvbox-master-aggregator/main/tvbox_full.json", "type": 0},
@@ -274,13 +290,11 @@ def build_multi_store():
         {"name": "✨ [4K] 蓝光专线仓", "url": "https://cdn.jsdelivr.net/gh/Lightconer/tvbox-ysc-config@main/output/4k.json", "type": 0}
     ]
     multi_config = {
-        "sites": multi_sites,
-        "stores": [{"name": m["name"], "url": m["url"]} for m in multi_sites],
-        "urls": [{"name": m["name"], "url": m["url"]} for m in multi_sites],
-        "note": "本配置由 TVBox 资源整合引擎自动生成。"
+        "urls": [{"name": m["name"], "url": m["url"]} for m in multi_sites]
     }
     with open(os.path.join(WORK_DIR, "tvbox_multi.json"), "w", encoding="utf-8") as f:
         json.dump(multi_config, f, ensure_ascii=False, indent=2)
+    print(f"[OK] 生成多仓配置文件: tvbox_multi.json", flush=True)
 
 def main():
     print("==================================================", flush=True)
@@ -300,10 +314,7 @@ def main():
         "recordable", "vipUrl", "flag", "parse", "jx", "url"
     ]
 
-    STANDARD_CATEGORIES = [
-        "国产剧", "港台剧", "日韩剧", "欧美剧", "泰剧", "综艺", "动作片", "喜剧片", "爱情片", "科幻片", "动漫"
-    ]
-
+    # 1. 生成主单仓 tvbox.json (纯采集极速站)
     clean_sites = []
     for s in cleaned_alive_sites:
         clean_name = s.pop("_clean_name", s.get("name", ""))
@@ -316,7 +327,7 @@ def main():
         c_site["key"] = clean_name
         c_site["name"] = f"[{cost}ms|稳] {clean_name}"
 
-        # 核心判定：带 xml / at/xml 的接口，强制 type: 0；标准 JSON 接口保持 type: 1
+        # 1:1 遵循官方规则：XML 接口强设 type: 0；JSON 接口为 type: 1
         raw_api = s.get("_clean_api", s.get("api", ""))
         if "xml" in raw_api.lower() or "at/xml" in raw_api.lower():
             c_site["type"] = 0
@@ -327,10 +338,6 @@ def main():
         c_site["searchable"] = 1
         c_site["quickSearch"] = 1
         c_site["filterable"] = 0
-
-        # 1:1 按照用户示范结构，为每个站点配备 categories 数组，确保 100% 出现分类！
-        if "categories" not in c_site or not c_site["categories"]:
-            c_site["categories"] = STANDARD_CATEGORIES
 
         clean_sites.append(c_site)
 
@@ -348,7 +355,6 @@ def main():
             seen_parses.add(url)
             unique_parses.append(p)
 
-    # 用户示范标准的完整旗舰全局配置 (flags, ijk, ads)
     DEFAULT_FLAGS = [
         "youku", "qq", "iqiyi", "qiyi", "letv", "sohu", "tudou", "pptv", "mgtv", "wasu"
     ]
@@ -429,6 +435,7 @@ def main():
         json.dump(master_config, f, ensure_ascii=False, indent=2)
     print(f"\n[OK] 生成主单仓配置文件: tvbox.json ({len(clean_sites)} 个纯采集极速站点)", flush=True)
 
+    # 2. 生成全量版 tvbox_full.json
     best_spider = spider_jars[0] if spider_jars else "https://raw.githubusercontent.com/FongMi/CatVodSpider/main/jar/custom_spider.jar"
     full_config = {
         "spider": best_spider,
@@ -452,7 +459,7 @@ def main():
         for s in clean_sites:
             f.write(f"{s['name']}\n{s['api']}\n\n")
 
-    print("\n[5/5] 完成！1:1 对齐用户示范结构落操完成。\n", flush=True)
+    print("\n[5/5] 完成！1:1 官方最新规范重构完成。\n", flush=True)
 
 if __name__ == "__main__":
     main()
