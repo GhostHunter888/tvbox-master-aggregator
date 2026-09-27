@@ -1,1 +1,4 @@
 # TVBox 视频源强制代理域名列表
+catbox.n13.club
+github.moeyy.xyz
+raw.githubusercontent.com
