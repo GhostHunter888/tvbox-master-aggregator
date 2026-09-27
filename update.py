@@ -2,14 +2,13 @@
 # -*- coding: utf-8 -*-
 """
 =============================================================================
- TVBox 资源全量整合更新引擎 (全量播放 CDN/网页播放页域名提取直连版)
+ TVBox 资源全量整合更新引擎 (多层级深解析与三阶段管道架构)
 =============================================================================
-重点逻辑落操：
-  1. 单仓 (tvbox.json) 顶层 spider 设为 ""，首站 OK资源 (sites[0]) 完美秒加载；
-  2. 独立全量播放域名提取：
-     - 不仅提取 m3u8，全量抓取 vod_play_url 中的 MP4、直播及 jimaoys95.com 网页播放页域名；
-     - 合并导出至 domains_direct.txt 与 clash_rules_direct.yaml，实现软路由播放全直连！
-  3. 原封不动全量合并上游 17+ 开源仓库，仅通过 SEX_KEYWORDS 隔离 18+ 低俗内容。
+管道架构：
+  阶段 1: 全量抓取与 18+ 黑名单过滤；
+  阶段 2: 三层递归深解析 (API -> vod/detail 播放页 -> M3U8/TS 终极 CDN 域名)；
+  阶段 3: 导出干净 sources.txt (剔除 csp_ 类名，只留 HTTP 网址) + 导出 PassWall / Clash 直连规则；
+  阶段 4: sites[0] 放置 OK资源 (用户亲优门面)，保证首页顶部分类秒出。
 =============================================================================
 """
 
@@ -26,9 +25,11 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 
 sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), "scripts"))
 try:
-    from extract_stream_domains import extract_stream_cdn_domains
+    from resolve_deep_cdn import resolve_deep_media_domains
+    from export_router_rules import export_all_router_rules
 except ImportError:
-    def extract_stream_cdn_domains(sites, max_sites=30): return set()
+    def resolve_deep_media_domains(sites, max_sites=30): return set()
+    def export_all_router_rules(work_dir, sites, deep_cdn_domains): pass
 
 sys.stdout.reconfigure(line_buffering=True) if hasattr(sys.stdout, 'reconfigure') else None
 
@@ -151,51 +152,9 @@ def clean_api_url(api):
     api = re.sub(r'[\?&]ac=(list|detail|videolist|vod).*$', '', api, flags=re.I)
     return api.rstrip("/")
 
-def export_router_rules(sites):
-    print("  [策略导出] 正在导出 PassWall / Clash 直连与代理策略...")
-    domains_direct = set()
-    domains_proxy = set()
-
-    for s in sites:
-        api = s.get("api", "")
-        name = s.get("name", "")
-        if api:
-            try:
-                domain = urllib.parse.urlparse(str(api)).netloc.split(":")[0]
-                domain = re.sub(r'^(www|api|cj|vip|v|jx|m|wap|app)\.', '', domain)
-                if domain:
-                    if "代理" in name or "翻墙" in name or "科学" in name or "github" in domain or "jsdelivr" in domain:
-                        domains_proxy.add(domain)
-                    else:
-                        domains_direct.add(domain)
-            except Exception: pass
-
-    # 调用专用的 extract_stream_cdn_domains 全量抓取包含播放页与切片的真实播放 CDN 域名！
-    cdn_domains = extract_stream_cdn_domains(sites, max_sites=30)
-    domains_direct.update(cdn_domains)
-
-    sorted_direct = sorted(list(domains_direct))
-    sorted_proxy = sorted(list(domains_proxy))
-
-    with open(os.path.join(WORK_DIR, "domains_direct.txt"), "w", encoding="utf-8") as f:
-        f.write("# TVBox 视频源、网页播放页与 M3U8/MP4 播放 CDN 国内直连域名列表\n")
-        for d in sorted_direct: f.write(f"{d}\n")
-
-    with open(os.path.join(WORK_DIR, "clash_rules_direct.yaml"), "w", encoding="utf-8") as f:
-        f.write("# TVBox 视频源、网页播放页与 M3U8/MP4 播放 CDN Clash 直连规则集\npayload:\n")
-        for d in sorted_direct: f.write(f"  - DOMAIN-SUFFIX,{d}\n")
-
-    with open(os.path.join(WORK_DIR, "domains_proxy.txt"), "w", encoding="utf-8") as f:
-        f.write("# TVBox 视频源强制代理域名列表\n")
-        for d in sorted_proxy: f.write(f"{d}\n")
-
-    with open(os.path.join(WORK_DIR, "clash_rules_proxy.yaml"), "w", encoding="utf-8") as f:
-        f.write("# TVBox 视频源 Clash 强制代理规则集\npayload:\n")
-        for d in sorted_proxy: f.write(f"  - DOMAIN-SUFFIX,{d}\n")
-
 def main():
     ts = time.strftime('%Y-%m-%d %H:%M:%S')
-    print(f"[{ts}] 开始 TVBox 全量资源去重与原封不动合并...")
+    print(f"[{ts}] 开始 TVBox 全量资源去重与多层级管道整合...")
 
     # 1. 抓取配置源列表
     html = curl("https://tvbox.clbug.com/user.php", 20)
@@ -218,7 +177,7 @@ def main():
     for gname, gurl in UPSTREAM_REPO_ENDPOINTS:
         sources.append((gname, gurl))
 
-    print(f"  [合并] 收集到 {len(sources)} 个源，开始执行 API 去重与全量合并...")
+    print(f"  [1/4 阶段一] 收集到 {len(sources)} 个源，开始执行 API 精确去重与合并...")
 
     all_sites = [ROOT_TOP_SITE]  # 门面节点置顶
     all_lives, all_parses = [], []
@@ -243,13 +202,14 @@ def main():
             raw_name = s.get("name", key)
             api = s.get("api", "")
 
+            # 唯一的过滤条件：仅杀 18+ 色情内容！绝不剔除任何 csp_ 或本地合法节点！
             if not key or is_blacklisted(raw_name) or is_blacklisted(str(api)):
                 continue
 
             clean_n = re.sub(r'^\[.*?\]\s*', '', raw_name).strip()
             if is_garbled_name(clean_n): continue
 
-            clean_api = clean_api_url(api)
+            clean_api = clean_api_url(api) if (isinstance(api, str) and api.startswith("http")) else api
 
             if clean_api and clean_api in seen_apis:
                 continue
@@ -257,7 +217,7 @@ def main():
                 key = f"{key}_{len(seen_keys)}"
 
             seen_keys.add(key)
-            if clean_api:
+            if clean_api and isinstance(clean_api, str) and clean_api.startswith("http"):
                 seen_apis.add(clean_api)
 
             s["key"] = key
@@ -277,8 +237,9 @@ def main():
             u = p.get("url", "")
             if u: all_parses.append(p)
 
-    print(f"  └─ 合并完成，总计收录唯一有效站点: {len(all_sites)} 个")
+    print(f"  └─ 去重合并完成，总计收录唯一有效站点: {len(all_sites)} 个")
 
+    # 2. 全局播放解码与广告过滤配置
     DEFAULT_FLAGS = ["youku", "qq", "iqiyi", "qiyi", "letv", "sohu", "tudou", "pptv", "mgtv", "wasu"]
     DEFAULT_IJK = [
         {"group": "软解码", "options": [{"category": 4, "name": "opensles", "value": "0"}, {"category": 4, "name": "overlay-format", "value": "842225234"}, {"category": 4, "name": "framedrop", "value": "1"}, {"category": 4, "name": "soundtouch", "value": "1"}, {"category": 4, "name": "start-on-prepared", "value": "1"}, {"category": 1, "name": "http-detect-range-support", "value": "0"}, {"category": 1, "name": "fflags", "value": "fastseek"}, {"category": 2, "name": "skip_loop_filter", "value": "48"}, {"category": 4, "name": "reconnect", "value": "1"}, {"category": 4, "name": "max-buffer-size", "value": "5242880"}, {"category": 4, "name": "enable-accurate-seek", "value": "0"}, {"category": 4, "name": "mediacodec", "value": "0"}, {"category": 4, "name": "mediacodec-auto-rotate", "value": "0"}, {"category": 4, "name": "mediacodec-handle-resolution-change", "value": "0"}, {"category": 4, "name": "mediacodec-hevc", "value": "0"}]},
@@ -309,6 +270,7 @@ def main():
     with open(os.path.join(WORK_DIR, "tvbox_full.json"), "w", encoding="utf-8") as f:
         json.dump(master_config, f, ensure_ascii=False, indent=2)
 
+    # 3. 生成 tvbox_multi.json (多仓版)
     multi_stores = [{"sourceName": name, "sourceUrl": url} for name, url, _ in [(n, u, 0) for n, u in sources]]
     multi = {
         "urls": [{"name": m["sourceName"], "url": m["sourceUrl"]} for m in multi_stores],
@@ -317,15 +279,24 @@ def main():
     }
     with open(os.path.join(WORK_DIR, "tvbox_multi.json"), "w", encoding="utf-8") as f:
         json.dump(multi, f, ensure_ascii=False, indent=2)
-    print(f"[OK] 生成多仓配置文件: tvbox_multi.json")
 
-    # 导出路由器规则与全量播放流域名
-    export_router_rules(all_sites)
+    # 4. [阶段三：多层级深解析与规则导出]
+    print("  [2/4 阶段二与阶段三] 正在运行多层级深解析脚本 (抓取 vod/detail 与终极播放 CDN)...")
+    deep_cdn_domains = resolve_deep_media_domains(all_sites, max_sites=30)
+
+    print("  [3/4 阶段四] 正在生成 PassWall / Clash 直连与代理策略...")
+    export_all_router_rules(WORK_DIR, all_sites, deep_cdn_domains)
+
+    # 5. 导出纯净 Sources.txt (仅保留真实 HTTP 网址，绝对剔除 csp_ Java类名！)
     with open(os.path.join(WORK_DIR, "sources.txt"), "w", encoding="utf-8") as f:
-        f.write(f"# {ts}\n\n")
-        for s in all_sites: f.write(f"{s['name']}\n{s.get('api', '')}\n\n")
+        f.write(f"# TVBox 纯净全量资源汇总 ({ts})\n\n")
+        for s in all_sites:
+            api = s.get("api", "")
+            # 严格过滤非 HTTP 的 csp_ 字符串，确保 sources.txt 全是可用的网址！
+            if isinstance(api, str) and api.startswith("http"):
+                f.write(f"{s['name']}\n{api}\n\n")
 
-    print(f"\n[{time.strftime('%Y-%m-%d %H:%M:%S')}] 去重合并更新完成!")
+    print(f"\n[{time.strftime('%Y-%m-%d %H:%M:%S')}] 多层级深解析与全量更新完成!")
     return 0
 
 if __name__ == "__main__":
