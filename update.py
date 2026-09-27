@@ -1,16 +1,13 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-=============================================================================
- TVBox 资源整合更新引擎 (1:1 整合参考库 tvyuan/update.py 与 my-tvbox/check.py 成熟代码)
-=============================================================================
-直接抄录与吸收参考库成熟跑通方案：
-  1. is_remote_site(): 来自 my-tvbox/check.py，严格过滤非 HTTP、csp_、本地节点；
-  2. clean_api_url(): 来自 tvyuan/update.py，剥离尾部 ac=list 多余参数；
-  3. tvbox.json: 1:1 参考 tvyuan/update.py，主单仓 spider 设为 ""，100% 极速 HTTP MacCMS 接口；
-  4. tvbox_full.json: 全量包含所有高阶爬虫源；
-  5. tvbox_multi.json: 1:1 参考 Lightconer/多仓订阅.json，输出 urls 仓库列表。
-=============================================================================
+TVBox 聚合源自动更新引擎
+1:1 复制并整合参考库 tvyuan/update.py 完整源码架构：
+  1. curl + test_play_speed 真实分片播放测速引擎；
+  2. tvbox.json       → 简洁版（顶级最快 MacCMS 纯采集站，无 spider 障碍）；
+  3. tvbox_full.json  → 全量版（全网合并，带对应 spider 爬虫包）；
+  4. tvbox_multi.json → 多仓版（完美兼容 storeHouse 与 urls）；
+  5. 嵌入 18+ 黑名单过滤与路由器 PassWall / Clash 直连策略导出。
 """
 
 import json
@@ -19,15 +16,14 @@ import re
 import ssl
 import sys
 import time
+import subprocess
 import urllib.parse
-import urllib.request
-from concurrent.futures import ThreadPoolExecutor, as_completed
-
-sys.stdout.reconfigure(line_buffering=True) if hasattr(sys.stdout, 'reconfigure') else None
+from urllib.parse import urljoin, urlparse
 
 WORK_DIR = os.path.dirname(os.path.abspath(__file__))
+CF_PROXY = os.environ.get("CF_PROXY", "")  # Cloudflare Worker 代理地址
 
-# 来自参考库 my-tvbox/check.py 的 18+ 黑名单词库
+# 18+ 黑名单词库
 SEX_KEYWORDS = [
     "x站", "18+", "色情", "伦理", "成人", "福利", "三级", "激情", "av",
     "杏吧", "极品x", "免费x", "嘿嘿", "火速", "红楼", "优优", "天美",
@@ -38,130 +34,141 @@ SEX_KEYWORDS = [
     "久草", "大x子", "老色x", "写真"
 ]
 
-SSL_CTX = ssl.create_default_context()
-SSL_CTX.check_hostname = False
-SSL_CTX.verify_mode = ssl.CERT_NONE
-
-HEADERS = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
-}
-
-def fetch_text(url, timeout=12):
-    try:
-        req = urllib.request.Request(url, headers=HEADERS)
-        with urllib.request.urlopen(req, timeout=timeout, context=SSL_CTX) as resp:
-            raw_data = resp.read()
-            try:
-                return raw_data.decode("utf-8")
-            except UnicodeDecodeError:
-                try:
-                    return raw_data.decode("gbk", errors="ignore")
-                except:
-                    return raw_data.decode("utf-8", errors="ignore")
-    except Exception:
-        return ""
-
 def is_blacklisted(text):
     if not text: return False
     lower_text = str(text).lower()
     return any(kw in lower_text for kw in SEX_KEYWORDS)
 
+def is_garbled_name(name):
+    if not name: return True
+    if re.search(r'[рҹв”еҗҲйӣҶзҒ«]', name):
+        return True
+    return False
+
+def curl(url, timeout=10, via_proxy=False):
+    actual_url = f"{CF_PROXY}?u={urllib.parse.quote(url, safe='')}" if (via_proxy and CF_PROXY) else url
+    try:
+        r = subprocess.run(["curl", "-s", "-L", "--connect-timeout", str(timeout),
+                           "--max-time", str(timeout*2), "-A", "Mozilla/5.0", actual_url],
+                          capture_output=True, timeout=timeout*2+5)
+        return r.stdout.decode("utf-8", errors="replace")
+    except Exception:
+        return ""
+
 def parse_json(raw):
     if not raw: return None
-    raw = raw.lstrip('\ufeff')
+    raw = raw.lstrip('﻿')
     raw = re.sub(r',(\s*[}\]])', r'\1', raw)
     try: return json.loads(raw, strict=False)
     except Exception:
         s, e = raw.find('{'), raw.rfind('}')
         if s >= 0 and e > s:
             try: return json.loads(raw[s:e+1], strict=False)
-            except: pass
+            except Exception: pass
     return None
 
-# 来自参考库 my-tvbox/check.py: 1:1 复制 is_remote_site 远程站点校验逻辑
-def is_remote_site(s):
-    api = s.get("api", "")
-    if not isinstance(api, str) or not api.startswith("http"):
-        return False
-    bad = ("127.0.0.1", "socks5", "./", "csp_", "file://")
-    return not any(b in api for b in bad)
+def resolve_spider(spider, source_url):
+    if not spider: return ""
+    if spider.startswith("http"): return spider
+    if spider.startswith("./"):
+        p = urlparse(source_url)
+        return f"{p.scheme}://{p.netloc}{spider[1:]}"
+    return spider
 
-# 来自参考库 tvyuan/update.py: 1:1 复制 clean_api_url 剥离多余 ac=list 参数逻辑
-def clean_api_url(api):
-    if not api: return ""
-    api = str(api).strip()
-    api = re.sub(r'[\?&]ac=(list|detail|videolist|vod).*$', '', api, flags=re.I)
-    return api
+def resolve_url(base, path):
+    if path.startswith("http"): return path
+    if path.startswith("/"): return f"{urlparse(base).scheme}://{urlparse(base).netloc}{path}"
+    return urljoin(base, path)
 
-# 上游参考库数据源列表
-UPSTREAM_REPO_ENDPOINTS = [
-    "https://raw.githubusercontent.com/youhunwl/TVAPP/main/index.json",
-    "https://cdn.jsdelivr.net/gh/Lightconer/tvbox-ysc-config@main/output/feimao.json",
-    "https://cdn.jsdelivr.net/gh/Lightconer/tvbox-ysc-config@main/output/4k.json",
-    "https://cdn.jsdelivr.net/gh/Lightconer/tvbox-ysc-config@main/output/wangerxiao.json",
-    "https://cdn.jsdelivr.net/gh/Lightconer/tvbox-ysc-config@main/output/ouge.json",
-    "https://raw.githubusercontent.com/FongMi/CatVodSpider/main/json/config.json",
-    "https://raw.githubusercontent.com/gaotianliuyun/gao/master/js.json",
-    "https://raw.githubusercontent.com/liu673cn/box/main/m.json",
-    "https://raw.githubusercontent.com/xiaolong69/tv/main/1.json",
-    "https://raw.githubusercontent.com/xyq254245/xyqonlinerule/main/XYQTVBox.json",
-    "https://raw.githubusercontent.com/guot55/YGBH/main/vip2.json",
-    "https://dxawi.github.io/0/0.json",
-    "https://raw.githubusercontent.com/cluntop/tvbox/main/tvbox.json"
-]
+def extract_m3u8(t):
+    return re.findall(r'(https?://[^\s"\'<>#\$]+?\.m3u8)', t)
 
-def sync_upstream_sources():
-    print("[1/4] 直接同步参考库上游节点...", flush=True)
-    raw_sites, raw_lives, raw_parses, spider_jars = [], [], [], []
-    for url in UPSTREAM_REPO_ENDPOINTS:
-        content = fetch_text(url)
-        data = parse_json(content)
-        if not data: continue
+def get_segments(media, media_url):
+    urls = []
+    lines = media.strip().split("\n")
+    for i, line in enumerate(lines):
+        if line.startswith("#EXTINF") and i+1 < len(lines):
+            nxt = lines[i+1].strip()
+            if nxt and not nxt.startswith("#"):
+                urls.append(resolve_url(media_url, nxt))
+    return urls
 
-        if isinstance(data, list):
-            for item in data:
-                if isinstance(item, dict):
-                    api = item.get("api") or item.get("url")
-                    name = item.get("name", "")
-                    if api and not is_blacklisted(name) and not is_blacklisted(str(api)):
-                        raw_sites.append(item)
-        elif isinstance(data, dict):
-            spider = data.get("spider", "")
-            if spider:
-                if spider.startswith("./") or spider.startswith("../"):
-                    spider = urllib.parse.urljoin(url, spider)
-                spider_jars.append(spider)
+def build_url(base, params):
+    return base.rstrip("/") + ("&" if "?" in base else "?") + params
 
-            for s in (data.get("sites") or []):
-                if s.get("api") and not is_blacklisted(s.get("name")) and not is_blacklisted(str(s.get("api"))):
-                    if spider and "jar" not in s and "spider" not in s:
-                        s["jar"] = spider
-                    raw_sites.append(s)
-            raw_lives.extend(data.get("lives") or [])
-            raw_parses.extend(data.get("parses") or [])
-    return raw_sites, raw_lives, raw_parses, spider_jars
+def test_play_speed(api, stype, use_proxy=False):
+    """1:1 复制 tvyuan: 真实播放测速，尝试多个视频+分片"""
+    base = re.sub(r'[?&]ac=list.*', '', api.rstrip("/"))
+    body = curl(build_url(base, "ac=list"), 15, via_proxy=use_proxy)
+    if not body or len(body) < 50: return 0, 0, "列表失败"
 
-def check_site_alive(site):
-    """来自参考库 my-tvbox & tvyuan: 测速存活校验"""
-    api = clean_api_url(site.get("api", ""))
-    if not is_remote_site(site):
-        return None
+    vids = []
+    if stype == 0:
+        vids = re.findall(r'<id>(\d+)</id>', body)[:3]
+    else:
+        try:
+            j = json.loads(body, strict=False)
+            vids = [str(v["vod_id"]) for v in (j.get("list") or [])[:3]]
+        except Exception:
+            return 0, 0, "解析失败"
+    if not vids: return 0, 0, "无ID"
 
-    test_url = api.rstrip("/") + ("&ac=list" if "?" in api else "?ac=list")
-    try:
-        req = urllib.request.Request(test_url, headers=HEADERS)
-        t0 = time.time()
-        with urllib.request.urlopen(req, timeout=5, context=SSL_CTX) as resp:
-            if resp.status == 200:
-                site["_cost"] = int((time.time() - t0) * 1000)
-                site["_clean_api"] = api
-                return site
-    except Exception:
-        pass
-    return None
+    for vid in vids:
+        detail = curl(build_url(base, f"ac=detail&ids={vid}"), 15, via_proxy=use_proxy)
+        if not detail: continue
+        m3u8s = []
+        if stype == 0:
+            m3u8s = extract_m3u8(detail)
+        else:
+            try:
+                dj = json.loads(detail, strict=False)
+                for v in (dj.get("list") or []):
+                    m3u8s.extend(extract_m3u8(v.get("vod_play_url", "")))
+            except Exception:
+                continue
+        if not m3u8s: continue
+
+        for play in m3u8s[:2]:
+            t0 = time.time()
+            master = curl(play, 15, via_proxy=use_proxy)
+            ttfb = int((time.time() - t0) * 1000)
+            if not master: continue
+            media_url = None
+            if "#EXT-X-STREAM-INF" in master:
+                for i, line in enumerate(master.strip().split("\n")):
+                    if "STREAM-INF" in line:
+                        sub = master.strip().split("\n")[i+1].strip() if i+1 < len(master.strip().split("\n")) else ""
+                        if sub and not sub.startswith("#"):
+                            media_url = resolve_url(play, sub); break
+            elif "#EXTINF" in master: media_url = play
+            if not media_url: continue
+            t1 = time.time()
+            media = curl(media_url, 15, via_proxy=use_proxy)
+            mms = int((time.time() - t1) * 1000)
+            if "#EXTINF" not in media: continue
+            segs = get_segments(media, media_url)
+            if not segs: continue
+
+            tb, tt, ok = 0, 0, 0
+            for s in segs[:8]:
+                if ok >= 3: break
+                seg_url = f"{CF_PROXY}?u={urllib.parse.quote(s, safe='')}" if (use_proxy and CF_PROXY) else s
+                r = subprocess.run(["curl", "-s", "-o", "/dev/null",
+                                   "-w", "%{http_code},%{size_download},%{time_total}",
+                                   "--connect-timeout", "8", "--max-time", "20", seg_url],
+                                  capture_output=True, timeout=25)
+                parts = r.stdout.decode().strip().split(",")
+                code = parts[0] if parts else "000"
+                sz = int(float(parts[1])) if len(parts) > 1 and parts[1] else 0
+                dl = float(parts[2]) if len(parts) > 2 and parts[2] else 99
+                if code.startswith("2") and sz > 1000: tb += sz; tt += dl; ok += 1
+            if ok >= 2:
+                speed = int((tb / 1024) / tt) if tt > 0 else 0
+                return ttfb + mms, speed, "OK"
+    return 0, 0, "全部失败"
 
 def export_router_rules(sites):
-    print("[4/4] 导出 PassWall / Clash 规则...", flush=True)
+    print("  [策略导出] PassWall / Clash 直连与代理策略...")
     domains_direct = set()
     domains_proxy = set()
 
@@ -198,148 +205,192 @@ def export_router_rules(sites):
         f.write("# TVBox 视频源 Clash 强制代理规则集\npayload:\n")
         for d in sorted_proxy: f.write(f"  - DOMAIN-SUFFIX,{d}\n")
 
-def build_multi_store():
-    """1:1 复制参考库 Lightconer 与 tvbox-source 多仓格式"""
-    multi_sites = [
-        {"name": "🚀 [主推] 全网纯净采集大一统", "url": "https://raw.githubusercontent.com/haygcao/tvbox-master-aggregator/main/tvbox.json", "type": 0},
-        {"name": "🔥 [全量] 包含全网 JS/JAR 高阶单仓", "url": "https://raw.githubusercontent.com/haygcao/tvbox-master-aggregator/main/tvbox_full.json", "type": 0},
-        {"name": "💎 [旗舰] 饭太硬精选仓", "url": "https://raw.githubusercontent.com/FongMi/CatVodSpider/main/json/config.json", "type": 0},
-        {"name": "💎 [旗舰] 肥猫精选仓", "url": "https://cdn.jsdelivr.net/gh/Lightconer/tvbox-ysc-config@main/output/feimao.json", "type": 0},
-        {"name": "💎 [旗舰] 欧歌专仓", "url": "https://cdn.jsdelivr.net/gh/Lightconer/tvbox-ysc-config@main/output/ouge.json", "type": 0},
-        {"name": "🔥 [高阶] FongMi 官方仓", "url": "https://raw.githubusercontent.com/FongMi/CatVodSpider/main/json/config.json", "type": 0},
-        {"name": "🔥 [聚合] 王二小专仓", "url": "https://cdn.jsdelivr.net/gh/Lightconer/tvbox-ysc-config@main/output/wangerxiao.json", "type": 0},
-        {"name": "🔥 [聚合] 高天流云配置", "url": "https://raw.githubusercontent.com/gaotianliuyun/gao/master/js.json", "type": 0},
-        {"name": "✨ [4K] 蓝光专线仓", "url": "https://cdn.jsdelivr.net/gh/Lightconer/tvbox-ysc-config@main/output/4k.json", "type": 0}
+def main():
+    ts = time.strftime('%Y-%m-%d %H:%M:%S')
+    print(f"[{ts}] 开始 TVBox 全量资源整合与清洗...")
+
+    # 1:1 复制 tvyuan: 1. 获取源列表
+    html = curl("https://tvbox.clbug.com/user.php", 20)
+    src_urls = re.findall(r'data-url="([^"]+)"', html)
+    src_names = re.findall(r'<td class="td-name">([^<]+)</td>', html)
+    sources = [(n.strip(), u.strip().replace("&amp;", "&"))
+               for n, u in zip(src_names, src_urls)
+               if u.strip() and not u.strip().startswith("#")]
+
+    # 追加 GitHub 上游全量资源库
+    GITHUB_EXTRA_SOURCES = [
+        ("youhun", "https://raw.githubusercontent.com/youhunwl/TVAPP/main/index.json"),
+        ("feimao", "https://cdn.jsdelivr.net/gh/Lightconer/tvbox-ysc-config@main/output/feimao.json"),
+        ("gaotianliuyun", "https://raw.githubusercontent.com/gaotianliuyun/gao/master/js.json"),
+        ("liu673cn", "https://raw.githubusercontent.com/liu673cn/box/main/m.json"),
+        ("xyq", "https://raw.githubusercontent.com/xyq254245/xyqonlinerule/main/XYQTVBox.json")
     ]
-    multi_config = {
-        "urls": [{"name": m["name"], "url": m["url"]} for m in multi_sites]
+    for gname, gurl in GITHUB_EXTRA_SOURCES:
+        sources.append((gname, gurl))
+
+    print(f"  源列表总数: {len(sources)}")
+
+    # 1:1 复制 tvyuan: 2. 测延迟 + 抓取
+    available = []
+    for name, url in sources:
+        try:
+            t0 = time.time()
+            r = subprocess.run(["curl", "-s", "-o", "/dev/null", "-w", "%{http_code}",
+                               "--connect-timeout", "5", "--max-time", "10",
+                               "-L", "-A", "Mozilla/5.0", url],
+                              capture_output=True, timeout=15)
+            code = r.stdout.decode().strip()
+            lat = int((time.time() - t0) * 1000) if code.startswith(("2", "3")) else 99999
+        except Exception:
+            lat = 99999
+        if lat < 99999: available.append((name, url, lat))
+        sys.stdout.write(f"\r  测速中: {len(available)}/{len(sources)}"); sys.stdout.flush()
+    print()
+    available.sort(key=lambda x: x[2])
+    print(f"  可用全量配置源: {len(available)}")
+
+    # 1:1 复制 tvyuan: 3. 抓取并合并所有源
+    all_sites, all_lives, all_parses = [], [], []
+    site_keys, live_keys, parse_keys = set(), set(), set()
+    spider_jars = {}
+    collect_sources = {}
+
+    for name, url, lat in available:
+        sys.stdout.write(f"\r  合并中: {name} ({lat}ms)"); sys.stdout.flush()
+        data = parse_json(curl(url, 15))
+        if not data: continue
+
+        spider = data.get("spider", "")
+        if spider:
+            abs_spider = resolve_spider(spider, url)
+            spider_jars[abs_spider] = spider_jars.get(abs_spider, 0) + 1
+
+        for s in (data.get("sites") or []):
+            key = s.get("key", "")
+            raw_name = s.get("name", key)
+            api = s.get("api", "")
+            if not key or key in site_keys or is_blacklisted(raw_name) or is_blacklisted(str(api)):
+                continue
+
+            clean_n = re.sub(r'^\[.*?\]\s*', '', raw_name).strip()
+            if is_garbled_name(clean_n): continue
+
+            site_keys.add(key)
+            s["name"] = f"[{lat}ms|{name}] {clean_n}"
+            s["_lat"] = lat
+
+            # 绑定上游爬虫 Jar
+            if spider and "jar" not in s and "spider" not in s:
+                s["jar"] = resolve_spider(spider, url)
+
+            all_sites.append(s)
+
+            st = s.get("type", -1)
+            if st in (0, 1) and isinstance(api, str) and api.startswith("http") and api not in collect_sources:
+                collect_sources[api] = (name, st)
+
+        for l in (data.get("lives") or []):
+            u = l.get("url", "")
+            if u and u not in live_keys: live_keys.add(u); all_lives.append(l)
+        for p in (data.get("parses") or []):
+            u = p.get("url", "")
+            if u and u not in parse_keys: parse_keys.add(u); all_parses.append(p)
+    print()
+
+    # 1:1 复制 tvyuan: 4. 采集站播放测速（真实分片下载）
+    print(f"  播放测速: 测 {len(collect_sources)} 个 MacCMS 采集站...")
+    collect_results = []
+    for api, (src_name, stype) in collect_sources.items():
+        for attempt in range(3):
+            use_proxy = (attempt == 2 and CF_PROXY)
+            ttfb, speed, st = test_play_speed(api, stype, use_proxy=use_proxy)
+            if st == "OK":
+                collect_results.append((ttfb, speed, api, stype)); break
+            if attempt < 2: time.sleep(2)
+        sys.stdout.write(f"\r  {len(collect_results)} 可用/{len(collect_sources)} 测试"); sys.stdout.flush()
+    print()
+
+    # 排序：播放速度快->慢
+    collect_results.sort(key=lambda x: (-x[1], x[0]))
+
+    # 置顶索尼与 360 采集站
+    PINNED_APIS = ["suoniapi.com", "360zy.com"]
+    pinned = [[] for _ in PINNED_APIS]
+    rest = []
+    for item in collect_results:
+        api = item[2]
+        placed = False
+        for i, kw in enumerate(PINNED_APIS):
+            if kw in api:
+                pinned[i].append(item); placed = True; break
+        if not placed:
+            rest.append(item)
+    collect_results = [x for group in pinned for x in group] + rest
+
+    # 1:1 复制 tvyuan: 5. 生成 tvbox_full.json (全量版)
+    best_spider = max(spider_jars, key=spider_jars.get) if spider_jars else "https://raw.githubusercontent.com/FongMi/CatVodSpider/main/jar/custom_spider.jar"
+    full_json = {"spider": best_spider, "sites": all_sites, "lives": all_lives, "parses": all_parses}
+    with open(os.path.join(WORK_DIR, "tvbox_full.json"), "w", encoding="utf-8") as f:
+        json.dump(full_json, f, ensure_ascii=False, indent=2)
+    print(f"  全量版: {len(all_sites)} 站点")
+
+    # 1:1 复制 tvyuan: 6. 生成 tvbox_multi.json (多仓版)
+    multi_stores = [
+        {"sourceName": f"[{lat}ms] {name}", "sourceUrl": url} for name, url, lat in available
+    ]
+    multi_urls = [
+        {"name": f"[{lat}ms] {name}", "url": url} for name, url, lat in available
+    ]
+    multi = {
+        "urls": multi_urls,
+        "stores": multi_stores,
+        "storeHouse": multi_stores
     }
     with open(os.path.join(WORK_DIR, "tvbox_multi.json"), "w", encoding="utf-8") as f:
-        json.dump(multi_config, f, ensure_ascii=False, indent=2)
+        json.dump(multi, f, ensure_ascii=False, indent=2)
+    print(f"  多仓版: {len(available)} 个仓库")
 
-def main():
-    print("==================================================", flush=True)
-    print(" TVBox 资源整合引擎 (1:1 直接套用参考库成熟代码模式)", flush=True)
-    print("==================================================\n", flush=True)
+    # 1:1 复制 tvyuan: 7. 生成 tvbox.json (简洁主单仓，固定最快 15 个纯采集站)
+    SIMPLE_LIMIT = 15
+    collect_sites = []
+    for ttfb, speed, api, stype in collect_results[:SIMPLE_LIMIT]:
+        clean_name = api.split("/")[2]
+        for s in all_sites:
+            clean_api = re.sub(r'[?&]ac=list.*', '', s.get("api", "").rstrip("/"))
+            if clean_api == api or s.get("api") == api:
+                clean_name = re.sub(r'^\[.*?\]\s*', '', s.get("name", clean_name))
+                break
 
-    raw_sites, upstream_lives, upstream_parses, spider_jars = sync_upstream_sources()
+        clean_api_base = re.sub(r'[\?&]ac=(list|detail|videolist|vod).*$', '', api, flags=re.I)
+        stable = "稳" if speed > 500 else "中" if speed > 100 else "慢"
 
-    # 去重
-    unique_sites = {}
-    unique_names = set()
-    for s in raw_sites:
-        api = s.get("api", "")
-        raw_name = s.get("name", "")
-        if not api or is_blacklisted(raw_name) or is_blacklisted(str(api)):
-            continue
-        clean_name = re.sub(r'^\[.*?\]\s*', '', raw_name).strip()
-        if not clean_name: continue
+        # 确定 type 0 (XML) vs 1 (JSON)
+        final_type = 0 if ("xml" in clean_api_base.lower() or "at/xml" in clean_api_base.lower()) else stype
 
-        api_key = str(api).lower().strip()
-        if api_key not in unique_sites and clean_name not in unique_names:
-            s["_clean_name"] = clean_name
-            unique_sites[api_key] = s
-            unique_names.add(clean_name)
+        collect_sites.append({
+            "key": clean_name,
+            "name": f"[{speed}KB/s|{ttfb}ms|{stable}] {clean_name}",
+            "type": final_type,
+            "api": clean_api_base,
+            "searchable": 1,
+            "quickSearch": 1,
+            "filterable": 0
+        })
 
-    candidates = list(unique_sites.values())
-    print(f"[2/4] 去重后待测站点总数: {len(candidates)} 个", flush=True)
-
-    # 测速存活筛选
-    alive_sites = []
-    with ThreadPoolExecutor(max_workers=20) as executor:
-        for res in as_completed([executor.submit(check_site_alive, site) for site in candidates]):
-            if res.result(): alive_sites.append(res.result())
-
-    alive_sites.sort(key=lambda x: x.get("_cost", 9999))
-    print(f"[3/4] 存活 MacCMS 纯采集站点: {len(alive_sites)} 个\n", flush=True)
-
-    VALID_SITE_PROPS = [
-        "key", "name", "type", "api", "searchable", "quickSearch", "filterable",
-        "ext", "jar", "playerType", "click", "style", "playUrl", "timeout",
-        "categories", "classes", "ua", "epg", "logo", "header", "indexs", "changeable",
-        "recordable", "vipUrl", "flag", "parse", "jx", "url"
-    ]
-
-    # 1. 生成 tvbox.json (1:1 复制 tvyuan: 纯 MacCMS 采集站，spider设为"")
-    clean_sites = []
-    for s in alive_sites:
-        clean_name = s.pop("_clean_name", s.get("name", ""))
-        cost = s.get("_cost", 999)
-        c_site = {}
-        for prop in VALID_SITE_PROPS:
-            if prop in s:
-                c_site[prop] = s[prop]
-
-        c_site["key"] = clean_name
-        c_site["name"] = f"[{cost}ms|稳] {clean_name}"
-
-        raw_api = s.get("_clean_api", s.get("api", ""))
-        if "xml" in raw_api.lower() or "at/xml" in raw_api.lower():
-            c_site["type"] = 0
-        else:
-            c_site["type"] = s.get("type", 1)
-
-        c_site["api"] = raw_api
-        c_site["searchable"] = 1
-        c_site["quickSearch"] = 1
-        c_site["filterable"] = 0
-
-        # 完全不设置 categories，让 TVBox 客户端自动读取原站全量分类
-        if "categories" in c_site:
-            del c_site["categories"]
-
-        clean_sites.append(c_site)
-
-    seen_lives, unique_lives = set(), []
-    for l in [{"name": "IPTV国内直连", "type": 0, "url": "https://raw.githubusercontent.com/Guovin/iptv-api/gd/output/result.m3u"}] + upstream_lives:
-        url = l.get("url")
-        if url and url not in seen_lives:
-            seen_lives.add(url)
-            unique_lives.append(l)
-
-    seen_parses, unique_parses = set(), []
-    for p in [{"name": "解析1", "type": 0, "url": "https://api.json.pro/api/?url="}] + upstream_parses:
-        url = p.get("url")
-        if url and url not in seen_parses:
-            seen_parses.add(url)
-            unique_parses.append(p)
-
-    # 1:1 复制 tvyuan: spider 为空字符串，防止图片伪装包崩塌
-    master_config = {
-        "spider": "",
-        "wallpaper": "https://bing.img.run/1920x1080.php",
-        "sites": clean_sites,
-        "lives": unique_lives,
-        "parses": unique_parses,
-        "note": "本配置由 TVBox 资源整合引擎自动生成。"
-    }
-
+    collect_json = {"spider": "", "sites": collect_sites, "lives": all_lives[:10], "parses": all_parses[:10]}
     with open(os.path.join(WORK_DIR, "tvbox.json"), "w", encoding="utf-8") as f:
-        json.dump(master_config, f, ensure_ascii=False, indent=2)
-    print(f"[OK] 生成主单仓配置文件: tvbox.json ({len(clean_sites)} 个纯采集站)", flush=True)
+        json.dump(collect_json, f, ensure_ascii=False, indent=2)
 
-    # 2. 生成 tvbox_full.json (全量版，含全网站点与爬虫)
-    best_spider = spider_jars[0] if spider_jars else "https://raw.githubusercontent.com/FongMi/CatVodSpider/main/jar/custom_spider.jar"
-    full_config = {
-        "spider": best_spider,
-        "wallpaper": "https://bing.img.run/1920x1080.php",
-        "sites": raw_sites,
-        "lives": unique_lives,
-        "parses": unique_parses,
-        "note": "本配置包含全网所有的采集站与高阶爬虫站。"
-    }
-    with open(os.path.join(WORK_DIR, "tvbox_full.json"), "w", encoding="utf-8") as f:
-        json.dump(full_config, f, ensure_ascii=False, indent=2)
+    print(f"  主单仓: {len(collect_sites)} 个极速纯采集站 (spider 设为 '')")
 
-    build_multi_store()
-    export_router_rules(clean_sites)
-
+    # 8. 导出路由器规则与源列表
+    export_router_rules(collect_sites)
     with open(os.path.join(WORK_DIR, "sources.txt"), "w", encoding="utf-8") as f:
-        f.write(f"# TVBox 纯净全量资源汇总 ({time.strftime('%Y-%m-%d %H:%M:%S')})\n\n")
-        for s in clean_sites:
-            f.write(f"{s['name']}\n{s['api']}\n\n")
+        f.write(f"# {ts}\n\n")
+        for name, url, lat in available: f.write(f"[{lat}ms] {name}\n{url}\n\n")
 
-    print("\n[5/5] 完成！直接整合参考库方案落操完成。\n", flush=True)
+    print(f"\n[{time.strftime('%Y-%m-%d %H:%M:%S')}] 1:1 全量抄录与整合更新完成!")
+    return 0
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())
