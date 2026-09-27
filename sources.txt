@@ -1,4 +1,4 @@
-# TVBox 纯净全量资源汇总 (2026-09-27 16:54:25)
+# TVBox 纯净全量资源汇总 (2026-09-27 21:04:18)
 
 OK资源
 https://api.okzyw.net/api.php/provide/vod/?ac=list
@@ -796,7 +796,7 @@ https://raw.githubusercontent.com/xyq254245/xyqonlinerule/main/dr_py/libs/drpy2.
 https://api.yzzy-api.com/inc/api.php
 
 [123] 🧿我要┃吃瓜
-https://pan.szfx.top/down.php/9e279c961bceb59a7999404388ffa748.py
+https://rose.tvdog.top/51chigua.py
 
 [123] 🧿gay┃资源
 https://slapibf.com/api.php/provide/vod
