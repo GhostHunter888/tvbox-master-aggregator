@@ -1,13 +1,19 @@
 # TVBox 视频源 Clash 直连规则集
 payload:
+  - DOMAIN-SUFFIX,11bat.com
   - DOMAIN-SUFFIX,19q.cc
-  - DOMAIN-SUFFIX,caiji.dbzy5.com
+  - DOMAIN-SUFFIX,Naixxzy.com
+  - DOMAIN-SUFFIX,apidanaizi.com
+  - DOMAIN-SUFFIX,apilsbzy1.com
   - DOMAIN-SUFFIX,caiji.maotaizy.cc
+  - DOMAIN-SUFFIX,ckzy.me
+  - DOMAIN-SUFFIX,fhapi9.com
   - DOMAIN-SUFFIX,gdlsp.com
   - DOMAIN-SUFFIX,huyaapi.com
-  - DOMAIN-SUFFIX,jipinvip.com
-  - DOMAIN-SUFFIX,jyzyapi.com
-  - DOMAIN-SUFFIX,moduzy.com
+  - DOMAIN-SUFFIX,jingpinx.com
+  - DOMAIN-SUFFIX,lbapi9.com
   - DOMAIN-SUFFIX,naixxzy.com
+  - DOMAIN-SUFFIX,shayuapi.com
+  - DOMAIN-SUFFIX,slapibf.com
   - DOMAIN-SUFFIX,wsyzy.net
   - DOMAIN-SUFFIX,xrbsp.com
