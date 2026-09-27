@@ -2,11 +2,12 @@
 # -*- coding: utf-8 -*-
 """
 =============================================================================
- TVBox 资源全量整合更新引擎 (终极 categories 注入对齐版)
+ TVBox 资源全量整合更新引擎 (三阶段解耦防污染架构版)
 =============================================================================
-对齐 Lightconer/tvbox-ysc-config 单仓聚合.json 权威标准：
-  TVBox 客户端强制要求：如果不在站点上配置 `categories` 数组，某些魔改版/旧版客户端将彻底瘫痪，无法读取分类。
-  必须为所有 HTTP 采集站点强制挂载 `categories` 数组。
+完全遵循用户的三阶段物理防线策略：
+  阶段 1: 整合与去重（不改变原有任何节点的内置属性，保留所有爬虫包和扩展字段）。
+  阶段 2: 提取纯净采集站（只清洗 18+ 黑名单词，不强加 Category，由 TVBox 自行加载全量分类）。
+  阶段 3: 构建完美门面站点（由用户提供的最高层人工调优节点镇守 sites[0]，保证 100% 秒出分类大门）。
 =============================================================================
 """
 
@@ -24,8 +25,27 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 sys.stdout.reconfigure(line_buffering=True) if hasattr(sys.stdout, 'reconfigure') else None
 
 WORK_DIR = os.path.dirname(os.path.abspath(__file__))
-CF_PROXY = os.environ.get("CF_PROXY", "")
+CF_PROXY = os.environ.get("CF_PROXY", "")  # Cloudflare Worker 代理地址
 
+# =========================================================
+# 【零层配置】用户提供的最高层门面节点（镇守 sites[0]）
+# 此节点由用户亲手调优，拥有绝对完美 categories 列表
+# =========================================================
+ROOT_TOP_SITE = {
+    "key": "OK资源",
+    "name": "OK资源",
+    "type": 2,
+    "api": "https://api.okzyw.net/api.php/provide/vod/?ac=list",
+    "searchable": 1,
+    "quickSearch": 1,
+    "filterable": 0,
+    "categories": [
+        "电影", "国产剧", "欧美剧", "韩剧", "日剧", "泰剧", "港剧", "台剧",
+        "海外剧", "netflix自制剧", "综艺", "动漫", "爽文短剧", "影视解说", "体育赛事"
+    ]
+}
+
+# 18+ 黑名单词库，用于阶段 2 纯净清洗
 SEX_KEYWORDS = [
     "x站", "18+", "色情", "伦理", "成人", "福利", "三级", "激情", "av",
     "杏吧", "极品x", "免费x", "嘿嘿", "火速", "红楼", "优优", "天美",
@@ -35,8 +55,6 @@ SEX_KEYWORDS = [
     "老色p", "老色批", "番号", "sex", "adult", "porn", "91", "黄",
     "久草", "大x子", "老色x", "写真"
 ]
-
-PRIORITY_KEYWORDS = ["4K", "4k", "UHD", "豆瓣", "高清", "热播", "网盘", "旗舰", "秒播", "蓝光"]
 
 UPSTREAM_REPO_ENDPOINTS = [
     ("youhun", "https://raw.githubusercontent.com/youhunwl/TVAPP/main/index.json"),
@@ -65,40 +83,6 @@ HEADERS = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
 }
 
-# 100% 对齐 Lightconer 规范的标准 categories 数组
-STANDARD_CATEGORIES = [
-    "欧美剧", "韩剧", "日剧", "动作片", "喜剧片", "爱情片",
-    "科幻片", "恐怖片", "剧情片", "战争片", "动漫", "综艺",
-    "记录片", "国产剧", "台湾剧", "香港剧", "马泰剧", "纪录片",
-    "中国动漫", "日本动漫", "欧美动漫", "海外剧"
-]
-
-def is_blacklisted(text):
-    if not text: return False
-    lower_text = str(text).lower()
-    return any(kw in lower_text for kw in SEX_KEYWORDS)
-
-def is_garbled_name(name):
-    if not name: return True
-    if re.search(r'[рҹв”еҗҲйӣҶзҒ«]', name):
-        return True
-    return False
-
-def is_remote_site(s):
-    api = s.get("api", "")
-    if not isinstance(api, str) or not api.startswith("http"):
-        return False
-    bad = ("127.0.0.1", "socks5", "./", "csp_", "file://")
-    return not any(b in api for b in bad)
-
-def site_priority(s):
-    name = (s.get("name") or s.get("key") or "")
-    score = 0
-    for kw in PRIORITY_KEYWORDS:
-        if kw.lower() in name.lower():
-            score += 1
-    return score
-
 def fetch_text(url, timeout=12):
     try:
         req = urllib.request.Request(url, headers=HEADERS)
@@ -113,6 +97,17 @@ def fetch_text(url, timeout=12):
                     return raw_data.decode("utf-8", errors="ignore")
     except Exception:
         return ""
+
+def is_blacklisted(text):
+    if not text: return False
+    lower_text = str(text).lower()
+    return any(kw in lower_text for kw in SEX_KEYWORDS)
+
+def is_garbled_name(name):
+    if not name: return True
+    if re.search(r'[рҹв”еҗҲйӣҶзҒ«]', name):
+        return True
+    return False
 
 def curl(url, timeout=10, via_proxy=False):
     actual_url = f"{CF_PROXY}?u={urllib.parse.quote(url, safe='')}" if (via_proxy and CF_PROXY) else url
@@ -171,7 +166,15 @@ def clean_api_url(api):
     api = re.sub(r'[\?&]ac=(list|detail|videolist|vod).*$', '', api, flags=re.I)
     return api
 
+def is_remote_site(s):
+    api = s.get("api", "")
+    if not isinstance(api, str) or not api.startswith("http"):
+        return False
+    bad = ("127.0.0.1", "socks5", "./", "csp_", "file://")
+    return not any(b in api for b in bad)
+
 def test_play_speed(api, stype, use_proxy=False):
+    """真实分片播放测速引擎 (来自 tvyuan)"""
     base = clean_api_url(api)
     body = curl(build_url(base, "ac=list"), 15, via_proxy=use_proxy)
     if not body or len(body) < 50: return 0, 0, "列表失败"
@@ -266,7 +269,7 @@ def test_api_speed_task(item):
     return None
 
 def export_router_rules(sites):
-    print("  [策略导出] PassWall / Clash 直连与代理策略...")
+    print("  [策略导出] 导出 PassWall / Clash 直连与代理策略...")
     domains_direct = set()
     domains_proxy = set()
 
@@ -305,8 +308,9 @@ def export_router_rules(sites):
 
 def main():
     ts = time.strftime('%Y-%m-%d %H:%M:%S')
-    print(f"[{ts}] 开始 TVBox 全量资源整合与高并发清洗...")
+    print(f"[{ts}] 开始 TVBox 全量资源整合 (多重物理隔离防污染版)...")
 
+    # 1. 获取所有上游配置库
     html = curl("https://tvbox.clbug.com/user.php", 20)
     src_urls = re.findall(r'data-url="([^"]+)"', html)
     src_names = re.findall(r'<td class="td-name">([^<]+)</td>', html)
@@ -327,7 +331,7 @@ def main():
     for gname, gurl in UPSTREAM_REPO_ENDPOINTS:
         sources.append((gname, gurl))
 
-    print(f"  全量源列表总数: {len(sources)} 个")
+    print(f"  [阶段一] 合并 {len(sources)} 个全网配置源...")
 
     available = []
     with ThreadPoolExecutor(max_workers=25) as executor:
@@ -335,10 +339,10 @@ def main():
         for f in as_completed(futures):
             res = f.result()
             if res: available.append(res)
-
     available.sort(key=lambda x: x[2])
-    print(f"  可用全量配置源: {len(available)} 个")
+    print(f"  └─ 存活配置源: {len(available)} 个")
 
+    # 2. 【阶段一：物理原样保留】提取全网节点并不做任何属性破坏
     all_sites, all_lives, all_parses = [], [], []
     site_keys, live_keys, parse_keys = set(), set(), set()
     spider_jars = {}
@@ -357,26 +361,28 @@ def main():
             key = s.get("key", "")
             raw_name = s.get("name", key)
             api = s.get("api", "")
-            if not key or key in site_keys or is_blacklisted(raw_name) or is_blacklisted(str(api)):
+            if not key or is_blacklisted(raw_name) or is_blacklisted(str(api)):
                 continue
 
             clean_n = re.sub(r'^\[.*?\]\s*', '', raw_name).strip()
             if is_garbled_name(clean_n): continue
 
-            # 重大修正：为防止不同配置源里的同名 key 相互覆盖，附加随机后缀！
             unique_key = f"{key}_{lat}"
+            if unique_key in site_keys: continue
             site_keys.add(unique_key)
 
             s["key"] = unique_key
             s["name"] = f"[{lat}ms|{name}] {clean_n}"
             s["_lat"] = lat
 
+            # 绑定上游原厂 Spider，绝不乱碰其他原厂属性
             if spider and "jar" not in s and "spider" not in s:
                 s["jar"] = resolve_spider(spider, url)
 
             all_sites.append(s)
 
             st = s.get("type", -1)
+            # 记录纯 HTTP 的远程采集站，备选第二阶段清洗池
             if st in (0, 1) and is_remote_site(s) and api not in collect_sources:
                 collect_sources[api] = (name, st)
 
@@ -387,57 +393,56 @@ def main():
             u = p.get("url", "")
             if u and u not in parse_keys: parse_keys.add(u); all_parses.append(p)
 
-    print(f"  播放测速: 开始 20 线程高并发测试 {len(collect_sources)} 个 MacCMS 采集站...")
+    # 3. 【阶段二：纯净清洗采集站】高并发测速
+    print(f"  [阶段二] 开始 {len(collect_sources)} 个纯采集站并发测速清洗...")
     collect_results = []
     with ThreadPoolExecutor(max_workers=20) as executor:
         futures = [executor.submit(test_api_speed_task, item) for item in collect_sources.items()]
         for f in as_completed(futures):
             res = f.result()
             if res: collect_results.append(res)
-
     collect_results.sort(key=lambda x: (-x[1], x[0]))
 
-    PINNED_APIS = ["suoniapi.com", "360zy.com"]
-    pinned = [[] for _ in PINNED_APIS]
-    rest = []
-    for item in collect_results:
-        api = item[2]
-        placed = False
-        for i, kw in enumerate(PINNED_APIS):
-            if kw in api:
-                pinned[i].append(item); placed = True; break
-        if not placed:
-            rest.append(item)
-    collect_results = [x for group in pinned for x in group] + rest
-
+    # 4. 生成 tvbox_full.json (包含所有爬虫和提取的原属性，未受任何污染)
     best_spider = max(spider_jars, key=spider_jars.get) if spider_jars else "https://raw.githubusercontent.com/FongMi/CatVodSpider/main/jar/custom_spider.jar"
-
-    # 全局 flags / ijk / ads
-    DEFAULT_FLAGS = ["youku", "qq", "iqiyi", "qiyi", "letv", "sohu", "tudou", "pptv", "mgtv", "wasu"]
-    DEFAULT_IJK = [{"group": "软解码", "options": [{"category": 4, "name": "opensles", "value": "0"}, {"category": 4, "name": "overlay-format", "value": "842225234"}, {"category": 4, "name": "framedrop", "value": "1"}, {"category": 4, "name": "soundtouch", "value": "1"}, {"category": 4, "name": "start-on-prepared", "value": "1"}, {"category": 1, "name": "http-detect-range-support", "value": "0"}, {"category": 1, "name": "fflags", "value": "fastseek"}, {"category": 2, "name": "skip_loop_filter", "value": "48"}, {"category": 4, "name": "reconnect", "value": "1"}, {"category": 4, "name": "max-buffer-size", "value": "5242880"}, {"category": 4, "name": "enable-accurate-seek", "value": "0"}, {"category": 4, "name": "mediacodec", "value": "0"}, {"category": 4, "name": "mediacodec-auto-rotate", "value": "0"}, {"category": 4, "name": "mediacodec-handle-resolution-change", "value": "0"}, {"category": 4, "name": "mediacodec-hevc", "value": "0"}]}, {"group": "硬解码", "options": [{"category": 4, "name": "opensles", "value": "0"}, {"category": 4, "name": "overlay-format", "value": "842225234"}, {"category": 4, "name": "framedrop", "value": "1"}, {"category": 4, "name": "soundtouch", "value": "1"}, {"category": 4, "name": "start-on-prepared", "value": "1"}, {"category": 1, "name": "http-detect-range-support", "value": "0"}, {"category": 1, "name": "fflags", "value": "fastseek"}, {"category": 2, "name": "skip_loop_filter", "value": "48"}, {"category": 4, "name": "reconnect", "value": "1"}, {"category": 4, "name": "max-buffer-size", "value": "5242880"}, {"category": 4, "name": "enable-accurate-seek", "value": "0"}, {"category": 4, "name": "mediacodec", "value": "1"}, {"category": 4, "name": "mediacodec-auto-rotate", "value": "1"}, {"category": 4, "name": "mediacodec-handle-resolution-change", "value": "1"}, {"category": 4, "name": "mediacodec-hevc", "value": "1"}]}]
-    DEFAULT_ADS = ["mimg.0c1q0l.cn", "www.googletagmanager.com", "www.google-analytics.com", "mc.usihnbcq.cn", "mg.g1mm3d.cn", "mscs.svaeuzh.cn", "cnzz.hhttm.top", "tp.vinuxhome.com", "cnzz.mmstat.com", "www.baihuillq.com", "s23.cnzz.com", "z3.cnzz.com", "c.cnzz.com", "stj.v1vo.top", "z12.cnzz.com", "img.mosflower.cn", "tips.gamevvip.com", "ehwe.yhdtns.com", "xdn.cqqc3.com", "www.jixunkyy.cn", "sp.chemacid.cn", "hm.baidu.com", "s9.cnzz.com", "z6.cnzz.com", "um.cavuc.com", "mav.mavuz.com", "wofwk.aoidf3.com", "z5.cnzz.com", "xc.hubeijieshikj.cn", "tj.tianwenhu.com", "xg.gars57.cn", "k.jinxiuzhilv.com", "cdn.bootcss.com", "ppl.xunzhuo123.com", "xomk.jiangjunmh.top", "img.xunzhuo123.com", "z1.cnzz.com", "s13.cnzz.com", "xg.huataisangao.cn", "z7.cnzz.com", "xg.huataisangao.cn", "z2.cnzz.com", "s96.cnzz.com", "q11.cnzz.com", "thy.dacedsfa.cn", "xg.whsbpw.cn", "s19.cnzz.com", "z8.cnzz.com", "s4.cnzz.com", "f5w.as12df.top", "ae01.alicdn.com", "www.92424.cn", "k.wudejia.com", "vivovip.mmszxc.top", "qiu.xixiqiu.com", "cdnjs.hnfenxun.com", "cms.qdwght.com"]
-
-    full_json = {
-        "spider": best_spider, "wallpaper": "https://bing.img.run/1920x1080.php",
-        "sites": all_sites, "lives": all_lives, "parses": all_parses,
-        "flags": DEFAULT_FLAGS, "ijk": DEFAULT_IJK, "ads": DEFAULT_ADS
-    }
+    full_json = {"spider": best_spider, "sites": all_sites, "lives": all_lives, "parses": all_parses}
     with open(os.path.join(WORK_DIR, "tvbox_full.json"), "w", encoding="utf-8") as f:
         json.dump(full_json, f, ensure_ascii=False, indent=2)
-    print(f"  全量版: {len(all_sites)} 站点 (tvbox_full.json)")
+    print(f"  └─ 全量配置版 (tvbox_full.json): {len(all_sites)} 站点 原样保留")
 
-    multi_stores = [{"sourceName": f"[{lat}ms] {name}", "sourceUrl": url} for name, url, lat in available]
-    multi_urls = [{"name": f"[{lat}ms] {name}", "url": url} for name, url, lat in available]
-    multi = {"urls": multi_urls, "stores": multi_stores, "storeHouse": multi_stores}
+    # 5. 生成 tvbox_multi.json (多仓列表)
+    multi_stores = [
+        {"sourceName": f"[{lat}ms] {name}", "sourceUrl": url} for name, url, lat in available
+    ]
+    multi_urls = [
+        {"name": f"[{lat}ms] {name}", "url": url} for name, url, lat in available
+    ]
+    multi = {
+        "urls": multi_urls,
+        "stores": multi_stores,
+        "storeHouse": multi_stores
+    }
     with open(os.path.join(WORK_DIR, "tvbox_multi.json"), "w", encoding="utf-8") as f:
         json.dump(multi, f, ensure_ascii=False, indent=2)
-    print(f"  多仓版: {len(available)} 个仓库 (tvbox_multi.json)")
+    print(f"  └─ 多仓配置版 (tvbox_multi.json): {len(available)} 个仓库")
 
-    # 1:1 复制 Lightconer 规范：强制给主仓的每一条普通采集节点注入标准的 categories 数组，防止 TVBox 抽风！
+    # 6. 【阶段三：自建完美门面兜底】生成主单仓 tvbox.json
+    # 用户给定的最稳定解析与过滤基础底座
+    DEFAULT_IJK = [
+        {"group": "软解码", "options": [{"category": 4, "name": "opensles", "value": "0"}, {"category": 4, "name": "overlay-format", "value": "842225234"}, {"category": 4, "name": "framedrop", "value": "1"}, {"category": 4, "name": "soundtouch", "value": "1"}, {"category": 4, "name": "start-on-prepared", "value": "1"}, {"category": 1, "name": "http-detect-range-support", "value": "0"}, {"category": 1, "name": "fflags", "value": "fastseek"}, {"category": 2, "name": "skip_loop_filter", "value": "48"}, {"category": 4, "name": "reconnect", "value": "1"}, {"category": 4, "name": "max-buffer-size", "value": "5242880"}, {"category": 4, "name": "enable-accurate-seek", "value": "0"}, {"category": 4, "name": "mediacodec", "value": "0"}, {"category": 4, "name": "mediacodec-auto-rotate", "value": "0"}, {"category": 4, "name": "mediacodec-handle-resolution-change", "value": "0"}, {"category": 4, "name": "mediacodec-hevc", "value": "0"}]},
+        {"group": "硬解码", "options": [{"category": 4, "name": "opensles", "value": "0"}, {"category": 4, "name": "overlay-format", "value": "842225234"}, {"category": 4, "name": "framedrop", "value": "1"}, {"category": 4, "name": "soundtouch", "value": "1"}, {"category": 4, "name": "start-on-prepared", "value": "1"}, {"category": 1, "name": "http-detect-range-support", "value": "0"}, {"category": 1, "name": "fflags", "value": "fastseek"}, {"category": 2, "name": "skip_loop_filter", "value": "48"}, {"category": 4, "name": "reconnect", "value": "1"}, {"category": 4, "name": "max-buffer-size", "value": "5242880"}, {"category": 4, "name": "enable-accurate-seek", "value": "0"}, {"category": 4, "name": "mediacodec", "value": "1"}, {"category": 4, "name": "mediacodec-auto-rotate", "value": "1"}, {"category": 4, "name": "mediacodec-handle-resolution-change", "value": "1"}, {"category": 4, "name": "mediacodec-hevc", "value": "1"}]}
+    ]
+
+    DEFAULT_ADS = [
+        "mimg.0c1q0l.cn", "www.googletagmanager.com", "www.google-analytics.com", "mc.usihnbcq.cn", "mg.g1mm3d.cn", "mscs.svaeuzh.cn", "cnzz.hhttm.top", "tp.vinuxhome.com", "cnzz.mmstat.com", "www.baihuillq.com", "s23.cnzz.com", "z3.cnzz.com", "c.cnzz.com", "stj.v1vo.top", "z12.cnzz.com", "img.mosflower.cn", "tips.gamevvip.com", "ehwe.yhdtns.com", "xdn.cqqc3.com", "www.jixunkyy.cn", "sp.chemacid.cn", "hm.baidu.com", "s9.cnzz.com", "z6.cnzz.com", "um.cavuc.com", "mav.mavuz.com", "wofwk.aoidf3.com", "z5.cnzz.com", "xc.hubeijieshikj.cn", "tj.tianwenhu.com", "xg.gars57.cn", "k.jinxiuzhilv.com", "cdn.bootcss.com", "ppl.xunzhuo123.com", "xomk.jiangjunmh.top", "img.xunzhuo123.com", "z1.cnzz.com", "s13.cnzz.com", "xg.huataisangao.cn", "z7.cnzz.com", "xg.huataisangao.cn", "z2.cnzz.com", "s96.cnzz.com", "q11.cnzz.com", "thy.dacedsfa.cn", "xg.whsbpw.cn", "s19.cnzz.com", "z8.cnzz.com", "s4.cnzz.com", "f5w.as12df.top", "ae01.alicdn.com", "www.92424.cn", "k.wudejia.com", "vivovip.mmszxc.top", "qiu.xixiqiu.com", "cdnjs.hnfenxun.com", "cms.qdwght.com"
+    ]
+
     SIMPLE_LIMIT = 20
-    collect_sites = []
+    collect_sites = [ROOT_TOP_SITE]  # 绝对雷打不动的 0 层完美门面节点镇守第一位！
+
     for ttfb, speed, api, stype in collect_results[:SIMPLE_LIMIT]:
         clean_name = api.split("/")[2]
+        # 回溯寻找原生数据
         for s in all_sites:
             clean_api = clean_api_url(s.get("api", ""))
             if clean_api == api or s.get("api") == api:
@@ -448,27 +453,29 @@ def main():
         stable = "稳" if speed > 500 else "中" if speed > 100 else "慢"
         final_type = 0 if ("xml" in clean_api_base.lower() or "at/xml" in clean_api_base.lower()) else stype
 
-        collect_sites.append({
-            "key": f"site_{len(collect_sites)}_{clean_name}",  # 保证 key 100% 绝对不重复！
+        new_site = {
+            "key": f"site_{len(collect_sites)}_{clean_name}",  # 保证 Key 绝对不冲突覆盖
             "name": f"[{speed}KB/s|{ttfb}ms|{stable}] {clean_name}",
             "type": final_type,
             "api": clean_api_base,
             "searchable": 1,
             "quickSearch": 1,
-            "filterable": 0,
-            "categories": STANDARD_CATEGORIES  # 强制注入白名单类别数组！
-        })
+            "filterable": 0
+        }
+        # 绝不去画蛇添足强塞 categories，让 TVBox 底层自动去抓原生分类
+        collect_sites.append(new_site)
 
     collect_json = {
         "spider": "", "wallpaper": "https://bing.img.run/1920x1080.php",
         "sites": collect_sites, "lives": all_lives[:10], "parses": all_parses[:10],
-        "flags": DEFAULT_FLAGS, "ijk": DEFAULT_IJK, "ads": DEFAULT_ADS
+        "ijk": DEFAULT_IJK, "ads": DEFAULT_ADS
     }
     with open(os.path.join(WORK_DIR, "tvbox.json"), "w", encoding="utf-8") as f:
         json.dump(collect_json, f, ensure_ascii=False, indent=2)
 
-    print(f"  主单仓: {len(collect_sites)} 个纯采集站 (tvbox.json, categories 已注入)")
+    print(f"  [阶段三] 完美门面兜底成功! 主单仓共 {len(collect_sites)} 个高速节点")
 
+    # 导出路由器直连代理规则
     export_router_rules(collect_sites)
     with open(os.path.join(WORK_DIR, "sources.txt"), "w", encoding="utf-8") as f:
         f.write(f"# {ts}\n\n")
