@@ -1,4 +1,4 @@
-# 2026-09-28 11:11:26
+# 2026-09-28 11:29:07
 
 💎可可影视┃4K高清
 https://gh-proxy.com/https://raw.githubusercontent.com/jie20091116/cat/a201c9690267c1ab4e3f65d5a1fca80662438fa0/TVBOX/PY/kkys.py
@@ -1800,6 +1800,42 @@ https://360zy.com/api.php/provide/vod?
 [my interface] 访问网站【api.starlink.fan】获取最新接口
 http://124.223.214.31:8/api/lib/drpy2.min.js
 
+[软件] 腾腾｜视频
+https://file.zhangyichi.dev/uploads/695cb6347d0b1_1767683636.js
+
+[软件] 酷酷｜视频
+https://file.zhangyichi.dev/uploads/695cb6347d0b1_1767683636.js
+
+[软件] 果果｜视频
+https://file.zhangyichi.dev/uploads/695cb6347d0b1_1767683636.js
+
+[软件] 奇奇｜视频
+https://file.zhangyichi.dev/uploads/695cb6347d0b1_1767683636.js
+
+[软件] 星芽｜短剧
+https://gh-proxy.com/https://git.yylx.win/raw.githubusercontent.com/PizazzGY/NewTVBox/main/movie/py/XYDJ.py
+
+[软件] 剧王｜短剧
+https://gh-proxy.com/https://git.yylx.win/raw.githubusercontent.com/PizazzGY/NewTVBox/main/movie/py/JWDJ.py
+
+[软件] 采集｜合集
+https://file.zhangyichi.dev/uploads/695cb6347d0b1_1767683636.js
+
+[软件] A1｜动漫
+https://file.zhangyichi.dev/uploads/695cb6347d0b1_1767683636.js
+
+[软件] NT｜动漫
+https://file.zhangyichi.dev/uploads/695cb6347d0b1_1767683636.js
+
+[软件] 花子｜动漫
+https://file.zhangyichi.dev/uploads/695cb6347d0b1_1767683636.js
+
+[软件] 路漫漫｜动漫
+https://file.zhangyichi.dev/uploads/695cb6347d0b1_1767683636.js
+
+[软件] 去看吧｜动漫
+https://file.zhangyichi.dev/uploads/695cb6347d0b1_1767683636.js
+
 [金鹰] 🐻黑狐┃影视
 https://catbox.n13.club/t4/heihu.php
 
@@ -2294,12 +2330,6 @@ https://gh-proxy.com/https://git.yylx.win/https://raw.githubusercontent.com/fant
 
 [1] 📚儿童┃启蒙
 https://gh-proxy.com/https://git.yylx.win/https://raw.githubusercontent.com/fantaiying7/EXT/refs/heads/main/drpy2.min.js
-
-[https://www.ls660.com/TV/feimao.json] 🎀️┃星牙┃短剧
-https://gh-proxy.com/https://git.yylx.win/raw.githubusercontent.com/PizazzGY/NewTVBox/main/movie/py/XYDJ.py
-
-[https://www.ls660.com/TV/feimao.json] 📺┃剧王┃短剧
-https://gh-proxy.com/https://git.yylx.win/raw.githubusercontent.com/PizazzGY/NewTVBox/main/movie/py/JWDJ.py
 
 [https://www.ls660.com/TV/feimao.json] 🏀┃体育┃直播
 https://gitlab.com/fantaiying/ext/-/raw/main/drpy2.min.js
