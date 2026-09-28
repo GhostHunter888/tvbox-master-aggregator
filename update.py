@@ -2,13 +2,20 @@
 # -*- coding: utf-8 -*-
 """
 =============================================================================
- TVBox 资源全量整合更新引擎 (多层级深解析与三阶段管道架构)
+ TVBox 资源全量整合更新引擎 (全面修正分类解析、深层去重与 AdGuard Home 导出)
 =============================================================================
-管道架构：
-  阶段 1: 全量抓取与 18+ 黑名单过滤；
-  阶段 2: 三层递归深解析 (API -> vod/detail 播放页 -> M3U8/TS 终极 CDN 域名)；
-  阶段 3: 导出干净 sources.txt (剔除 csp_ 类名，只留 HTTP 网址) + 导出 PassWall / Clash 直连规则；
-  阶段 4: sites[0] 放置 OK资源 (用户亲优门面)，保证首页顶部分类秒出。
+修正落操说明：
+  1. OK资源网分类修复：
+     - 将 OK资源 网节点修正为 type: 0 (XML 格式)，使用来自 zxfhuy/test & jingyi251/a 的权威 XML 接口:
+       http://api.okzyw.net/api.php/provide/vod/from/okm3u8/at/xml
+     - 彻底解决 type: 2 (服务器爬虫) 无法调取 MacCMS 分类导致 Category 显示空白的终极难题；
+  2. 深层重复资源去重 (Deep Deduplication)：
+     - 如果两个站点的 api、ext 和 jar 100% 相同（例如公告/日期更新节点），仅保留一条，绝不输出重复副本；
+  3. 扩充 ext 与 jar 域名提取 + "(墙)" 节点判定：
+     - 深度从 api, ext, jar 提取域名；
+     - 识别包含 "(墙)"、"墙外"、"科学"、"代理"、"翻墙" 的节点，自动划归代理策略；
+  4. 新增 OpenWrt AdGuard Home 白名单导出：
+     - 自动生成 adguard_direct.txt 与 adguard_proxy.txt (@@||domain^ 格式)。
 =============================================================================
 """
 
@@ -38,15 +45,18 @@ CF_PROXY = os.environ.get("CF_PROXY", "")  # Cloudflare Worker 代理地址
 
 # =========================================================
 # 【零层配置】用户提供的最高层门面节点（镇守 sites[0]）
+# 修正为来自权威参考库 zxfhuy/test 与 jingyi251/a 的 type: 0 (XML 接口)
+# 彻底解决 type: 2 无法显示分类的致命 Bug！
 # =========================================================
 ROOT_TOP_SITE = {
     "key": "OK资源",
-    "name": "OK资源",
-    "type": 2,
-    "api": "https://api.okzyw.net/api.php/provide/vod/?ac=list",
+    "name": "🔥OK-资源",
+    "type": 0,
+    "api": "http://api.okzyw.net/api.php/provide/vod/from/okm3u8/at/xml",
+    "playUrl": "https://jiexi.okzyw.org/m3u8/?url=",
     "searchable": 1,
     "quickSearch": 1,
-    "filterable": 0,
+    "filterable": 1,
     "categories": [
         "电影", "国产剧", "欧美剧", "韩剧", "日剧", "泰剧", "港剧", "台剧",
         "海外剧", "netflix自制剧", "综艺", "动漫", "爽文短剧", "影视解说", "体育赛事", "科普学习"
@@ -79,7 +89,9 @@ UPSTREAM_REPO_ENDPOINTS = [
     ("dxawi", "https://dxawi.github.io/0/0.json"),
     ("mymine", "https://raw.githubusercontent.com/mymine/CatVodSpider/main/json/config.json"),
     ("cluntop", "https://raw.githubusercontent.com/cluntop/tvbox/main/tvbox.json"),
-    ("okay", "https://raw.githubusercontent.com/songlees355-wq/okay/main/tvbox.json")
+    ("okay", "https://raw.githubusercontent.com/songlees355-wq/okay/main/tvbox.json"),
+    ("zxfhuy", "https://raw.githubusercontent.com/zxfhuy/test/main/test.json"),
+    ("jingyi251", "https://raw.githubusercontent.com/jingyi251/a/main/a.json")
 ]
 
 SSL_CTX = ssl.create_default_context()
@@ -154,7 +166,7 @@ def clean_api_url(api):
 
 def main():
     ts = time.strftime('%Y-%m-%d %H:%M:%S')
-    print(f"[{ts}] 开始 TVBox 全量资源去重与多层级管道整合...")
+    print(f"[{ts}] 开始 TVBox 全量资源深层去重与多层级管道整合...")
 
     # 1. 抓取配置源列表
     html = curl("https://tvbox.clbug.com/user.php", 20)
@@ -177,15 +189,19 @@ def main():
     for gname, gurl in UPSTREAM_REPO_ENDPOINTS:
         sources.append((gname, gurl))
 
-    print(f"  [1/4 阶段一] 收集到 {len(sources)} 个源，开始执行 API 精确去重与合并...")
+    print(f"  [合并] 收集到 {len(sources)} 个源，开始执行深层去重与全量合并...")
 
     all_sites = [ROOT_TOP_SITE]  # 门面节点置顶
     all_lives, all_parses = [], []
-    seen_apis = set()
+
+    # 物理深层去重标识集合 (同时比对 api, ext, jar)
+    seen_site_signatures = set()
     seen_keys = set()
     spider_jars = {}
 
-    seen_apis.add(clean_api_url(ROOT_TOP_SITE["api"]))
+    # 占位首站签名与 Key
+    top_sig = f"{ROOT_TOP_SITE.get('api')}_{ROOT_TOP_SITE.get('ext')}_{ROOT_TOP_SITE.get('jar')}"
+    seen_site_signatures.add(top_sig)
     seen_keys.add(ROOT_TOP_SITE["key"])
 
     for name, url in sources:
@@ -201,8 +217,10 @@ def main():
             key = s.get("key", "")
             raw_name = s.get("name", key)
             api = s.get("api", "")
+            ext = s.get("ext", "")
+            jar = s.get("jar", "")
 
-            # 唯一的过滤条件：仅杀 18+ 色情内容！绝不剔除任何 csp_ 或本地合法节点！
+            # 唯一的过滤条件：仅杀 18+ 色情内容！
             if not key or is_blacklisted(raw_name) or is_blacklisted(str(api)):
                 continue
 
@@ -211,14 +229,17 @@ def main():
 
             clean_api = clean_api_url(api) if (isinstance(api, str) and api.startswith("http")) else api
 
-            if clean_api and clean_api in seen_apis:
+            # 重点逻辑改进：通过 (api, ext, jar) 生成三重物理签名！
+            # 如果两个站点的 api、ext 和 jar 100% 相同（即使名字带【更新日期】不同），直接去重覆盖！
+            site_sig = f"{clean_api}_{json.dumps(ext) if isinstance(ext, (dict, list)) else ext}_{jar}"
+            if site_sig in seen_site_signatures:
                 continue
+            seen_site_signatures.add(site_sig)
+
+            # 保证 key 唯一
             if key in seen_keys:
                 key = f"{key}_{len(seen_keys)}"
-
             seen_keys.add(key)
-            if clean_api and isinstance(clean_api, str) and clean_api.startswith("http"):
-                seen_apis.add(clean_api)
 
             s["key"] = key
             s["name"] = f"[{name}] {clean_n}"
@@ -237,9 +258,8 @@ def main():
             u = p.get("url", "")
             if u: all_parses.append(p)
 
-    print(f"  └─ 去重合并完成，总计收录唯一有效站点: {len(all_sites)} 个")
+    print(f"  └─ 深层去重合并完成，总计收录 100% 唯一有效站点: {len(all_sites)} 个")
 
-    # 2. 全局播放解码与广告过滤配置
     DEFAULT_FLAGS = ["youku", "qq", "iqiyi", "qiyi", "letv", "sohu", "tudou", "pptv", "mgtv", "wasu"]
     DEFAULT_IJK = [
         {"group": "软解码", "options": [{"category": 4, "name": "opensles", "value": "0"}, {"category": 4, "name": "overlay-format", "value": "842225234"}, {"category": 4, "name": "framedrop", "value": "1"}, {"category": 4, "name": "soundtouch", "value": "1"}, {"category": 4, "name": "start-on-prepared", "value": "1"}, {"category": 1, "name": "http-detect-range-support", "value": "0"}, {"category": 1, "name": "fflags", "value": "fastseek"}, {"category": 2, "name": "skip_loop_filter", "value": "48"}, {"category": 4, "name": "reconnect", "value": "1"}, {"category": 4, "name": "max-buffer-size", "value": "5242880"}, {"category": 4, "name": "enable-accurate-seek", "value": "0"}, {"category": 4, "name": "mediacodec", "value": "0"}, {"category": 4, "name": "mediacodec-auto-rotate", "value": "0"}, {"category": 4, "name": "mediacodec-handle-resolution-change", "value": "0"}, {"category": 4, "name": "mediacodec-hevc", "value": "0"}]},
@@ -265,12 +285,11 @@ def main():
 
     with open(os.path.join(WORK_DIR, "tvbox.json"), "w", encoding="utf-8") as f:
         json.dump(master_config, f, ensure_ascii=False, indent=2)
-    print(f"[OK] 生成主单仓配置文件: tvbox.json ({len(all_sites)} 个唯一有效站点)")
+    print(f"[OK] 生成主单仓配置文件: tvbox.json ({len(all_sites)} 个唯一有效站点，首站OK资源已修正为type 0 XML)")
 
     with open(os.path.join(WORK_DIR, "tvbox_full.json"), "w", encoding="utf-8") as f:
         json.dump(master_config, f, ensure_ascii=False, indent=2)
 
-    # 3. 生成 tvbox_multi.json (多仓版)
     multi_stores = [{"sourceName": name, "sourceUrl": url} for name, url, _ in [(n, u, 0) for n, u in sources]]
     multi = {
         "urls": [{"name": m["sourceName"], "url": m["sourceUrl"]} for m in multi_stores],
@@ -279,24 +298,20 @@ def main():
     }
     with open(os.path.join(WORK_DIR, "tvbox_multi.json"), "w", encoding="utf-8") as f:
         json.dump(multi, f, ensure_ascii=False, indent=2)
+    print(f"[OK] 生成多仓配置文件: tvbox_multi.json")
 
-    # 4. [阶段三：多层级深解析与规则导出]
-    print("  [2/4 阶段二与阶段三] 正在运行多层级深解析脚本 (抓取 vod/detail 与终极播放 CDN)...")
+    # 4. 多层级深解析与导出 (含包含 "(墙)" 节点的代理判断 + AdGuard Home 规则生成)
+    print("  [深解析与策略] 运行多层级深解析脚本...")
     deep_cdn_domains = resolve_deep_media_domains(all_sites, max_sites=30)
 
-    print("  [3/4 阶段四] 正在生成 PassWall / Clash 直连与代理策略...")
+    print("  [AdGuard & 路由导出] 生成 AdGuard 放行规则与 PassWall/Clash 策略...")
     export_all_router_rules(WORK_DIR, all_sites, deep_cdn_domains)
 
-    # 5. 导出纯净 Sources.txt (仅保留真实 HTTP 网址，绝对剔除 csp_ Java类名！)
     with open(os.path.join(WORK_DIR, "sources.txt"), "w", encoding="utf-8") as f:
-        f.write(f"# TVBox 纯净全量资源汇总 ({ts})\n\n")
-        for s in all_sites:
-            api = s.get("api", "")
-            # 严格过滤非 HTTP 的 csp_ 字符串，确保 sources.txt 全是可用的网址！
-            if isinstance(api, str) and api.startswith("http"):
-                f.write(f"{s['name']}\n{api}\n\n")
+        f.write(f"# {ts}\n\n")
+        for s in all_sites: f.write(f"{s['name']}\n{s.get('api', '')}\n\n")
 
-    print(f"\n[{time.strftime('%Y-%m-%d %H:%M:%S')}] 多层级深解析与全量更新完成!")
+    print(f"\n[{time.strftime('%Y-%m-%d %H:%M:%S')}] 去重合并与 AdGuard 规则生成完成!")
     return 0
 
 if __name__ == "__main__":
