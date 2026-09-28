@@ -2,20 +2,16 @@
 # -*- coding: utf-8 -*-
 """
 =============================================================================
- TVBox 资源全量整合更新引擎 (全面修正分类解析、深层去重与 AdGuard Home 导出)
+ TVBox 资源全量整合更新引擎 (三大门面置顶 + 潜在重复日志挖掘版)
 =============================================================================
-修正落操说明：
-  1. OK资源网分类修复：
-     - 将 OK资源 网节点修正为 type: 0 (XML 格式)，使用来自 zxfhuy/test & jingyi251/a 的权威 XML 接口:
-       http://api.okzyw.net/api.php/provide/vod/from/okm3u8/at/xml
-     - 彻底解决 type: 2 (服务器爬虫) 无法调取 MacCMS 分类导致 Category 显示空白的终极难题；
-  2. 深层重复资源去重 (Deep Deduplication)：
-     - 如果两个站点的 api、ext 和 jar 100% 相同（例如公告/日期更新节点），仅保留一条，绝不输出重复副本；
-  3. 扩充 ext 与 jar 域名提取 + "(墙)" 节点判定：
-     - 深度从 api, ext, jar 提取域名；
-     - 识别包含 "(墙)"、"墙外"、"科学"、"代理"、"翻墙" 的节点，自动划归代理策略；
-  4. 新增 OpenWrt AdGuard Home 白名单导出：
-     - 自动生成 adguard_direct.txt 与 adguard_proxy.txt (@@||domain^ 格式)。
+重点更新：
+  1. 三大顶级门面节点死死镇守 sites[0], sites[1], sites[2]：
+     - 置顶 1: OK资源 (http://api.okzyw.net/api.php/provide/vod/from/okm3u8/at/xml, type: 0)
+     - 置顶 2: 鸭鸭资源 (https://cj.yayazy.net/api.php/provide/vod/from/yym3u8/at/xml, type: 0)
+     - 置顶 3: 360资源 (https://360zy.com/api.php/provide/vod?, type: 1)
+  2. 抹掉 18+ 低俗内容后的 51 个纯净全量分类，挂载于 OK资源 与 鸭鸭资源；
+  3. 引入独立分析脚本 analyze_potential_duplicates，生成 potential_duplicates.log；
+  4. 绝不上演多余的强制合并，保持全网合并节点的原汁原味。
 =============================================================================
 """
 
@@ -34,9 +30,11 @@ sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), "script
 try:
     from resolve_deep_cdn import resolve_deep_media_domains
     from export_router_rules import export_all_router_rules
+    from analyze_potential_duplicates import analyze_potential_duplicates
 except ImportError:
     def resolve_deep_media_domains(sites, max_sites=30): return set()
     def export_all_router_rules(work_dir, sites, deep_cdn_domains): pass
+    def analyze_potential_duplicates(work_dir, sites): pass
 
 sys.stdout.reconfigure(line_buffering=True) if hasattr(sys.stdout, 'reconfigure') else None
 
@@ -44,24 +42,61 @@ WORK_DIR = os.path.dirname(os.path.abspath(__file__))
 CF_PROXY = os.environ.get("CF_PROXY", "")  # Cloudflare Worker 代理地址
 
 # =========================================================
-# 【零层配置】用户提供的最高层门面节点（镇守 sites[0]）
-# 修正为来自权威参考库 zxfhuy/test 与 jingyi251/a 的 type: 0 (XML 接口)
-# 彻底解决 type: 2 无法显示分类的致命 Bug！
+# 抹掉 18+ 低俗项目后的 51 个纯净全量分类白名单
 # =========================================================
-ROOT_TOP_SITE = {
-    "key": "OK资源",
-    "name": "🔥OK-资源",
-    "type": 0,
-    "api": "http://api.okzyw.net/api.php/provide/vod/from/okm3u8/at/xml",
-    "playUrl": "https://jiexi.okzyw.org/m3u8/?url=",
-    "searchable": 1,
-    "quickSearch": 1,
-    "filterable": 1,
-    "categories": [
-        "电影", "国产剧", "欧美剧", "韩剧", "日剧", "泰剧", "港剧", "台剧",
-        "海外剧", "netflix自制剧", "综艺", "动漫", "爽文短剧", "影视解说", "体育赛事", "科普学习"
-    ]
-}
+CLEANED_51_CATEGORIES = [
+    "电影", "电视剧", "综艺", "动漫", "动作片", "喜剧片", "爱情片", "科幻片",
+    "恐怖片", "剧情片", "战争片", "国产剧", "欧美剧", "韩剧", "日剧", "港剧",
+    "台剧", "泰剧", "纪录片", "海外剧", "大陆综艺", "日韩综艺", "港台综艺", "欧美综艺",
+    "国产动漫", "日韩动漫", "欧美动漫", "动画片", "港台动漫", "海外动漫", "演唱会", "体育赛事",
+    "篮球", "足球", "预告片", "斯诺克", "影视解说", "爽文短剧", "4K电影", "有声动漫",
+    "女频恋爱", "反转爽剧", "古装仙侠", "年代穿越", "脑洞悬疑", "现代都市", "邵氏电影", "Netflix自制剧", "Netflix电影", "科普学习", "漫剧"
+]
+
+# =========================================================
+# 三大金刚门面置顶节点 (镇守 sites[0], sites[1], sites[2])
+# =========================================================
+TOP_SITES_FACADE = [
+    # 置顶 1: OK资源
+    {
+        "key": "OK资源",
+        "name": "🔥OK-资源",
+        "type": 0,
+        "api": "http://api.okzyw.net/api.php/provide/vod/from/okm3u8/at/xml",
+        "playUrl": "https://jiexi.okzyw.org/m3u8/?url=",
+        "searchable": 1,
+        "quickSearch": 1,
+        "filterable": 1,
+        "categories": CLEANED_51_CATEGORIES
+    },
+    # 置顶 2: 鸭鸭资源
+    {
+        "key": "鸭鸭资源",
+        "name": "🦆鸭鸭资源",
+        "type": 0,
+        "api": "https://cj.yayazy.net/api.php/provide/vod/from/yym3u8/at/xml",
+        "searchable": 1,
+        "quickSearch": 1,
+        "filterable": 1,
+        "categories": CLEANED_51_CATEGORIES
+    },
+    # 置顶 3: 360资源
+    {
+        "key": "360资源",
+        "name": "🦚360┃采集",
+        "type": 1,
+        "api": "https://360zy.com/api.php/provide/vod?",
+        "searchable": 1,
+        "quickSearch": 1,
+        "filterable": 1,
+        "categories": [
+            "动作片", "喜剧片", "爱情片", "科幻片", "恐怖片", "剧情片", "战争片", "古装片",
+            "悬疑片", "犯罪片", "灾难片", "国产剧", "香港剧", "韩国剧", "欧美剧", "台湾剧",
+            "日本剧", "海外剧", "泰国剧", "大陆综艺", "港台综艺", "日韩综艺", "欧美综艺", "国产动漫",
+            "欧美动漫", "日韩动漫", "现代都市", "脑洞悬疑", "年代穿越", "古装仙侠", "女频恋爱", "成长逆袭", "爽文短剧"
+        ]
+    }
+]
 
 SEX_KEYWORDS = [
     "x站", "18+", "色情", "伦理", "成人", "福利", "三级", "激情", "av",
@@ -166,7 +201,7 @@ def clean_api_url(api):
 
 def main():
     ts = time.strftime('%Y-%m-%d %H:%M:%S')
-    print(f"[{ts}] 开始 TVBox 全量资源深层去重与多层级管道整合...")
+    print(f"[{ts}] 开始 TVBox 全量资源整合 (三大门面置顶 + 日志分析版)...")
 
     # 1. 抓取配置源列表
     html = curl("https://tvbox.clbug.com/user.php", 20)
@@ -189,20 +224,19 @@ def main():
     for gname, gurl in UPSTREAM_REPO_ENDPOINTS:
         sources.append((gname, gurl))
 
-    print(f"  [合并] 收集到 {len(sources)} 个源，开始执行深层去重与全量合并...")
+    print(f"  [合并] 收集到 {len(sources)} 个源，开始执行全量合并与置顶布局...")
 
-    all_sites = [ROOT_TOP_SITE]  # 门面节点置顶
+    # 三大门面节点优先占领 sites[0], sites[1], sites[2]
+    all_sites = list(TOP_SITES_FACADE)
     all_lives, all_parses = [], []
 
-    # 物理深层去重标识集合 (同时比对 api, ext, jar)
     seen_site_signatures = set()
     seen_keys = set()
-    spider_jars = {}
 
-    # 占位首站签名与 Key
-    top_sig = f"{ROOT_TOP_SITE.get('api')}_{ROOT_TOP_SITE.get('ext')}_{ROOT_TOP_SITE.get('jar')}"
-    seen_site_signatures.add(top_sig)
-    seen_keys.add(ROOT_TOP_SITE["key"])
+    for facade in TOP_SITES_FACADE:
+        sig = f"{facade.get('api')}_{facade.get('ext')}_{facade.get('jar')}"
+        seen_site_signatures.add(sig)
+        seen_keys.add(facade["key"])
 
     for name, url in sources:
         data = parse_json(curl(url, 15))
@@ -211,7 +245,7 @@ def main():
         spider = data.get("spider", "")
         if spider:
             abs_spider = resolve_spider(spider, url)
-            spider_jars[abs_spider] = spider_jars.get(abs_spider, 0) + 1
+            spider_jars[abs_spider] = spider_jars.get(abs_spider, 0) + 1 if 'spider_jars' in locals() else 1
 
         for s in (data.get("sites") or []):
             key = s.get("key", "")
@@ -229,14 +263,11 @@ def main():
 
             clean_api = clean_api_url(api) if (isinstance(api, str) and api.startswith("http")) else api
 
-            # 重点逻辑改进：通过 (api, ext, jar) 生成三重物理签名！
-            # 如果两个站点的 api、ext 和 jar 100% 相同（即使名字带【更新日期】不同），直接去重覆盖！
             site_sig = f"{clean_api}_{json.dumps(ext) if isinstance(ext, (dict, list)) else ext}_{jar}"
             if site_sig in seen_site_signatures:
                 continue
             seen_site_signatures.add(site_sig)
 
-            # 保证 key 唯一
             if key in seen_keys:
                 key = f"{key}_{len(seen_keys)}"
             seen_keys.add(key)
@@ -258,7 +289,10 @@ def main():
             u = p.get("url", "")
             if u: all_parses.append(p)
 
-    print(f"  └─ 深层去重合并完成，总计收录 100% 唯一有效站点: {len(all_sites)} 个")
+    print(f"  └─ 合并完成，总计收录 100% 唯一有效站点: {len(all_sites)} 个")
+
+    # 运行潜在重复分析脚本，记录日志
+    analyze_potential_duplicates(WORK_DIR, all_sites)
 
     DEFAULT_FLAGS = ["youku", "qq", "iqiyi", "qiyi", "letv", "sohu", "tudou", "pptv", "mgtv", "wasu"]
     DEFAULT_IJK = [
@@ -268,8 +302,6 @@ def main():
     DEFAULT_ADS = [
         "mimg.0c1q0l.cn", "www.googletagmanager.com", "www.google-analytics.com", "mc.usihnbcq.cn", "mg.g1mm3d.cn", "mscs.svaeuzh.cn", "cnzz.hhttm.top", "tp.vinuxhome.com", "cnzz.mmstat.com", "www.baihuillq.com", "s23.cnzz.com", "z3.cnzz.com", "c.cnzz.com", "stj.v1vo.top", "z12.cnzz.com", "img.mosflower.cn", "tips.gamevvip.com", "ehwe.yhdtns.com", "xdn.cqqc3.com", "www.jixunkyy.cn", "sp.chemacid.cn", "hm.baidu.com", "s9.cnzz.com", "z6.cnzz.com", "um.cavuc.com", "mav.mavuz.com", "wofwk.aoidf3.com", "z5.cnzz.com", "xc.hubeijieshikj.cn", "tj.tianwenhu.com", "xg.gars57.cn", "k.jinxiuzhilv.com", "cdn.bootcss.com", "ppl.xunzhuo123.com", "xomk.jiangjunmh.top", "img.xunzhuo123.com", "z1.cnzz.com", "s13.cnzz.com", "xg.huataisangao.cn", "z7.cnzz.com", "xg.huataisangao.cn", "z2.cnzz.com", "s96.cnzz.com", "q11.cnzz.com", "thy.dacedsfa.cn", "xg.whsbpw.cn", "s19.cnzz.com", "z8.cnzz.com", "s4.cnzz.com", "f5w.as12df.top", "ae01.alicdn.com", "www.92424.cn", "k.wudejia.com", "vivovip.mmszxc.top", "qiu.xixiqiu.com", "cdnjs.hnfenxun.com", "cms.qdwght.com"
     ]
-
-    best_spider = max(spider_jars, key=spider_jars.get) if spider_jars else "https://raw.githubusercontent.com/FongMi/CatVodSpider/main/jar/custom_spider.jar"
 
     master_config = {
         "spider": "",
@@ -285,7 +317,7 @@ def main():
 
     with open(os.path.join(WORK_DIR, "tvbox.json"), "w", encoding="utf-8") as f:
         json.dump(master_config, f, ensure_ascii=False, indent=2)
-    print(f"[OK] 生成主单仓配置文件: tvbox.json ({len(all_sites)} 个唯一有效站点，首站OK资源已修正为type 0 XML)")
+    print(f"[OK] 生成主单仓配置文件: tvbox.json ({len(all_sites)} 个唯一有效站点)")
 
     with open(os.path.join(WORK_DIR, "tvbox_full.json"), "w", encoding="utf-8") as f:
         json.dump(master_config, f, ensure_ascii=False, indent=2)
@@ -300,7 +332,7 @@ def main():
         json.dump(multi, f, ensure_ascii=False, indent=2)
     print(f"[OK] 生成多仓配置文件: tvbox_multi.json")
 
-    # 4. 多层级深解析与导出 (含包含 "(墙)" 节点的代理判断 + AdGuard Home 规则生成)
+    # 4. 多层级深解析与导出
     print("  [深解析与策略] 运行多层级深解析脚本...")
     deep_cdn_domains = resolve_deep_media_domains(all_sites, max_sites=30)
 
@@ -309,9 +341,12 @@ def main():
 
     with open(os.path.join(WORK_DIR, "sources.txt"), "w", encoding="utf-8") as f:
         f.write(f"# {ts}\n\n")
-        for s in all_sites: f.write(f"{s['name']}\n{s.get('api', '')}\n\n")
+        for s in all_sites:
+            api = s.get("api", "")
+            if isinstance(api, str) and api.startswith("http"):
+                f.write(f"{s['name']}\n{api}\n\n")
 
-    print(f"\n[{time.strftime('%Y-%m-%d %H:%M:%S')}] 去重合并与 AdGuard 规则生成完成!")
+    print(f"\n[{time.strftime('%Y-%m-%d %H:%M:%S')}] 去重合并与三大门面更新完成!")
     return 0
 
 if __name__ == "__main__":
