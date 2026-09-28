@@ -2,14 +2,20 @@
 # -*- coding: utf-8 -*-
 """
 =============================================================================
- 独立任务一：全网资源配置合并与 18+ 过滤 (Merge Sources & Blacklist Filter)
+ 独立任务一：全网资源配置合并、全量 PY 爬虫扫描与 18+ 黑名单物理过滤
 =============================================================================
-唯一任务：
-  1. 从全网 130+ 个上游仓库抓取原始 JSON 配置；
-  2. 仅过滤 18+ 色情不良内容 (SEX_KEYWORDS)；
-  3. 执行 API 与 (api, ext, jar) 深层签名去重；
-  4. 放置三大门面置顶节点 (可可影视4K, OK资源, 鸭鸭资源, 360资源)；
-  5. 输出 tvbox.json, tvbox_full.json, tvbox_multi.json 与纯净 sources.txt。
+重点更新：
+  1. 精准门面节点顺序 (按用户指示死死固定前置)：
+     - 置顶 1: 可可影视 4K (kkys.py - 彻底擦除硬加的 categories，渲染原生 4K/多线路)
+     - 置顶 2: 厂长资源 (czzy.py - 彻底擦除硬加的 categories，渲染原生 1080P/4K)
+     - 置顶 3: OK资源 (http://api.okzyw.net/api.php/provide/vod/from/okm3u8/at/xml, type: 0)
+     - 置顶 4: 鸭鸭资源 (https://cj.yayazy.net/api.php/provide/vod/from/yym3u8/at/xml, type: 0)
+     - 置顶 5: 360资源 (https://360zy.com/api.php/provide/vod?, type: 1)
+     - 置顶 6: 索尼资源 (https://suoniapi.com/api.php/provide/vod/?ac=list, type: 1)
+     - 置顶 7: 极速资源 (https://jszyapi.com/api.php/provide/vod/, type: 1)
+  2. 动态全量扫描 jie20091116/cat 的 TVBOX/PY 目录下的全部 100+ 个 .py 独立爬虫脚本，100% 全量注册收录！
+  3. 补全扩充 18+ 黑名单词库 (追加 ①⑧, 🔞, 18/, 小师妹, 奶茶, 探探, pgx 等漏网之鱼)；
+  4. 为所有 GitHub .py / .jar 增加 https://gh-proxy.com/ 前缀，解决电视盒子跑进度条失败报错问题。
 =============================================================================
 """
 
@@ -35,17 +41,31 @@ CLEANED_51_CATEGORIES = [
     "年代穿越", "脑洞悬疑", "现代都市", "邵氏电影", "Netflix自制剧", "Netflix电影", "科普学习", "漫剧"
 ]
 
+GH_PROXY_PREFIX = "https://gh-proxy.com/"
+
+# 按用户指示：死死固定置顶顺序：可可影视 ➔ 厂长资源 ➔ OK资源 ➔ 鸭鸭资源 ➔ 360 ➔ 索尼 ➔ 极速
 TOP_SITES_FACADE = [
+    # 置顶 1: 可可影视 4K (PY 逆向，彻底移除硬加 categories 覆盖)
     {
         "key": "kkys_py",
         "name": "💎可可影视┃4K高清",
         "type": 3,
-        "api": "https://raw.githubusercontent.com/jie20091116/cat/a201c9690267c1ab4e3f65d5a1fca80662438fa0/TVBOX/PY/kkys.py",
+        "api": "https://gh-proxy.com/https://raw.githubusercontent.com/jie20091116/cat/a201c9690267c1ab4e3f65d5a1fca80662438fa0/TVBOX/PY/kkys.py",
         "searchable": 1,
         "quickSearch": 1,
-        "filterable": 1,
-        "categories": CLEANED_51_CATEGORIES
+        "filterable": 1
     },
+    # 置顶 2: 厂长资源 (PY 逆向，彻底移除硬加 categories 覆盖)
+    {
+        "key": "czzy_py",
+        "name": "💎厂长资源┃1080P",
+        "type": 3,
+        "api": "https://gh-proxy.com/https://raw.githubusercontent.com/jie20091116/cat/a201c9690267c1ab4e3f65d5a1fca80662438fa0/TVBOX/PY/czzy.py",
+        "searchable": 1,
+        "quickSearch": 1,
+        "filterable": 1
+    },
+    # 置顶 3: OK资源
     {
         "key": "OK资源",
         "name": "🔥OK-资源",
@@ -57,6 +77,7 @@ TOP_SITES_FACADE = [
         "filterable": 1,
         "categories": CLEANED_51_CATEGORIES
     },
+    # 置顶 4: 鸭鸭资源
     {
         "key": "鸭鸭资源",
         "name": "🦆鸭鸭资源",
@@ -67,6 +88,7 @@ TOP_SITES_FACADE = [
         "filterable": 1,
         "categories": CLEANED_51_CATEGORIES
     },
+    # 置顶 5: 360资源
     {
         "key": "360资源",
         "name": "🦚360┃采集",
@@ -81,48 +103,36 @@ TOP_SITES_FACADE = [
             "日本剧", "海外剧", "泰国剧", "大陆综艺", "港台综艺", "日韩综艺", "欧美综艺", "国产动漫",
             "欧美动漫", "日韩动漫", "现代都市", "脑洞悬疑", "年代穿越", "古装仙侠", "女频恋爱", "成长逆袭", "爽文短剧"
         ]
+    },
+    # 置顶 6: 索尼资源
+    {
+        "key": "索尼资源",
+        "name": "🐉索尼┃高清4K",
+        "type": 1,
+        "api": "https://suoniapi.com/api.php/provide/vod/?ac=list",
+        "searchable": 1,
+        "quickSearch": 1,
+        "filterable": 1,
+        "categories": [
+            "动作片", "喜剧片", "科幻片", "恐怖片", "爱情片", "剧情片", "战争片", "记录片",
+            "国产剧", "欧美剧", "香港剧", "韩国剧", "台湾剧", "日本剧", "海外剧", "泰国剧",
+            "国产动漫", "日韩动漫", "欧美动漫", "港台动漫", "海外动漫", "大陆综艺", "港台综艺", "日韩综艺", "欧美综艺"
+        ]
+    },
+    # 置顶 7: 极速资源
+    {
+        "key": "极速资源",
+        "name": "⚡极速┃云播",
+        "type": 1,
+        "api": "https://jszyapi.com/api.php/provide/vod/",
+        "searchable": 1,
+        "quickSearch": 1,
+        "filterable": 1,
+        "categories": CLEANED_51_CATEGORIES
     }
 ]
 
-PY_CAT_SITES = [
-    {
-        "key": "yunduanyis_py",
-        "name": "💎云端影视┃[PY]",
-        "type": 3,
-        "api": "https://raw.githubusercontent.com/jie20091116/cat/a201c9690267c1ab4e3f65d5a1fca80662438fa0/TVBOX/%E4%BA%91%E7%AB%AF%E5%BD%B1%E8%A7%86.py",
-        "searchable": 1,
-        "quickSearch": 1,
-        "filterable": 1
-    },
-    {
-        "key": "yunsuyis_py",
-        "name": "💎云速影视┃[PY]",
-        "type": 3,
-        "api": "https://raw.githubusercontent.com/jie20091116/cat/a201c9690267c1ab4e3f65d5a1fca80662438fa0/TVBOX/%E4%BA%91%E9%80%9F%E5%BD%B1%E8%A7%86.py",
-        "searchable": 1,
-        "quickSearch": 1,
-        "filterable": 1
-    },
-    {
-        "key": "youyou_py",
-        "name": "💎悠悠影视┃[PY]",
-        "type": 3,
-        "api": "https://raw.githubusercontent.com/jie20091116/cat/a201c9690267c1ab4e3f65d5a1fca80662438fa0/TVBOX/%E6%82%A0%E6%82%A0APP.py",
-        "searchable": 1,
-        "quickSearch": 1,
-        "filterable": 1
-    },
-    {
-        "key": "yuhuoshe_py",
-        "name": "💎浴火社┃[PY]",
-        "type": 3,
-        "api": "https://raw.githubusercontent.com/jie20091116/cat/a201c9690267c1ab4e3f65d5a1fca80662438fa0/TVBOX/%E6%B5%B4%E7%81%AB%E7%A4%BEAPP.py",
-        "searchable": 1,
-        "quickSearch": 1,
-        "filterable": 1
-    }
-]
-
+# 扩充 18+ 色情词库 (追加用户精准抓出的漏网之鱼：①⑧, 🔞, 18/, 小师妹, 奶茶, 探探, pgx 等)
 SEX_KEYWORDS = [
     "x站", "18+", "色情", "伦理", "成人", "福利", "三级", "激情", "av",
     "杏吧", "极品x", "免费x", "嘿嘿", "火速", "红楼", "优优", "天美",
@@ -130,7 +140,11 @@ SEX_KEYWORDS = [
     "桃花", "ck伦理", "大奶子", "搜av", "奥斯卡", "jkun", "滴滴", "豆豆",
     "精品x", "鲨鱼", "辣椒", "森林", "155", "色猫", "乐播", "玉兔",
     "老色p", "老色批", "番号", "sex", "adult", "porn", "91", "黄",
-    "久草", "大x子", "老色x", "写真"
+    "久草", "大x子", "老色x", "写真",
+    "①⑧", "🔞", "18/", "小师妹", "奶茶", "探探", "pgx", "小师妹资源", "奶茶资源", "探探资源", "pgx资源",
+    "18av", "4kav", "18jtv", "2048", "777wuye", "8x8x", "91porn", "91crdj", "asmrhoney", "adult",
+    "mamazipai", "missav", "mitaoav", "nanrenbense", "owoav", "seba", "sebo", "shaofu", "sinparty",
+    "xhamster", "yiqicao", "youav", "zhengmeiav", "色播", "风欲", "萝莉av"
 ]
 
 UPSTREAM_REPO_ENDPOINTS = [
@@ -214,7 +228,10 @@ def parse_json(raw):
 
 def resolve_spider(spider, source_url):
     if not spider: return ""
-    if spider.startswith("http"): return spider
+    if spider.startswith("http"):
+        if "raw.githubusercontent.com" in spider or "github.com" in spider:
+            return f"{GH_PROXY_PREFIX}{spider}"
+        return spider
     if spider.startswith("./"):
         p = urlparse(source_url)
         return f"{p.scheme}://{p.netloc}{spider[1:]}"
@@ -226,9 +243,46 @@ def clean_api_url(api):
     api = re.sub(r'[\?&]ac=(list|detail|videolist|vod).*$', '', api, flags=re.I)
     return api.rstrip("/")
 
+def scan_all_py_scripts_from_jie_cat():
+    """动态调用 GitHub API 全量扫描 jie20091116/cat 的 TVBOX/PY 文件夹下所有 .py 独立爬虫脚本，100% 一个不漏！"""
+    print("  [PY 扫描器] 正在通过 GitHub API 动态全量扫描 TVBOX/PY 目录下的全部 .py 独立脚本...", flush=True)
+    scanned_sites = []
+    api_url = "https://api.github.com/repos/jie20091116/cat/contents/TVBOX/PY?ref=a201c9690267c1ab4e3f65d5a1fca80662438fa0"
+
+    raw_json = fetch_text(api_url)
+    items = parse_json(raw_json)
+
+    if isinstance(items, list):
+        for item in items:
+            fname = item.get("name", "")
+            dl_url = item.get("download_url", "")
+
+            if fname.endswith(".py") and dl_url:
+                clean_stem = fname[:-3]
+                # 黑名单物理过滤 18+ 的 PY 脚本
+                if is_blacklisted(fname) or is_blacklisted(dl_url):
+                    continue
+
+                # 增加 gh-proxy 加速代理，解决电视盒子跑进度条失败
+                proxied_url = f"{GH_PROXY_PREFIX}{dl_url}"
+
+                site_obj = {
+                    "key": f"py_{clean_stem}",
+                    "name": f"💎{clean_stem}┃[PY]",
+                    "type": 3,
+                    "api": proxied_url,
+                    "searchable": 1,
+                    "quickSearch": 1,
+                    "filterable": 1
+                }
+                scanned_sites.append(site_obj)
+
+    print(f"  └─ 扫描完成！共捕获并过滤通过 {len(scanned_sites)} 个合法 PY 独立爬虫节点，100% 一个不漏全量收录！", flush=True)
+    return scanned_sites
+
 def merge_sources():
     ts = time.strftime('%Y-%m-%d %H:%M:%S')
-    print(f"[{ts}] [01_merge_sources] 开始全网资源抓取与合并...")
+    print(f"[{ts}] [01_merge_sources] 开始全量资源合并 (含全量 PY 动态扫描与精准置顶)...")
 
     html = curl("https://tvbox.clbug.com/user.php", 20)
     src_urls = re.findall(r'data-url="([^"]+)"', html)
@@ -250,12 +304,16 @@ def merge_sources():
     for gname, gurl in UPSTREAM_REPO_ENDPOINTS:
         sources.append((gname, gurl))
 
-    spider_jars = {}
-    all_sites = list(TOP_SITES_FACADE) + list(PY_CAT_SITES)
+    # 全量扫描 jie20091116/cat 的 TVBOX/PY 文件夹
+    all_scanned_py = scan_all_py_scripts_from_jie_cat()
+
+    # 布局全量 sites 链：三大门面 (可可 ➔ 厂长 ➔ OK资源 ➔ 鸭鸭 ➔ 360 ➔ 索尼 ➔ 极速) + 全量扫描到的 PY 节点
+    all_sites = list(TOP_SITES_FACADE) + all_scanned_py
     all_lives, all_parses = [], []
 
     seen_site_signatures = set()
     seen_keys = set()
+    spider_jars = {}
 
     for facade in all_sites:
         sig = f"{facade.get('api')}_{facade.get('ext')}_{facade.get('jar')}"
@@ -301,6 +359,13 @@ def merge_sources():
             s["name"] = f"[{name}] {clean_n}"
             if clean_api:
                 s["api"] = clean_api
+
+            # 为所有 GitHub 资源前置 gh-proxy 镜像加速
+            if isinstance(s.get("api"), str) and ("raw.githubusercontent.com" in s["api"] or "github.com" in s["api"]) and not s["api"].startswith(GH_PROXY_PREFIX):
+                s["api"] = f"{GH_PROXY_PREFIX}{s['api']}"
+
+            if isinstance(s.get("jar"), str) and ("raw.githubusercontent.com" in s["jar"] or "github.com" in s["jar"]) and not s["jar"].startswith(GH_PROXY_PREFIX):
+                s["jar"] = f"{GH_PROXY_PREFIX}{s['jar']}"
 
             if spider and "jar" not in s and "spider" not in s:
                 s["jar"] = resolve_spider(spider, url)
@@ -359,7 +424,7 @@ def merge_sources():
             if isinstance(api, str) and api.startswith("http"):
                 f.write(f"{s['name']}\n{api}\n\n")
 
-    print(f"  └─ [01_merge_sources] 完成！写入 {len(all_sites)} 个有效站点到 tvbox.json")
+    print(f"  └─ [01_merge_sources] 完成！全量扫描收录 {len(all_sites)} 个有效站点到 tvbox.json")
     return all_sites
 
 if __name__ == "__main__":
