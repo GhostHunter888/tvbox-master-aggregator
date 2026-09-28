@@ -1,0 +1,47 @@
+央视频道,#genre#
+CCTV-1 综合,http://111.63.117.15:6060/000000001000/1000000001000019246/index.m3u8
+CCTV-2 财经,http://111.63.117.15:6060/000000001000/1000000001000019247/index.m3u8
+CCTV-3 综艺,http://111.63.117.15:6060/000000001000/1000000001000019248/index.m3u8
+CCTV-4 中文国际,http://111.63.117.15:6060/000000001000/1000000001000019249/index.m3u8
+CCTV-5 体育,http://111.63.117.15:6060/000000001000/1000000001000019250/index.m3u8
+CCTV-6 电影,http://111.63.117.15:6060/000000001000/1000000001000019251/index.m3u8
+CCTV-13 新闻,http://111.63.117.15:6060/000000001000/1000000001000019258/index.m3u8
+
+卫视频道,#genre#
+湖南卫视,http://111.63.117.15:6060/000000001000/1000000001000019260/index.m3u8
+浙江卫视,http://111.63.117.15:6060/000000001000/1000000001000019261/index.m3u8
+东方卫视,http://111.63.117.15:6060/000000001000/1000000001000019262/index.m3u8
+江苏卫视,http://111.63.117.15:6060/000000001000/1000000001000019263/index.m3u8
+
+英语学习/美英频道,#genre#
+US - ABC News Live (美国ABC新闻),https://content.uplynk.com/channel/3324f2467c414329b3b08f413926e446.m3u8
+US - CBS News HD (美国CBS新闻),https://cbsn-us.cbsnstream.cbsnews.com/main/master.m3u8
+US - Bloomberg TV HD (彭博财经),https://liveproduced.bloomberg.com/live/BTV_US/playlist.m3u8
+US - NASA TV HD (美国宇航局),https://nasa-vh.akamaihd.net/i/NASA_101@319270/master.m3u8
+US - PBS Kids (美国少儿英语),https://livestream.pbskids.org/out/v1/55b3d9d3000d43a68d06ee29f3d53b21/index.m3u8
+UK - BBC News HD (英国BBC新闻),http://158.101.222.193:88/georgia_play.php?id=bbcnews
+UK - Sky News HD (英国天空新闻),https://skynews-live.skynews.com/1280/skynews-live.m3u8
+UK - EuroNews English (欧洲英语台),https://euronews-euronews-website-main-1-gb.samsung.wurl.tv/manifest.m3u8
+US/UK - 1+1 Ukraina (1080p),http://stream.mcquack.net/219/index.m3u8
+US/UK - 1HD Music Television (1080p),http://176.118.197.101/1HD/index.m3u8
+US/UK - 3ABN Praise Him Music Network,https://3abn.bozztv.com/3abn1/PraiseHim/smil:PraiseHim.smil/playlist.m3u8
+US/UK - 3ABN Russia (720p),https://hls.tv.3angels.ru/stream.m3u8
+US/UK - 3Cat Exclusiu 1 (1080p) [Geo-blocked],https://directes-tv-cat.3catdirectes.cat/live-content/oca1-hls/master.m3u8
+US/UK - 3Cat Exclusiu 2 (1080p) [Geo-blocked],https://directes-tv-cat.3catdirectes.cat/live-content/oca2-hls/master.m3u8
+US/UK - 3Cat Exclusiu 3 (1080p) [Geo-blocked],https://directes-tv-cat.3catdirectes.cat/live-content/oca3-hls/master.m3u8
+US/UK - 4ever Music (1080p),http://stream.mcquack.net/257/index.m3u8
+US/UK - 4 Music,https://musichls.persiana.live/hls/stream.m3u8
+US/UK - 5Plus (1080p),http://89.33.29.115:8080/sportplus/index.m3u8
+US/UK - 5 Plus (720p),https://mmtvs.exliatycl.online/5plus/stream.m3u8
+US/UK - 7S Music (576p),https://cdn.pishow.tv/ott/live/1257/master.m3u8
+US/UK - 9 Plus News (1080p),https://stream.ottlive.co.in/9plusnews/index.m3u8
+US/UK - 15+ Music (1080p),https://live.15plusmg.ru/memfs/ce3366b1-bf25-4e24-96bb-1adf0d44bd3d.m3u8
+US/UK - 30A Music (720p),https://30a-tv.com/music.m3u8
+US/UK - 30A Ridiculous TV (720p),https://30a-tv.com/feeds/720p/63.m3u8
+US/UK - A2i Music (720p) [Not 24/7],https://stream.sen-gt.com/A2iMusic/myStream/playlist.m3u8
+US/UK - A-Plus TV (576p),http://115.42.65.142:9981/stream/channelid/113328724
+US/UK - ABC KAAL (1080p),https://amg01942-amg01942c6-stirr-us-10178.playouts.now.amagi.tv/playlist.m3u8
+US/UK - ABC KERO-TV (720p),https://aegis-cloudfront-1.tubi.video/69c4e4f9-84fa-43eb-b38e-6d1f9464ca73/playlist.m3u8
+US/UK - ABC KGUN-TV (720p),https://aegis-cloudfront-1.tubi.video/a53514a7-f2aa-4d34-802e-c2b5594fc0d7/playlist.m3u8
+US/UK - ABC KITV (720p),https://fuel-streaming-prod01.fuelmedia.io/v1/sem/c4067ddc-0e67-4928-b7ec-624481f721a6.m3u8
+
