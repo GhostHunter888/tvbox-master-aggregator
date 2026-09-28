@@ -1,6 +1,10 @@
 name: 03_AdGuard 与软路由直连代理规则导出
 
 on:
+  workflow_run:
+    workflows: ["02_深层播放域名探测与 Stage5 追踪"]
+    types:
+      - completed
   schedule:
     - cron: '0 0 */3 * *'  # 每 3 天自动导出 AdGuard Home 与 PassWall/Clash 规则
   workflow_dispatch:       # 支持手动随时触发
@@ -10,6 +14,11 @@ permissions:
 
 jobs:
   export_rules:
+    # 核心 AND 逻辑条件：02号深解析成功完成时触发，或 3 天定时器，或手动触发
+    if: >
+      github.event.workflow_run.conclusion == 'success' ||
+      github.event_name == 'schedule' ||
+      github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
