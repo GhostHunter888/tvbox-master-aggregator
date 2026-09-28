@@ -2,15 +2,14 @@
 # -*- coding: utf-8 -*-
 """
 =============================================================================
- TVBox 资源全量整合更新引擎 (清理 kkys 误绑 ext + 全量自动加载 TVBOX/PY 脚本版)
+ TVBox 资源全量整合更新引擎 (置顶1设为可可影视4K + 深层CDN 3天缓存加速版)
 =============================================================================
-说明与修正：
-  1. 彻底移除 kkys.py 上硬加的 ext: "https://kuhh4jo.com" 误导配置：
-     - kkys.py 作为 CatVod Python 爬虫，其内部自带完整的域名与解密逻辑，绝对不需要配置外部 ext！
-  2. 全量自动扫描并挂载 TVBOX/PY 文件夹下的所有 .py 独立爬虫脚本：
-     - 包含 kkys.py、360.py、czzy.py、ddys.py、libvio.py、yiso.py 等全套独立 Python 爬虫，
-     - 自动注册为纯粹的 type: 3 节点，不强加任何错误 ext 属性；
-  3. 四大门面节点 (OK资源, 鸭鸭资源, 360资源) 稳稳置顶。
+调整说明：
+  1. 首页置顶 1 (sites[0]) 切换为可可影视 4K (kkys_py)：
+     - 精准挂载 51 个纯净分类，供客户端直接测试 4K 画质与分类加载性能；
+  2. 深层播放 CDN 解析加设 3 天 (72小时) 本地 JSON 缓存机制：
+     - 避免每 3 小时定时任务重复对 150+ 个站点做耗时深的 M3U8/TS 物理探测；
+     - 缓存未过期时直接复用 grouped_cdn_domains.json，大幅缩短 GitHub Actions 构建耗时。
 =============================================================================
 """
 
@@ -49,7 +48,20 @@ CLEANED_51_CATEGORIES = [
     "年代穿越", "脑洞悬疑", "现代都市", "邵氏电影", "Netflix自制剧", "Netflix电影", "科普学习", "漫剧"
 ]
 
+# 按用户指示：将排序第一个改成【可可影视 4K】！
 TOP_SITES_FACADE = [
+    # 置顶 1: 可可影视 4K (根据用户指令切换为第一门面)
+    {
+        "key": "kkys_py",
+        "name": "💎可可影视┃4K高清",
+        "type": 3,
+        "api": "https://raw.githubusercontent.com/jie20091116/cat/a201c9690267c1ab4e3f65d5a1fca80662438fa0/TVBOX/PY/kkys.py",
+        "searchable": 1,
+        "quickSearch": 1,
+        "filterable": 1,
+        "categories": CLEANED_51_CATEGORIES
+    },
+    # 置顶 2: OK资源
     {
         "key": "OK资源",
         "name": "🔥OK-资源",
@@ -61,6 +73,7 @@ TOP_SITES_FACADE = [
         "filterable": 1,
         "categories": CLEANED_51_CATEGORIES
     },
+    # 置顶 3: 鸭鸭资源
     {
         "key": "鸭鸭资源",
         "name": "🦆鸭鸭资源",
@@ -71,6 +84,7 @@ TOP_SITES_FACADE = [
         "filterable": 1,
         "categories": CLEANED_51_CATEGORIES
     },
+    # 置顶 4: 360资源
     {
         "key": "360资源",
         "name": "🦚360┃采集",
@@ -86,6 +100,7 @@ TOP_SITES_FACADE = [
             "欧美动漫", "日韩动漫", "现代都市", "脑洞悬疑", "年代穿越", "古装仙侠", "女频恋爱", "成长逆袭", "爽文短剧"
         ]
     },
+    # 置顶 5: 索尼资源
     {
         "key": "索尼资源",
         "name": "🐉索尼┃高清4K",
@@ -100,6 +115,7 @@ TOP_SITES_FACADE = [
             "国产动漫", "日韩动漫", "欧美动漫", "港台动漫", "海外动漫", "大陆综艺", "港台综艺", "日韩综艺", "欧美综艺"
         ]
     },
+    # 置顶 6: 极速资源
     {
         "key": "极速资源",
         "name": "⚡极速┃云播",
@@ -112,17 +128,7 @@ TOP_SITES_FACADE = [
     }
 ]
 
-# 纯粹的 CatVod Python (PY) 爬虫节点 (彻底移除 ext 误导配置)
 PY_CAT_SITES = [
-    {
-        "key": "kkys_py",
-        "name": "💎可可影视┃[PY]",
-        "type": 3,
-        "api": "https://raw.githubusercontent.com/jie20091116/cat/a201c9690267c1ab4e3f65d5a1fca80662438fa0/TVBOX/PY/kkys.py",
-        "searchable": 1,
-        "quickSearch": 1,
-        "filterable": 1
-    },
     {
         "key": "yunduanyis_py",
         "name": "💎云端影视┃[PY]",
@@ -266,7 +272,7 @@ def clean_api_url(api):
 
 def main():
     ts = time.strftime('%Y-%m-%d %H:%M:%S')
-    print(f"[{ts}] 开始 TVBox 全量资源整合 (全量扫描 TVBOX/PY 独立脚本)...")
+    print(f"[{ts}] 开始 TVBox 全量资源整合 (可可影视4K置顶 + 3天CDN缓存版)...")
 
     html = curl("https://tvbox.clbug.com/user.php", 20)
     src_urls = re.findall(r'data-url="([^"]+)"', html)
@@ -382,7 +388,7 @@ def main():
 
     with open(os.path.join(WORK_DIR, "tvbox.json"), "w", encoding="utf-8") as f:
         json.dump(master_config, f, ensure_ascii=False, indent=2)
-    print(f"[OK] 生成主单仓配置文件: tvbox.json ({len(all_sites)} 个唯一有效站点)")
+    print(f"[OK] 生成主单仓配置文件: tvbox.json (首站已设为可可影视4K)")
 
     with open(os.path.join(WORK_DIR, "tvbox_full.json"), "w", encoding="utf-8") as f:
         json.dump(master_config, f, ensure_ascii=False, indent=2)
@@ -395,10 +401,32 @@ def main():
     }
     with open(os.path.join(WORK_DIR, "tvbox_multi.json"), "w", encoding="utf-8") as f:
         json.dump(multi, f, ensure_ascii=False, indent=2)
-    print(f"[OK] 生成多仓配置文件: tvbox_multi.json")
 
-    print("  [全量深解析与策略] 正在对全网所有有效站点执行全并发深解析...")
-    grouped_cdn_domains = resolve_deep_media_domains(all_sites, max_sites=len(all_sites))
+    # 重点改进：加设 3 天 (72小时) 本地 JSON 缓存机制！
+    cache_file = os.path.join(WORK_DIR, "grouped_cdn_domains.json")
+    force_resolve = os.environ.get("FORCE_CDN_RESOLVE", "0") == "1"
+    grouped_cdn_domains = None
+
+    if not force_resolve and os.path.exists(cache_file):
+        mtime = os.path.getmtime(cache_file)
+        if (time.time() - mtime) < (3 * 86400):  # 未满 3 天，复用本地缓存！
+            try:
+                with open(cache_file, "r", encoding="utf-8") as f:
+                    grouped_cdn_domains = json.load(f)
+                print(f"  [深解析缓存] 找到 3 天内已生成的 CDN 域名缓存 (grouped_cdn_domains.json)，直接复用！")
+            except Exception: pass
+
+    if not grouped_cdn_domains:
+        print("  [全量深解析与策略] 正在对全网所有有效站点执行全并发深解析...")
+        grouped_cdn_domains = resolve_deep_media_domains(all_sites, max_sites=len(all_sites))
+        # 转换成 json 可序列化的 dict 结构并写盘保存 3 天
+        cache_data = {
+            "top_facade_domains": list(grouped_cdn_domains.get("top_facade_domains", set())),
+            "media_player_domains": list(grouped_cdn_domains.get("media_player_domains", set())),
+            "deep_stream_domains": list(grouped_cdn_domains.get("deep_stream_domains", set()))
+        }
+        with open(cache_file, "w", encoding="utf-8") as f:
+            json.dump(cache_data, f, ensure_ascii=False, indent=2)
 
     print("  [AdGuard & 路由导出] 生成 AdGuard 放行规则与 PassWall/Clash 策略...")
     export_all_router_rules(WORK_DIR, all_sites, grouped_cdn_domains)
@@ -410,7 +438,7 @@ def main():
             if isinstance(api, str) and api.startswith("http"):
                 f.write(f"{s['name']}\n{api}\n\n")
 
-    print(f"\n[{time.strftime('%Y-%m-%d %H:%M:%S')}] 全量合并与更新完成!")
+    print(f"\n[{time.strftime('%Y-%m-%d %H:%M:%S')}] 可可影视4K置顶与 3 天 CDN 缓存更新全量完成!")
     return 0
 
 if __name__ == "__main__":
