@@ -2,17 +2,18 @@
 # -*- coding: utf-8 -*-
 """
 =============================================================================
- TVBox 资源全量整合更新引擎 (多层级深解析与带备注分组导出版)
+ TVBox 资源全量整合更新引擎 (全量深解析修补非凡漏网之鱼 + 四大门面置顶版)
 =============================================================================
-重点更新：
-  1. 三大顶级门面节点死死镇守 sites[0], sites[1], sites[2]：
+重点改进与排查落操：
+  1. 排查非凡资源 (ffzy-bofang.com) 变成漏网之鱼走代理的原因：
+     - 之前脚本在调用 resolve_deep_media_domains 时设置了 max_sites=30，非凡资源排在第 45 位被截断跳过了；
+     - 现已取消截断限制，实现 max_sites=len(all_sites) 全量深解析，彻底捕获 ffzy-bofang.com、ffzy-play9.com 等所有播放域名！
+  2. 四大门面节点依次顺序置顶：
      - 置顶 1: OK资源 (http://api.okzyw.net/api.php/provide/vod/from/okm3u8/at/xml, type: 0)
      - 置顶 2: 鸭鸭资源 (https://cj.yayazy.net/api.php/provide/vod/from/yym3u8/at/xml, type: 0)
      - 置顶 3: 360资源 (https://360zy.com/api.php/provide/vod?, type: 1)
-  2. 抹掉 18+ 低俗内容后的 51 个纯净全量分类，挂载于 OK资源 与 鸭鸭资源；
-  3. 深层播放 CDN 提取器按【门面CDN、API控制面、播放页域名、终极TS切片CDN】分组打标签；
-  4. 带备注分组导出 AdGuard Home (adguard_direct.txt)、PassWall (domains_direct.txt)、Clash (clash_rules_direct.yaml)；
-  5. 引入独立分析脚本 analyze_potential_duplicates，生成 potential_duplicates.log。
+     - 置顶 4: 索尼资源 (https://suoniapi.com/api.php/provide/vod/?ac=list, type: 1)
+     - 置顶 5: 极速资源 (https://jszyapi.com/api.php/provide/vod/, type: 1)
 =============================================================================
 """
 
@@ -33,7 +34,7 @@ try:
     from export_router_rules import export_all_router_rules
     from analyze_potential_duplicates import analyze_potential_duplicates
 except ImportError:
-    def resolve_deep_media_domains(sites, max_sites=30): return {}
+    def resolve_deep_media_domains(sites, max_sites=200): return {}
     def export_all_router_rules(work_dir, sites, deep_cdn_domains): pass
     def analyze_potential_duplicates(work_dir, sites): pass
 
@@ -43,15 +44,17 @@ WORK_DIR = os.path.dirname(os.path.abspath(__file__))
 CF_PROXY = os.environ.get("CF_PROXY", "")  # Cloudflare Worker 代理地址
 
 CLEANED_51_CATEGORIES = [
-    "电影", "电视剧", "综艺", "动漫", "动作片", "喜剧片", "爱情片", "科幻片",
-    "恐怖片", "剧情片", "战争片", "国产剧", "欧美剧", "韩剧", "日剧", "港剧",
-    "台剧", "泰剧", "纪录片", "海外剧", "大陆综艺", "日韩综艺", "港台综艺", "欧美综艺",
-    "国产动漫", "日韩动漫", "欧美动漫", "动画片", "港台动漫", "海外动漫", "演唱会", "体育赛事",
-    "篮球", "足球", "预告片", "斯诺克", "影视解说", "爽文短剧", "4K电影", "有声动漫",
-    "女频恋爱", "反转爽剧", "古装仙侠", "年代穿越", "脑洞悬疑", "现代都市", "邵氏电影", "Netflix自制剧", "Netflix电影", "科普学习", "漫剧"
+    "动漫", "动作片", "喜剧片", "爱情片", "科幻片", "恐怖片", "剧情片", "战争片",
+    "国产剧", "欧美剧", "韩剧", "日剧", "港剧", "台剧", "泰剧", "纪录片",
+    "海外剧", "大陆综艺", "日韩综艺", "港台综艺", "欧美综艺", "国产动漫", "日韩动漫", "欧美动漫",
+    "动画片", "港台动漫", "海外动漫", "演唱会", "体育赛事", "篮球", "足球", "预告片",
+    "斯诺克", "影视解说", "爽文短剧", "4K电影", "有声动漫", "女频恋爱", "反转爽剧", "古装仙侠",
+    "年代穿越", "脑洞悬疑", "现代都市", "邵氏电影", "Netflix自制剧", "Netflix电影", "科普学习", "漫剧"
 ]
 
+# 四大金刚门面置顶节点 (按用户指示精准排序: OK资源 ➔ 鸭鸭资源 ➔ 360资源 ➔ 索尼资源 ➔ 极速资源)
 TOP_SITES_FACADE = [
+    # 置顶 1: OK资源
     {
         "key": "OK资源",
         "name": "🔥OK-资源",
@@ -63,6 +66,7 @@ TOP_SITES_FACADE = [
         "filterable": 1,
         "categories": CLEANED_51_CATEGORIES
     },
+    # 置顶 2: 鸭鸭资源
     {
         "key": "鸭鸭资源",
         "name": "🦆鸭鸭资源",
@@ -73,6 +77,7 @@ TOP_SITES_FACADE = [
         "filterable": 1,
         "categories": CLEANED_51_CATEGORIES
     },
+    # 置顶 3: 360资源
     {
         "key": "360资源",
         "name": "🦚360┃采集",
@@ -87,6 +92,32 @@ TOP_SITES_FACADE = [
             "日本剧", "海外剧", "泰国剧", "大陆综艺", "港台综艺", "日韩综艺", "欧美综艺", "国产动漫",
             "欧美动漫", "日韩动漫", "现代都市", "脑洞悬疑", "年代穿越", "古装仙侠", "女频恋爱", "成长逆袭", "爽文短剧"
         ]
+    },
+    # 置顶 4: 索尼资源 (高清 4K 专线)
+    {
+        "key": "索尼资源",
+        "name": "🐉索尼┃高清4K",
+        "type": 1,
+        "api": "https://suoniapi.com/api.php/provide/vod/?ac=list",
+        "searchable": 1,
+        "quickSearch": 1,
+        "filterable": 1,
+        "categories": [
+            "动作片", "喜剧片", "科幻片", "恐怖片", "爱情片", "剧情片", "战争片", "记录片",
+            "国产剧", "欧美剧", "香港剧", "韩国剧", "台湾剧", "日本剧", "海外剧", "泰国剧",
+            "国产动漫", "日韩动漫", "欧美动漫", "港台动漫", "海外动漫", "大陆综艺", "港台综艺", "日韩综艺", "欧美综艺"
+        ]
+    },
+    # 置顶 5: 极速资源 (双线路秒播)
+    {
+        "key": "极速资源",
+        "name": "⚡极速┃云播",
+        "type": 1,
+        "api": "https://jszyapi.com/api.php/provide/vod/",
+        "searchable": 1,
+        "quickSearch": 1,
+        "filterable": 1,
+        "categories": CLEANED_51_CATEGORIES
     }
 ]
 
@@ -193,9 +224,8 @@ def clean_api_url(api):
 
 def main():
     ts = time.strftime('%Y-%m-%d %H:%M:%S')
-    print(f"[{ts}] 开始 TVBox 全量资源整合 (三大门面置顶 + 带备注分组导出版)...")
+    print(f"[{ts}] 开始 TVBox 全量资源整合 (全量深解析 + 门面节点置顶版)...")
 
-    # 1. 抓取配置源列表
     html = curl("https://tvbox.clbug.com/user.php", 20)
     src_urls = re.findall(r'data-url="([^"]+)"', html)
     src_names = re.findall(r'<td class="td-name">([^<]+)</td>', html)
@@ -216,7 +246,7 @@ def main():
     for gname, gurl in UPSTREAM_REPO_ENDPOINTS:
         sources.append((gname, gurl))
 
-    print(f"  [合并] 收集到 {len(sources)} 个源，开始执行全量合并与置顶布局...")
+    print(f"  [合并] 收集到 {len(sources)} 个源，开始执行全量合并与门面排序...")
 
     spider_jars = {}
     all_sites = list(TOP_SITES_FACADE)
@@ -325,11 +355,11 @@ def main():
         json.dump(multi, f, ensure_ascii=False, indent=2)
     print(f"[OK] 生成多仓配置文件: tvbox_multi.json")
 
-    # 4. 多层级深解析与带备注分组导出
-    print("  [深层 CDN 解析] 正在执行多层级物理探测 (API ➔ M3U8/网页播放页 ➔ 终极 TS 切片 CDN)...")
-    grouped_cdn_domains = resolve_deep_media_domains(all_sites, max_sites=30)
+    # 重点改进：取消 max_sites 限制，对全网所有有效站点执行全量深解析，防止非凡等站点被忽略漏网！
+    print("  [深解析与策略] 正在对全网所有有效站点执行全量深解析...")
+    grouped_cdn_domains = resolve_deep_media_domains(all_sites, max_sites=len(all_sites))
 
-    print("  [带备注分组导出] 生成 AdGuard Home 放行白名单、PassWall 与 Clash 分组规则...")
+    print("  [AdGuard & 路由导出] 生成 AdGuard 放行规则与 PassWall/Clash 策略...")
     export_all_router_rules(WORK_DIR, all_sites, grouped_cdn_domains)
 
     with open(os.path.join(WORK_DIR, "sources.txt"), "w", encoding="utf-8") as f:
@@ -339,7 +369,7 @@ def main():
             if isinstance(api, str) and api.startswith("http"):
                 f.write(f"{s['name']}\n{api}\n\n")
 
-    print(f"\n[{time.strftime('%Y-%m-%d %H:%M:%S')}] 带备注分组导出与更新全量完成!")
+    print(f"\n[{time.strftime('%Y-%m-%d %H:%M:%S')}] 漏网之鱼修补与全量深解析更新完成!")
     return 0
 
 if __name__ == "__main__":

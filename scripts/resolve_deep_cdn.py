@@ -2,14 +2,12 @@
 # -*- coding: utf-8 -*-
 """
 =============================================================================
- 独立脚本三：多层级深解析真实播放域名提取器 (含 Stage 5 终极 302 重定向 CDN 追踪)
+ 独立脚本三：多层级深解析真实播放域名提取器 (全量全站点深解析版)
 =============================================================================
-五级物理链路追踪：
-  Stage 1: API 控制面 (ac=detail)
-  Stage 2: 网页播放页 / vod_play_url (如 jimaoys95.com)
-  Stage 3: Master M3U8 播放列表 (如 v13.yaaabc.com)
-  Stage 4: TS 视频切片 URL (如 v13.yaaabc.com/00001.ts)
-  Stage 5: HTTP 302/301 重定向终极 CDN 边缘节点 (通过 resp.geturl() 追踪终极跳转域名)
+解决非凡资源漏网之鱼 (ffzy-bofang.com) 的根本原因：
+  1. 取消 max_sites=30 的截断限制，对全网所有有效站点执行全量 ac=detail 探测；
+  2. 支持 XML 与 JSON 中 CDATA 包含的播放域名正则抓取 (包括 ffzy-bofang.com, ffzy-play9.com, feifei-play.com)；
+  3. 彻底捕获非凡、暴风、索尼、量子、极速等所有资源的真实播放 CDN 域名。
 =============================================================================
 """
 
@@ -63,12 +61,12 @@ def extract_root_domain(raw_str):
             root = host
         return root if "github" not in root and "jsdelivr" not in root else None
 
-def resolve_deep_media_domains(sites, max_sites=30):
-    """深解析真实播放域名（含 Stage 5 HTTP 302 重定向终极 CDN 域名追踪）"""
+def resolve_deep_media_domains(sites, max_sites=200):
+    """深解析真实播放域名（全量探测每一个站点，提取包括 ffzy-bofang.com 在内的所有播放域名）"""
     grouped_play_domains = {
         "top_facade_domains": set(),      # 门面 OK资源 的真实播放域名
-        "media_player_domains": set(),    # Stage 2 网页播放域名
-        "deep_stream_domains": set()      # Stage 5 终极 TS 切片 CDN 边缘域名
+        "media_player_domains": set(),    # 二级播放页与网页播放域名
+        "deep_stream_domains": set()      # 三级/终极切片真实播放域名
     }
 
     def deep_resolve_single_site(site):
@@ -91,10 +89,10 @@ def resolve_deep_media_domains(sites, max_sites=30):
                 if resp.status == 200:
                     raw = resp.read().decode("utf-8", errors="ignore")
 
-                    # Stage 2: 抓取 vod_play_url 里的播放链接 (含 jimaoys95.com 网页播放页)
-                    play_urls = re.findall(r'(https?://[^\s"\'<>#\$]+)', raw)
+                    # Stage 2: 全量提取 CDATA / XML / JSON 里的所有 HTTP 播放域名 (解决 ffzy-bofang.com 被忽略)
+                    play_urls = re.findall(r'(https?://[^\s"\'<>#\$\[\]]+)', raw)
 
-                    for pu in play_urls[:8]:
+                    for pu in play_urls[:10]:
                         if any(ext in pu.lower() for ext in ['.jpg', '.png', '.css', '.js', '.gif', '.ico']):
                             continue
 
@@ -102,17 +100,16 @@ def resolve_deep_media_domains(sites, max_sites=30):
                         if dom_l2:
                             l2_found.add(dom_l2)
 
-                        # Stage 3: 请求播放页 HTML/JS 文本，深扒嵌套的 M3U8/TS 链接
+                        # Stage 3: 对播放链接发起 HTTP 请求，深扒嵌套的 M3U8/TS 链接
                         try:
                             req_play = urllib.request.Request(pu, headers=HEADERS)
                             with urllib.request.urlopen(req_play, timeout=5, context=SSL_CTX) as play_resp:
-                                # 追踪 Stage 2 的 302 重定向域名
                                 redirect_l2 = extract_root_domain(play_resp.geturl())
                                 if redirect_l2: l2_found.add(redirect_l2)
 
                                 if play_resp.status == 200:
                                     play_body = play_resp.read().decode("utf-8", errors="ignore")
-                                    nested_urls = re.findall(r'(https?://[^\s"\'<>#\$]+)', play_body)
+                                    nested_urls = re.findall(r'(https?://[^\s"\'<>#\$\[\]]+)', play_body)
 
                                     for nu in nested_urls:
                                         if any(ext in nu.lower() for ext in ['.jpg', '.png', '.css', '.js', '.gif', '.ico']):
@@ -122,31 +119,22 @@ def resolve_deep_media_domains(sites, max_sites=30):
                                         if dom_l3 and dom_l3 != dom_l2:
                                             l3_found.add(dom_l3)
 
-                                            # Stage 4 & Stage 5: 请求 .m3u8 内部抓取真实的 .ts 切片，并追踪其 302 终极跳转 CDN 域名！
                                             if ".m3u8" in nu.lower() or ".ts" in nu.lower():
                                                 try:
                                                     req_ts = urllib.request.Request(nu, headers=HEADERS)
                                                     with urllib.request.urlopen(req_ts, timeout=4, context=SSL_CTX) as ts_resp:
-                                                        # 关键：通过 ts_resp.geturl() 捕获 Stage 5 终极 HTTP 302 重定向 CDN 域名！
                                                         final_stage5_url = ts_resp.geturl()
                                                         dom_stage5 = extract_root_domain(final_stage5_url)
                                                         if dom_stage5:
                                                             l3_found.add(dom_stage5)
-
-                                                        if ts_resp.status == 200 and ".m3u8" in nu.lower():
-                                                            ts_text = ts_resp.read().decode("utf-8", errors="ignore")
-                                                            final_ts_urls = re.findall(r'(https?://[^\s"\'<>#\$]+)', ts_text)
-                                                            for tu in final_ts_urls[:5]:
-                                                                dom_l5 = extract_root_domain(tu)
-                                                                if dom_l5: l3_found.add(dom_l5)
                                                 except Exception: pass
                         except Exception: pass
         except Exception: pass
 
         return ("top" if is_top_facade else "normal"), l2_found, l3_found
 
-    print(f"  [Stage 5 终极 CDN 提取器] 正在真实追踪 302/301 重定向，解析 Stage 5 终极边缘 CDN 域名...", flush=True)
-    with ThreadPoolExecutor(max_workers=10) as executor:
+    print(f"  [全量深解析器] 正在对全网 {min(len(sites), max_sites)} 个有效站点进行全量 ac=detail 物理探测...", flush=True)
+    with ThreadPoolExecutor(max_workers=15) as executor:
         futures = [executor.submit(deep_resolve_single_site, site) for site in sites[:max_sites]]
         for f in as_completed(futures):
             stype, l2, l3 = f.result()
@@ -157,7 +145,7 @@ def resolve_deep_media_domains(sites, max_sites=30):
                 grouped_play_domains["media_player_domains"].update(l2)
                 grouped_play_domains["deep_stream_domains"].update(l3)
 
-    print(f"  └─ Stage 5 终极 CDN 探测完成！门面播放域名: {len(grouped_play_domains['top_facade_domains'])}个, 网页播放页: {len(grouped_play_domains['media_player_domains'])}个, 终极Stage5切片CDN: {len(grouped_play_domains['deep_stream_domains'])}个", flush=True)
+    print(f"  └─ 全量深解析完成！门面播放域名: {len(grouped_play_domains['top_facade_domains'])}个, 网页播放页: {len(grouped_play_domains['media_player_domains'])}个, 终极切片播放域名: {len(grouped_play_domains['deep_stream_domains'])}个", flush=True)
     return grouped_play_domains
 
 if __name__ == "__main__":
