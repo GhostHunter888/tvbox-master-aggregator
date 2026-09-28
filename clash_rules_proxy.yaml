@@ -1,7 +1,7 @@
-# TVBox 视频源 Clash 强制代理规则集
+# TVBox 强制代理 Clash 规则集
 payload:
-  - DOMAIN-SUFFIX,catbox.n13.club
-  - DOMAIN-SUFFIX,file.icve.com.cn
-  - DOMAIN-SUFFIX,files.zohopublic.com.cn
   - DOMAIN-SUFFIX,haiwaikan.com
-  - DOMAIN-SUFFIX,home.jundie.top
+  - DOMAIN-SUFFIX,icve.com.cn
+  - DOMAIN-SUFFIX,jundie.top
+  - DOMAIN-SUFFIX,n13.club
+  - DOMAIN-SUFFIX,zohopublic.com.cn

@@ -1,6 +1,6 @@
-# TVBox 视频源强制代理域名列表
-catbox.n13.club
-file.icve.com.cn
-files.zohopublic.com.cn
+# TVBox 强制代理域名列表 (含 '(墙)' 节点)
 haiwaikan.com
-home.jundie.top
+icve.com.cn
+jundie.top
+n13.club
+zohopublic.com.cn
