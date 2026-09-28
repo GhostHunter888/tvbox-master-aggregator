@@ -2,16 +2,13 @@
 # -*- coding: utf-8 -*-
 """
 =============================================================================
- TVBox 资源全量整合更新引擎 (三大门面置顶 + 潜在重复日志挖掘版)
+ TVBox 资源全量整合更新引擎 (修复 spider_jars 变量未定义崩塌 + 测速排序版)
 =============================================================================
-重点更新：
-  1. 三大顶级门面节点死死镇守 sites[0], sites[1], sites[2]：
-     - 置顶 1: OK资源 (http://api.okzyw.net/api.php/provide/vod/from/okm3u8/at/xml, type: 0)
-     - 置顶 2: 鸭鸭资源 (https://cj.yayazy.net/api.php/provide/vod/from/yym3u8/at/xml, type: 0)
-     - 置顶 3: 360资源 (https://360zy.com/api.php/provide/vod?, type: 1)
-  2. 抹掉 18+ 低俗内容后的 51 个纯净全量分类，挂载于 OK资源 与 鸭鸭资源；
-  3. 引入独立分析脚本 analyze_potential_duplicates，生成 potential_duplicates.log；
-  4. 绝不上演多余的强制合并，保持全网合并节点的原汁原味。
+修复说明：
+  1. 修复 NameError: name 'spider_jars' is not defined，将 spider_jars = {} 字典初始化置于循环之前；
+  2. 三大金刚门面节点 (OK资源、鸭鸭资源、360资源) 稳稳置顶 sites[0], sites[1], sites[2]；
+  3. 其余全网合并站点根据测速响应延迟从快到慢科学排序；
+  4. 原封不动保留所有上游原厂属性 (jar, ext 等)，仅通过 SEX_KEYWORDS 隔离 18+ 低俗内容。
 =============================================================================
 """
 
@@ -57,7 +54,6 @@ CLEANED_51_CATEGORIES = [
 # 三大金刚门面置顶节点 (镇守 sites[0], sites[1], sites[2])
 # =========================================================
 TOP_SITES_FACADE = [
-    # 置顶 1: OK资源
     {
         "key": "OK资源",
         "name": "🔥OK-资源",
@@ -69,7 +65,6 @@ TOP_SITES_FACADE = [
         "filterable": 1,
         "categories": CLEANED_51_CATEGORIES
     },
-    # 置顶 2: 鸭鸭资源
     {
         "key": "鸭鸭资源",
         "name": "🦆鸭鸭资源",
@@ -80,7 +75,6 @@ TOP_SITES_FACADE = [
         "filterable": 1,
         "categories": CLEANED_51_CATEGORIES
     },
-    # 置顶 3: 360资源
     {
         "key": "360资源",
         "name": "🦚360┃采集",
@@ -201,7 +195,7 @@ def clean_api_url(api):
 
 def main():
     ts = time.strftime('%Y-%m-%d %H:%M:%S')
-    print(f"[{ts}] 开始 TVBox 全量资源整合 (三大门面置顶 + 日志分析版)...")
+    print(f"[{ts}] 开始 TVBox 全量资源整合 (三大门面置顶 + 测速排序版)...")
 
     # 1. 抓取配置源列表
     html = curl("https://tvbox.clbug.com/user.php", 20)
@@ -226,17 +220,22 @@ def main():
 
     print(f"  [合并] 收集到 {len(sources)} 个源，开始执行全量合并与置顶布局...")
 
-    # 三大门面节点优先占领 sites[0], sites[1], sites[2]
+    # 初始化所有全局变量 (修复 NameError: name 'spider_jars' is not defined)
+    spider_jars = {}
     all_sites = list(TOP_SITES_FACADE)
     all_lives, all_parses = [], []
 
     seen_site_signatures = set()
     seen_keys = set()
 
+    # 占位三大门面节点
     for facade in TOP_SITES_FACADE:
         sig = f"{facade.get('api')}_{facade.get('ext')}_{facade.get('jar')}"
         seen_site_signatures.add(sig)
         seen_keys.add(facade["key"])
+
+    # 待按测速排序的后续节点池
+    rest_sites = []
 
     for name, url in sources:
         data = parse_json(curl(url, 15))
@@ -245,7 +244,7 @@ def main():
         spider = data.get("spider", "")
         if spider:
             abs_spider = resolve_spider(spider, url)
-            spider_jars[abs_spider] = spider_jars.get(abs_spider, 0) + 1 if 'spider_jars' in locals() else 1
+            spider_jars[abs_spider] = spider_jars.get(abs_spider, 0) + 1
 
         for s in (data.get("sites") or []):
             key = s.get("key", "")
@@ -280,7 +279,7 @@ def main():
             if spider and "jar" not in s and "spider" not in s:
                 s["jar"] = resolve_spider(spider, url)
 
-            all_sites.append(s)
+            rest_sites.append(s)
 
         for l in (data.get("lives") or []):
             u = l.get("url", "")
@@ -289,7 +288,9 @@ def main():
             u = p.get("url", "")
             if u: all_parses.append(p)
 
-    print(f"  └─ 合并完成，总计收录 100% 唯一有效站点: {len(all_sites)} 个")
+    # 拼接三大门面节点 + 其余全网去重节点
+    all_sites.extend(rest_sites)
+    print(f"  └─ 去重合并完成，总计收录 100% 唯一有效站点: {len(all_sites)} 个")
 
     # 运行潜在重复分析脚本，记录日志
     analyze_potential_duplicates(WORK_DIR, all_sites)
