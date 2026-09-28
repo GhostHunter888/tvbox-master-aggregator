@@ -1,0 +1,39 @@
+name: 01_快速 JSON 资源抓取与合并同步
+
+on:
+  schedule:
+    - cron: '0 */3 * * *'  # 每 3 小时自动快速同步一次 JSON 订阅
+  workflow_dispatch:       # 支持手动一键触发
+
+permissions:
+  contents: write
+
+jobs:
+  sync_json:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 设置 Python 3.11 环境
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: 安装依赖
+        run: pip install -r requirements.txt || true
+
+      - name: 运行 01_merge_sources 独立任务
+        env:
+          PYTHONUNBUFFERED: "1"
+        run: python3 scripts/01_merge_sources.py
+
+      - name: 自动 Push 更新后的 JSON 订阅文件
+        run: |
+          git config user.email "actions@github.com"
+          git config user.name "GitHub Actions"
+          git add tvbox.json tvbox_full.json tvbox_multi.json sources.txt
+          git diff --cached --quiet && echo "JSON 无变更，跳过提交" && exit 0
+          git commit -m "auto: 定时同步快速 JSON 资源 [$(date -u '+%Y-%m-%d %H:%M:%S')]"
+          git pull --rebase origin main || true
+          git push origin HEAD:main --force
