@@ -2,18 +2,19 @@
 # -*- coding: utf-8 -*-
 """
 =============================================================================
- TVBox 资源全量整合更新引擎 (全量深解析修补非凡漏网之鱼 + 四大门面置顶版)
+ TVBox 资源全量整合更新引擎 (集成 可可影视/云端/云速/悠悠/浴火社 + awesome-zhuiju-free)
 =============================================================================
-重点改进与排查落操：
-  1. 排查非凡资源 (ffzy-bofang.com) 变成漏网之鱼走代理的原因：
-     - 之前脚本在调用 resolve_deep_media_domains 时设置了 max_sites=30，非凡资源排在第 45 位被截断跳过了；
-     - 现已取消截断限制，实现 max_sites=len(all_sites) 全量深解析，彻底捕获 ffzy-bofang.com、ffzy-play9.com 等所有播放域名！
-  2. 四大门面节点依次顺序置顶：
-     - 置顶 1: OK资源 (http://api.okzyw.net/api.php/provide/vod/from/okm3u8/at/xml, type: 0)
-     - 置顶 2: 鸭鸭资源 (https://cj.yayazy.net/api.php/provide/vod/from/yym3u8/at/xml, type: 0)
-     - 置顶 3: 360资源 (https://360zy.com/api.php/provide/vod?, type: 1)
-     - 置顶 4: 索尼资源 (https://suoniapi.com/api.php/provide/vod/?ac=list, type: 1)
-     - 置顶 5: 极速资源 (https://jszyapi.com/api.php/provide/vod/, type: 1)
+重点融入最新源与全并发深解析：
+  1. 取消任何单线程或 max_sites 截断限制，全量 ThreadPoolExecutor 线程池并发处理！
+  2. 融入 jie20091116/cat 库：
+     - 可可影视 (kkys.py - 4K/1080P 超高清画质)
+     - 云端影视 (云端影视.py)
+     - 云速影视 (云速影视.py)
+     - 悠悠 APP (悠悠APP.py)
+     - 浴火社 APP (浴火社APP.py)
+  3. 融入 laoma2053/awesome-zhuiju-free 库：
+     - 精选 117+ 个全网高分影视站与接口自动提取合并！
+  4. 三大门面节点 (OK资源, 鸭鸭资源, 360资源) 稳稳置顶 sites[0], sites[1], sites[2]。
 =============================================================================
 """
 
@@ -52,9 +53,7 @@ CLEANED_51_CATEGORIES = [
     "年代穿越", "脑洞悬疑", "现代都市", "邵氏电影", "Netflix自制剧", "Netflix电影", "科普学习", "漫剧"
 ]
 
-# 四大金刚门面置顶节点 (按用户指示精准排序: OK资源 ➔ 鸭鸭资源 ➔ 360资源 ➔ 索尼资源 ➔ 极速资源)
 TOP_SITES_FACADE = [
-    # 置顶 1: OK资源
     {
         "key": "OK资源",
         "name": "🔥OK-资源",
@@ -66,7 +65,6 @@ TOP_SITES_FACADE = [
         "filterable": 1,
         "categories": CLEANED_51_CATEGORIES
     },
-    # 置顶 2: 鸭鸭资源
     {
         "key": "鸭鸭资源",
         "name": "🦆鸭鸭资源",
@@ -77,7 +75,6 @@ TOP_SITES_FACADE = [
         "filterable": 1,
         "categories": CLEANED_51_CATEGORIES
     },
-    # 置顶 3: 360资源
     {
         "key": "360资源",
         "name": "🦚360┃采集",
@@ -93,7 +90,6 @@ TOP_SITES_FACADE = [
             "欧美动漫", "日韩动漫", "现代都市", "脑洞悬疑", "年代穿越", "古装仙侠", "女频恋爱", "成长逆袭", "爽文短剧"
         ]
     },
-    # 置顶 4: 索尼资源 (高清 4K 专线)
     {
         "key": "索尼资源",
         "name": "🐉索尼┃高清4K",
@@ -108,7 +104,6 @@ TOP_SITES_FACADE = [
             "国产动漫", "日韩动漫", "欧美动漫", "港台动漫", "海外动漫", "大陆综艺", "港台综艺", "日韩综艺", "欧美综艺"
         ]
     },
-    # 置顶 5: 极速资源 (双线路秒播)
     {
         "key": "极速资源",
         "name": "⚡极速┃云播",
@@ -118,6 +113,56 @@ TOP_SITES_FACADE = [
         "quickSearch": 1,
         "filterable": 1,
         "categories": CLEANED_51_CATEGORIES
+    }
+]
+
+# 最新加入的用户提取的高清 Python / PY 逆向节点 (来自 jie20091116/cat)
+PY_CAT_SITES = [
+    {
+        "key": "kkys_4k",
+        "name": "💎可可影视┃4K高清",
+        "type": 3,
+        "api": "https://raw.githubusercontent.com/jie20091116/cat/a201c9690267c1ab4e3f65d5a1fca80662438fa0/TVBOX/PY/kkys.py",
+        "searchable": 1,
+        "quickSearch": 1,
+        "filterable": 1,
+        "ext": "https://kuhh4jo.com"
+    },
+    {
+        "key": "yunduanyis_4k",
+        "name": "💎云端影视┃4K专线",
+        "type": 3,
+        "api": "https://raw.githubusercontent.com/jie20091116/cat/a201c9690267c1ab4e3f65d5a1fca80662438fa0/TVBOX/%E4%BA%91%E7%AB%AF%E5%BD%B1%E8%A7%86.py",
+        "searchable": 1,
+        "quickSearch": 1,
+        "filterable": 1
+    },
+    {
+        "key": "yunsuyis_4k",
+        "name": "💎云速影视┃极速专线",
+        "type": 3,
+        "api": "https://raw.githubusercontent.com/jie20091116/cat/a201c9690267c1ab4e3f65d5a1fca80662438fa0/TVBOX/%E4%BA%91%E9%80%9F%E5%BD%B1%E8%A7%86.py",
+        "searchable": 1,
+        "quickSearch": 1,
+        "filterable": 1
+    },
+    {
+        "key": "youyou_app",
+        "name": "💎悠悠影视┃APP",
+        "type": 3,
+        "api": "https://raw.githubusercontent.com/jie20091116/cat/a201c9690267c1ab4e3f65d5a1fca80662438fa0/TVBOX/%E6%82%A0%E6%82%A0APP.py",
+        "searchable": 1,
+        "quickSearch": 1,
+        "filterable": 1
+    },
+    {
+        "key": "yuhuoshe_app",
+        "name": "💎浴火社┃APP",
+        "type": 3,
+        "api": "https://raw.githubusercontent.com/jie20091116/cat/a201c9690267c1ab4e3f65d5a1fca80662438fa0/TVBOX/%E6%B5%B4%E7%81%AB%E7%A4%BEAPP.py",
+        "searchable": 1,
+        "quickSearch": 1,
+        "filterable": 1
     }
 ]
 
@@ -149,7 +194,9 @@ UPSTREAM_REPO_ENDPOINTS = [
     ("cluntop", "https://raw.githubusercontent.com/cluntop/tvbox/main/tvbox.json"),
     ("okay", "https://raw.githubusercontent.com/songlees355-wq/okay/main/tvbox.json"),
     ("zxfhuy", "https://raw.githubusercontent.com/zxfhuy/test/main/test.json"),
-    ("jingyi251", "https://raw.githubusercontent.com/jingyi251/a/main/a.json")
+    ("jingyi251", "https://raw.githubusercontent.com/jingyi251/a/main/a.json"),
+    ("jie20091116", "https://raw.githubusercontent.com/jie20091116/cat/a201c9690267c1ab4e3f65d5a1fca80662438fa0/TVBOX/config.json"),
+    ("laoma2053", "https://raw.githubusercontent.com/laoma2053/awesome-zhuiju-free/main/resources/resources.json")
 ]
 
 SSL_CTX = ssl.create_default_context()
@@ -224,8 +271,9 @@ def clean_api_url(api):
 
 def main():
     ts = time.strftime('%Y-%m-%d %H:%M:%S')
-    print(f"[{ts}] 开始 TVBox 全量资源整合 (全量深解析 + 门面节点置顶版)...")
+    print(f"[{ts}] 开始 TVBox 全量资源整合 (结合 可可/云端/云速 PY 节点与全并发解析)...")
 
+    # 1. 抓取配置源列表
     html = curl("https://tvbox.clbug.com/user.php", 20)
     src_urls = re.findall(r'data-url="([^"]+)"', html)
     src_names = re.findall(r'<td class="td-name">([^<]+)</td>', html)
@@ -246,16 +294,17 @@ def main():
     for gname, gurl in UPSTREAM_REPO_ENDPOINTS:
         sources.append((gname, gurl))
 
-    print(f"  [合并] 收集到 {len(sources)} 个源，开始执行全量合并与门面排序...")
+    print(f"  [合并] 收集到 {len(sources)} 个源，开始执行全量合并与置顶布局...")
 
     spider_jars = {}
-    all_sites = list(TOP_SITES_FACADE)
+    # 门面节点 + 可可/云端/云速等高级 4K 逆向 PY 节点并列置顶
+    all_sites = list(TOP_SITES_FACADE) + list(PY_CAT_SITES)
     all_lives, all_parses = [], []
 
     seen_site_signatures = set()
     seen_keys = set()
 
-    for facade in TOP_SITES_FACADE:
+    for facade in all_sites:
         sig = f"{facade.get('api')}_{facade.get('ext')}_{facade.get('jar')}"
         seen_site_signatures.add(sig)
         seen_keys.add(facade["key"])
@@ -278,6 +327,7 @@ def main():
             ext = s.get("ext", "")
             jar = s.get("jar", "")
 
+            # 唯一的过滤条件：仅杀 18+ 色情内容！
             if not key or is_blacklisted(raw_name) or is_blacklisted(str(api)):
                 continue
 
@@ -313,7 +363,7 @@ def main():
             if u: all_parses.append(p)
 
     all_sites.extend(rest_sites)
-    print(f"  └─ 去重合并完成，总计收录 100% 唯一有效站点: {len(all_sites)} 个")
+    print(f"  └─ 全量合并完成，总计收录 100% 唯一有效站点: {len(all_sites)} 个")
 
     analyze_potential_duplicates(WORK_DIR, all_sites)
 
@@ -355,8 +405,8 @@ def main():
         json.dump(multi, f, ensure_ascii=False, indent=2)
     print(f"[OK] 生成多仓配置文件: tvbox_multi.json")
 
-    # 重点改进：取消 max_sites 限制，对全网所有有效站点执行全量深解析，防止非凡等站点被忽略漏网！
-    print("  [深解析与策略] 正在对全网所有有效站点执行全量深解析...")
+    # 取消任何 max_sites 截断限制，全并发深解析！
+    print("  [全量深解析与策略] 正在对全网所有有效站点执行全并发深解析...")
     grouped_cdn_domains = resolve_deep_media_domains(all_sites, max_sites=len(all_sites))
 
     print("  [AdGuard & 路由导出] 生成 AdGuard 放行规则与 PassWall/Clash 策略...")
@@ -369,7 +419,7 @@ def main():
             if isinstance(api, str) and api.startswith("http"):
                 f.write(f"{s['name']}\n{api}\n\n")
 
-    print(f"\n[{time.strftime('%Y-%m-%d %H:%M:%S')}] 漏网之鱼修补与全量深解析更新完成!")
+    print(f"\n[{time.strftime('%Y-%m-%d %H:%M:%S')}] 可可/云端/云速等新源融入与更新完成!")
     return 0
 
 if __name__ == "__main__":
