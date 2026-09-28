@@ -527,6 +527,14 @@
     {
       "name": "okay",
       "url": "https://raw.githubusercontent.com/songlees355-wq/okay/main/tvbox.json"
+    },
+    {
+      "name": "zxfhuy",
+      "url": "https://raw.githubusercontent.com/zxfhuy/test/main/test.json"
+    },
+    {
+      "name": "jingyi251",
+      "url": "https://raw.githubusercontent.com/jingyi251/a/main/a.json"
     }
   ],
   "stores": [
@@ -1057,6 +1065,14 @@
     {
       "sourceName": "okay",
       "sourceUrl": "https://raw.githubusercontent.com/songlees355-wq/okay/main/tvbox.json"
+    },
+    {
+      "sourceName": "zxfhuy",
+      "sourceUrl": "https://raw.githubusercontent.com/zxfhuy/test/main/test.json"
+    },
+    {
+      "sourceName": "jingyi251",
+      "sourceUrl": "https://raw.githubusercontent.com/jingyi251/a/main/a.json"
     }
   ],
   "storeHouse": [
@@ -1587,6 +1603,14 @@
     {
       "sourceName": "okay",
       "sourceUrl": "https://raw.githubusercontent.com/songlees355-wq/okay/main/tvbox.json"
+    },
+    {
+      "sourceName": "zxfhuy",
+      "sourceUrl": "https://raw.githubusercontent.com/zxfhuy/test/main/test.json"
+    },
+    {
+      "sourceName": "jingyi251",
+      "sourceUrl": "https://raw.githubusercontent.com/jingyi251/a/main/a.json"
     }
   ]
 }

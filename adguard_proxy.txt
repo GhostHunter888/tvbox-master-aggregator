@@ -1,0 +1,6 @@
+! OpenWrt AdGuard Home TVBox 视频源强制代理放行白名单规则
+@@||catbox.n13.club^
+@@||file.icve.com.cn^
+@@||files.zohopublic.com.cn^
+@@||haiwaikan.com^
+@@||home.jundie.top^
