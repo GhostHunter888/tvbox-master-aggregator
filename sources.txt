@@ -1,7 +1,10 @@
-# 2026-09-28 09:58:09
+# 2026-09-28 10:36:11
 
 💎可可影视┃4K高清
-https://raw.githubusercontent.com/jie20091116/cat/a201c9690267c1ab4e3f65d5a1fca80662438fa0/TVBOX/PY/kkys.py
+https://gh-proxy.com/https://raw.githubusercontent.com/jie20091116/cat/a201c9690267c1ab4e3f65d5a1fca80662438fa0/TVBOX/PY/kkys.py
+
+💎厂长资源┃1080P
+https://gh-proxy.com/https://raw.githubusercontent.com/jie20091116/cat/a201c9690267c1ab4e3f65d5a1fca80662438fa0/TVBOX/PY/czzy.py
 
 🔥OK-资源
 http://api.okzyw.net/api.php/provide/vod/from/okm3u8/at/xml
@@ -18,18 +21,6 @@ https://suoniapi.com/api.php/provide/vod/?ac=list
 ⚡极速┃云播
 https://jszyapi.com/api.php/provide/vod/
 
-💎云端影视┃[PY]
-https://raw.githubusercontent.com/jie20091116/cat/a201c9690267c1ab4e3f65d5a1fca80662438fa0/TVBOX/%E4%BA%91%E7%AB%AF%E5%BD%B1%E8%A7%86.py
-
-💎云速影视┃[PY]
-https://raw.githubusercontent.com/jie20091116/cat/a201c9690267c1ab4e3f65d5a1fca80662438fa0/TVBOX/%E4%BA%91%E9%80%9F%E5%BD%B1%E8%A7%86.py
-
-💎悠悠影视┃[PY]
-https://raw.githubusercontent.com/jie20091116/cat/a201c9690267c1ab4e3f65d5a1fca80662438fa0/TVBOX/%E6%82%A0%E6%82%A0APP.py
-
-💎浴火社┃[PY]
-https://raw.githubusercontent.com/jie20091116/cat/a201c9690267c1ab4e3f65d5a1fca80662438fa0/TVBOX/%E6%B5%B4%E7%81%AB%E7%A4%BEAPP.py
-
 [俊哥接口] 低端影视(DRPY)
 http://home.jundie.top:666/JS/dr_py/libs/drpy.min.js
 
@@ -37,7 +28,7 @@ http://home.jundie.top:666/JS/dr_py/libs/drpy.min.js
 http://home.jundie.top:666/JS/dr_py/libs/drpy.min.js
 
 [宝盒接口] 儿童📚启蒙
-https://gh-proxy.net/https://raw.githubusercontent.com/fantaiying7/EXT/refs/heads/main/drpy2.min.js
+https://gh-proxy.com/https://gh-proxy.net/https://raw.githubusercontent.com/fantaiying7/EXT/refs/heads/main/drpy2.min.js
 
 [荐片] 🦚量子┃采集
 https://cj.lziapi.com/api.php/provide/vod/at/xml
@@ -70,10 +61,10 @@ https://file.zhangyichi.dev/uploads/695cb6347d0b1_1767683636.js
 https://file.zhangyichi.dev/uploads/695cb6347d0b1_1767683636.js
 
 [软件] 星芽｜短剧
-https://git.yylx.win/raw.githubusercontent.com/PizazzGY/NewTVBox/main/movie/py/XYDJ.py
+https://gh-proxy.com/https://git.yylx.win/raw.githubusercontent.com/PizazzGY/NewTVBox/main/movie/py/XYDJ.py
 
 [软件] 剧王｜短剧
-https://git.yylx.win/raw.githubusercontent.com/PizazzGY/NewTVBox/main/movie/py/JWDJ.py
+https://gh-proxy.com/https://git.yylx.win/raw.githubusercontent.com/PizazzGY/NewTVBox/main/movie/py/JWDJ.py
 
 [软件] 采集｜合集
 https://file.zhangyichi.dev/uploads/695cb6347d0b1_1767683636.js
@@ -196,7 +187,7 @@ https://so.yinpai.xyz/api.php?type=xunlei
 http://124.223.214.31:16/api/lib/drpy2.min.js
 
 [5] 钛金影视
-https://gh-proxy.org/https://raw.github.com/tly824/tvbox/master/lib/drpy2.min.js
+https://gh-proxy.com/https://gh-proxy.org/https://raw.github.com/tly824/tvbox/master/lib/drpy2.min.js
 
 [5] 牛牛影视
 https://api.niuniuzy.me/api.php/provide/vod/from/nnm3u8/at/json
@@ -205,28 +196,28 @@ https://api.niuniuzy.me/api.php/provide/vod/from/nnm3u8/at/json
 https://cj.lziapi.com/api.php/provide/vod
 
 [5] 腾讯视频
-https://gh-proxy.org/https://raw.github.com/tly824/TvBoxx/master/js/drpy2.min.js
+https://gh-proxy.com/https://gh-proxy.org/https://raw.github.com/tly824/TvBoxx/master/js/drpy2.min.js
 
 [5] 爱奇艺
-https://gh-proxy.org/https://raw.github.com/tly824/TvBoxx/master/js/drpy2.min.js
+https://gh-proxy.com/https://gh-proxy.org/https://raw.github.com/tly824/TvBoxx/master/js/drpy2.min.js
 
 [5] 优酷
-https://gh-proxy.org/https://raw.github.com/tly824/TvBoxx/master/js/drpy2.min.js
+https://gh-proxy.com/https://gh-proxy.org/https://raw.github.com/tly824/TvBoxx/master/js/drpy2.min.js
 
 [5] 芒果Tv
-https://gh-proxy.org/https://raw.github.com/tly824/TvBoxx/master/js/drpy2.min.js
+https://gh-proxy.com/https://gh-proxy.org/https://raw.github.com/tly824/TvBoxx/master/js/drpy2.min.js
 
 [5] 芒果TV[追剧]
 https://file.icve.com.cn/file_doc/249/899/3E7E0C8A023B624CEC6BDCC200F06F02.js
 
 [5] 360影视
-https://gh-proxy.org/https://raw.github.com/tly824/TvBoxx/master/js/drpy2.min.js
+https://gh-proxy.com/https://gh-proxy.org/https://raw.github.com/tly824/TvBoxx/master/js/drpy2.min.js
 
 [5] 搜狗影视
-https://gh-proxy.org/https://raw.github.com/tly824/TvBoxx/master/js/drpy2.min.js
+https://gh-proxy.com/https://gh-proxy.org/https://raw.github.com/tly824/TvBoxx/master/js/drpy2.min.js
 
 [5] 奇优影视
-https://gh-proxy.org/https://raw.github.com/tly824/TvBoxx/master/js/drpy2.min.js
+https://gh-proxy.com/https://gh-proxy.org/https://raw.github.com/tly824/TvBoxx/master/js/drpy2.min.js
 
 [5] 飘零影视
 https://p2100.net/api.php/provide/vod
@@ -268,43 +259,43 @@ https://tyyszyapi.com/api.php/provide/vod/at/xml
 https://ikunzyapi.com/api.php/provide/vod/at/xml
 
 [5] 西瓜影视.js
-https://ghfast.top/https://raw.githubusercontent.com/FGBLH/HKL/refs/heads/main/jar_js/西瓜影视.js
+https://gh-proxy.com/https://ghfast.top/https://raw.githubusercontent.com/FGBLH/HKL/refs/heads/main/jar_js/西瓜影视.js
 
 [5] 🐬拾光影视.js[追剧]
-https://ghfast.top/https://raw.githubusercontent.com/FGBLH/HKL/refs/heads/main/jar_js/拾光影视.js
+https://gh-proxy.com/https://ghfast.top/https://raw.githubusercontent.com/FGBLH/HKL/refs/heads/main/jar_js/拾光影视.js
 
 [5] 片库
-https://ghfast.top/https://raw.githubusercontent.com/FGBLH/HKL/refs/heads/main/jar_js/片库.js
+https://gh-proxy.com/https://ghfast.top/https://raw.githubusercontent.com/FGBLH/HKL/refs/heads/main/jar_js/片库.js
 
 [5] 枫叶影院
-https://ghfast.top/https://raw.githubusercontent.com/FGBLH/HKL/refs/heads/main/jar_js/枫叶影院.js
+https://gh-proxy.com/https://ghfast.top/https://raw.githubusercontent.com/FGBLH/HKL/refs/heads/main/jar_js/枫叶影院.js
 
 [5] 808影院
-https://ghfast.top/https://raw.githubusercontent.com/FGBLH/HKL/refs/heads/main/py/808影院.py
+https://gh-proxy.com/https://ghfast.top/https://raw.githubusercontent.com/FGBLH/HKL/refs/heads/main/py/808影院.py
 
 [5] 共青春影院
-https://ghfast.top/https://raw.githubusercontent.com/FGBLH/HKL/refs/heads/main/py/共青春影院.py
+https://gh-proxy.com/https://ghfast.top/https://raw.githubusercontent.com/FGBLH/HKL/refs/heads/main/py/共青春影院.py
 
 [5] 枝枝影视
-https://ghfast.top/https://raw.githubusercontent.com/FGBLH/HKL/refs/heads/main/py/枝枝影视.py
+https://gh-proxy.com/https://ghfast.top/https://raw.githubusercontent.com/FGBLH/HKL/refs/heads/main/py/枝枝影视.py
 
 [5] 柯南影视
-https://ghfast.top/https://raw.githubusercontent.com/FGBLH/HKL/refs/heads/main/py/柯南影视.py
+https://gh-proxy.com/https://ghfast.top/https://raw.githubusercontent.com/FGBLH/HKL/refs/heads/main/py/柯南影视.py
 
 [5] 太乙影视
-https://ghfast.top/https://raw.githubusercontent.com/FGBLH/HKL/refs/heads/main/py/太乙影视.py
+https://gh-proxy.com/https://ghfast.top/https://raw.githubusercontent.com/FGBLH/HKL/refs/heads/main/py/太乙影视.py
 
 [5] 悟空影视
-https://ghfast.top/https://raw.githubusercontent.com/FGBLH/HKL/refs/heads/main/py/悟空影视.py
+https://gh-proxy.com/https://ghfast.top/https://raw.githubusercontent.com/FGBLH/HKL/refs/heads/main/py/悟空影视.py
 
 [5] 神马影视
-https://ghfast.top/https://raw.githubusercontent.com/FGBLH/HKL/refs/heads/main/py/神马影视.py
+https://gh-proxy.com/https://ghfast.top/https://raw.githubusercontent.com/FGBLH/HKL/refs/heads/main/py/神马影视.py
 
 [5] 腾云驾雾[官](drpy_t3)
-https://gh-proxy.org/https://raw.github.com/tly824/hipy-server/master/app/t4/files/drpy_libs/drpy2.min.js
+https://gh-proxy.com/https://gh-proxy.org/https://raw.github.com/tly824/hipy-server/master/app/t4/files/drpy_libs/drpy2.min.js
 
 [5] 百忙无果[官](drpy_t3)
-https://gh-proxy.org/https://raw.github.com/tly824/hipy-server/master/app/t4/files/drpy_libs/drpy2.min.js
+https://gh-proxy.com/https://gh-proxy.org/https://raw.github.com/tly824/hipy-server/master/app/t4/files/drpy_libs/drpy2.min.js
 
 [5] 点播源
 http://www.xyba.cn/api.php/provide/vod/at/xml
@@ -319,7 +310,7 @@ https://ikunzyapi.com/api.php/provide/vod/from/ikm3u8
 https://haiwaikan.com/api.php/provide/vod
 
 [我] 儿童┃启蒙
-https://ghp.ci/raw.githubusercontent.com/fantaiying7/EXT/refs/heads/main/drpy2.min.js
+https://gh-proxy.com/https://ghp.ci/raw.githubusercontent.com/fantaiying7/EXT/refs/heads/main/drpy2.min.js
 
 [vv] 影视 • 电影天堂
 http://caiji.dyttzyapi.com/api.php/provide/vod
@@ -354,17 +345,8 @@ https://api.apibdzy.com/api.php/provide/vod
 [00000] 音乐-蜻蜓-点我切换线路-(公众号老猫迷)
 https://catbox.n13.club/t9/qingting.php
 
-[00000] 人人影视
-https://catbox.n13.club/18/人人影视.php
-
 [00000] 影视-鬼片之家(T4)
 https://catbox.n13.club/ai/guipian360.php
-
-[00000] 央视影视
-https://catbox.n13.club/18/央视影视.php
-
-[00000] 影探影视
-https://catbox.n13.club/18/影探影视.php
 
 [00000] 瓜子影视
 https://catbox.n13.club/ai/瓜子影视.php
@@ -582,35 +564,20 @@ https://www.xrbsp.com/api/xml.php
 [apple] 香奶儿资源(已修复)
 https://www.gdlsp.com/api/xml.php
 
-[apple] 🔞花椒资源
-https://api.apilyzy.com/api.php/provide/vod/at/xml
-
-[apple] 💞探探资源💞
-https://apittzy.com/api.php/provide/vod
-
 [apple] AIvin
 http://lbapiby.com/api.php/provide/vod/at/xml
 
 [apple] 小湿妹资源(已修复)
 https://www.afasu.com/api/xml.php
 
-[apple] 奶茶资源(已修复)
-https://caiji.naichaapi.com/inc/api.php
-
-[apple] 🔞PGX电影
-https://www.pgxdy.com/api/xml.php
-
-[apple] 🔞易看资源
-https://api.yikanapi.com/api.php/provide/vod
-
 [1] 🐯虎牙┃直播
 https://gh-proxy.com/https://raw.githubusercontent.com/fantaiying7/EXT/refs/heads/main/drpy2.min.js
 
 [1] 🐟斗鱼┃直播
-https://git.yylx.win/https://raw.githubusercontent.com/fantaiying7/EXT/refs/heads/main/drpy2.min.js
+https://gh-proxy.com/https://git.yylx.win/https://raw.githubusercontent.com/fantaiying7/EXT/refs/heads/main/drpy2.min.js
 
 [1] 📚儿童┃启蒙
-https://git.yylx.win/https://raw.githubusercontent.com/fantaiying7/EXT/refs/heads/main/drpy2.min.js
+https://gh-proxy.com/https://git.yylx.win/https://raw.githubusercontent.com/fantaiying7/EXT/refs/heads/main/drpy2.min.js
 
 [https://www.ls660.com/TV/feimao.json] 🏀┃体育┃直播
 https://gitlab.com/fantaiying/ext/-/raw/main/drpy2.min.js
@@ -799,7 +766,7 @@ https://zjuba.vip/api.php/provide/vod
 https://api.zuidapi.com/api.php/provide/vod
 
 [直播] 星牙┃短剧
-https://git.yylx.win/raw.githubusercontent.com/PizazzGY/NewTVBox/main/movie/py/XYDJ.py
+https://gh-proxy.com/https://git.yylx.win/raw.githubusercontent.com/PizazzGY/NewTVBox/main/movie/py/XYDJ.py
 
 [直播] 四叶草
 https://pan.szfx.top/down.php/08343ea7d5d8d12da1c16f9ccf03040d.js
@@ -937,22 +904,22 @@ https://caiji.dyttzyapi.com/api.php/provide/vod
 https://jyzyapi.com/provide/vod/from/jinyingm3u8/at/json
 
 [直播] 豆瓣[js]
-https://raw.githubusercontent.com/xyq254245/xyqonlinerule/main/dr_py/libs/drpy2.min.js
+https://gh-proxy.com/https://raw.githubusercontent.com/xyq254245/xyqonlinerule/main/dr_py/libs/drpy2.min.js
 
 [直播] 奇珍异兽[js]
-https://raw.githubusercontent.com/xyq254245/xyqonlinerule/main/dr_py/libs/drpy2.min.js
+https://gh-proxy.com/https://raw.githubusercontent.com/xyq254245/xyqonlinerule/main/dr_py/libs/drpy2.min.js
 
 [直播] 优酷[js]
-https://raw.githubusercontent.com/xyq254245/xyqonlinerule/main/dr_py/libs/drpy2.min.js
+https://gh-proxy.com/https://raw.githubusercontent.com/xyq254245/xyqonlinerule/main/dr_py/libs/drpy2.min.js
 
 [直播] 腾云驾雾[js]
-https://raw.githubusercontent.com/xyq254245/xyqonlinerule/main/dr_py/libs/drpy2.min.js
+https://gh-proxy.com/https://raw.githubusercontent.com/xyq254245/xyqonlinerule/main/dr_py/libs/drpy2.min.js
 
 [直播] 百忙无果[js]
-https://raw.githubusercontent.com/xyq254245/xyqonlinerule/main/dr_py/libs/drpy2.min.js
+https://gh-proxy.com/https://raw.githubusercontent.com/xyq254245/xyqonlinerule/main/dr_py/libs/drpy2.min.js
 
 [直播] 金牌影视[js]
-https://raw.githubusercontent.com/xyq254245/xyqonlinerule/main/dr_py/libs/drpy2.min.js
+https://gh-proxy.com/https://raw.githubusercontent.com/xyq254245/xyqonlinerule/main/dr_py/libs/drpy2.min.js
 
 [直播] 🍊柚子资源
 https://api.yzzy-api.com/inc/api.php
@@ -1053,18 +1020,6 @@ http://lbapiby.com/api.php/provide/vod/at/xml
 [https://clun.top/fun.json] 沙鱼 | 采集
 https://shayuapi.com/api.php/provide/vod
 
-[https://clun.top/fun.json] 色播[js]
-https://raw.githubusercontent.com/fish2018/lib/main/js/dr_py/js/sebo.js
-
-[https://clun.top/fun.json] xhm
-https://raw.githubusercontent.com/fish2018/lib/main/py/py_Xhm.py
-
-[https://clun.top/fun.json] py_Phb
-https://raw.githubusercontent.com/fish2018/lib/main/py/py_Phb.py
-
-[https://clun.top/fun.json] 推特
-https://raw.githubusercontent.com/fish2018/lib/main/py/py_推特.py
-
 [https://clun.top/fun.json] 水机 | 采集
 https://www.xrbsp.com/api/xml.php
 
@@ -1083,14 +1038,8 @@ https://www.msnii.com/api/xml.php
 [https://clun.top/fun.json] 湿妹 | 采集
 http://www.afasu.com/api/xml.php
 
-[https://clun.top/fun.json] 奶茶 | 采集
-https://caiji.naichaapi.com/inc/api.php
-
 [https://clun.top/fun.json] 奶香 | 采集
 https://naixxzy.com/api.php/provide/vod
-
-[https://clun.top/fun.json] 探探 | 采集
-https://apittzy.com/api.php/provide/vod
 
 [https://clun.top/fun.json] 芒果 | 采集
 https://mgzyz1.com/api.php/provide/vod
@@ -1120,7 +1069,7 @@ http://rihou.vip:55/lib/drpy2.min.js
 https://xzcjz.com/api.php/provide/vod
 
 [4k] ⚽310直播
-https://github.moeyy.xyz/raw.githubusercontent.com/gaotianliuyun/gao/master/lib/drpy2.min.js
+https://gh-proxy.com/https://github.moeyy.xyz/raw.githubusercontent.com/gaotianliuyun/gao/master/lib/drpy2.min.js
 
 [ouge] 📢接口软件永远免费
 https://cdn.jsdmirror.com/gh/ouhaibo1980/tvbox@main/py/py_douban.py
