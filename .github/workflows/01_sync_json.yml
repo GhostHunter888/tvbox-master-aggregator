@@ -18,15 +18,11 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-          cache: 'pip'
-
-      - name: 安装依赖
-        run: pip install -r requirements.txt || true
 
       - name: 运行 01_merge_sources 独立任务
         env:
           PYTHONUNBUFFERED: "1"
-        run: python3 scripts/01_merge_sources.py
+        run: python3 scripts/merge_sources.py
 
       - name: 自动 Push 更新后的 JSON 订阅文件
         run: |

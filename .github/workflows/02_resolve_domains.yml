@@ -1,4 +1,4 @@
-name: 02_深层播放域名探测与路由规则导出
+name: 02_深层播放域名探测与 Stage5 追踪
 
 on:
   schedule:
@@ -23,26 +23,18 @@ jobs:
       - name: 安装依赖 (含 tldextract)
         run: pip install -r requirements.txt
 
-      - name: 运行 01_merge_sources 加载基础 sites
-        env:
-          PYTHONUNBUFFERED: "1"
-        run: python3 scripts/01_merge_sources.py
-
       - name: 运行 resolve_deep_cdn 独立深解析任务 (Stage 5 302 追踪)
         env:
           PYTHONUNBUFFERED: "1"
           FORCE_CDN_RESOLVE: "1"
-        run: python3 -c "import sys, os; sys.path.append('scripts'); from scripts.01_merge_sources import merge_sources; from scripts.resolve_deep_cdn import resolve_deep_media_domains; from scripts.export_router_rules import export_all_router_rules; sites = merge_sources(); g_doms = resolve_deep_media_domains(sites, max_sites=len(sites)); export_all_router_rules('.', sites, g_doms)"
+        run: python3 -c "import sys, os; sys.path.append('scripts'); from scripts.merge_sources import merge_sources; from scripts.resolve_deep_cdn import resolve_deep_media_domains; sites = merge_sources(); g_doms = resolve_deep_media_domains(sites, max_sites=len(sites)); import json; open('grouped_cdn_domains.json', 'w').write(json.dumps(g_doms, default=list, ensure_ascii=False, indent=2))"
 
-      - name: 运行 analyze_potential_duplicates 分析组
-        run: python3 scripts/analyze_potential_duplicates.py || true
-
-      - name: 自动 Push 路由器与 AdGuard 放行规则
+      - name: 自动 Push 深解析出来的 CDN 域名缓存
         run: |
           git config user.email "actions@github.com"
           git config user.name "GitHub Actions"
-          git add domains_direct.txt domains_proxy.txt clash_rules_direct.yaml clash_rules_proxy.yaml adguard_direct.txt adguard_proxy.txt potential_duplicates.log grouped_cdn_domains.json || true
-          git diff --cached --quiet && echo "规则无变更，跳过提交" && exit 0
-          git commit -m "auto: 定时深度探测播放域名并导出 AdGuard/PassWall/Clash 规则 [$(date -u '+%Y-%m-%d %H:%M:%S')]"
+          git add grouped_cdn_domains.json || true
+          git diff --cached --quiet && echo "域名缓存无变更，跳过提交" && exit 0
+          git commit -m "auto: 定时深度探测播放域名 [$(date -u '+%Y-%m-%d %H:%M:%S')]"
           git pull --rebase origin main || true
           git push origin HEAD:main --force

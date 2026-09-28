@@ -1,0 +1,39 @@
+name: 03_AdGuard 与软路由直连代理规则导出
+
+on:
+  schedule:
+    - cron: '0 0 */3 * *'  # 每 3 天自动导出 AdGuard Home 与 PassWall/Clash 规则
+  workflow_dispatch:       # 支持手动随时触发
+
+permissions:
+  contents: write
+
+jobs:
+  export_rules:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 设置 Python 3.11 环境
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: 安装依赖 (含 tldextract)
+        run: pip install -r requirements.txt
+
+      - name: 运行 export_router_rules 独立导出任务
+        env:
+          PYTHONUNBUFFERED: "1"
+        run: python3 -c "import sys, os, json; sys.path.append('scripts'); from scripts.merge_sources import merge_sources; from scripts.export_router_rules import export_all_router_rules; sites = merge_sources(); g_doms = json.load(open('grouped_cdn_domains.json')) if os.path.exists('grouped_cdn_domains.json') else {}; export_all_router_rules('.', sites, g_doms)"
+
+      - name: 自动 Push 路由器与 AdGuard 放行规则
+        run: |
+          git config user.email "actions@github.com"
+          git config user.name "GitHub Actions"
+          git add domains_direct.txt domains_proxy.txt clash_rules_direct.yaml clash_rules_proxy.yaml adguard_direct.txt adguard_proxy.txt || true
+          git diff --cached --quiet && echo "规则无变更，跳过提交" && exit 0
+          git commit -m "auto: 导出 AdGuard/PassWall/Clash 分组放行规则 [$(date -u '+%Y-%m-%d %H:%M:%S')]"
+          git pull --rebase origin main || true
+          git push origin HEAD:main --force

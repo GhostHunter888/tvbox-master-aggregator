@@ -5,7 +5,7 @@
  TVBox 主任务入口管道 (Pipeline Orchestrator)
 =============================================================================
 按顺序串联 5 个独立的单职责 Python 任务脚本：
-  01. scripts/01_merge_sources.py              : 资源抓取与合并
+  01. scripts/merge_sources.py                 : 资源抓取与合并
   02. scripts/analyze_potential_duplicates.py   : 潜在重复资源日志分析
   03. scripts/resolve_deep_cdn.py               : 多层级物理播放域名探测
   04. scripts/export_router_rules.py            : 路由器与 AdGuard 放行规则导出
@@ -18,7 +18,7 @@ import time
 
 sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), "scripts"))
 
-from scripts import01_merge_sources as step1
+from scripts import merge_sources as step1
 from scripts import analyze_potential_duplicates as step2
 from scripts import resolve_deep_cdn as step3
 from scripts import export_router_rules as step4
