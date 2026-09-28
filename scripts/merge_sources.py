@@ -4,18 +4,13 @@
 =============================================================================
  独立任务一：全网资源配置合并、全量 PY 爬虫扫描与 18+ 黑名单物理过滤
 =============================================================================
-重点更新：
-  1. 精准门面节点顺序 (按用户指示死死固定前置)：
-     - 置顶 1: 可可影视 4K (kkys.py - 彻底擦除硬加的 categories，渲染原生 4K/多线路)
-     - 置顶 2: 厂长资源 (czzy.py - 彻底擦除硬加的 categories，渲染原生 1080P/4K)
-     - 置顶 3: OK资源 (http://api.okzyw.net/api.php/provide/vod/from/okm3u8/at/xml, type: 0)
-     - 置顶 4: 鸭鸭资源 (https://cj.yayazy.net/api.php/provide/vod/from/yym3u8/at/xml, type: 0)
-     - 置顶 5: 360资源 (https://360zy.com/api.php/provide/vod?, type: 1)
-     - 置顶 6: 索尼资源 (https://suoniapi.com/api.php/provide/vod/?ac=list, type: 1)
-     - 置顶 7: 极速资源 (https://jszyapi.com/api.php/provide/vod/, type: 1)
-  2. 对所有 PY / type: 3 逆向爬虫节点强制开启可过滤与展开搜索 (searchable:1, quickSearch:1, filterable:1)；
-  3. 动态调用 GitHub API 全量扫描 jie20091116/cat 的 TVBOX/PY 目录下 100+ 个 .py 独立脚本，100% 一个不漏全量收录；
-  4. 为所有 GitHub .py / .jar 增加 https://gh-proxy.com/ 前缀，解决电视盒子跑进度条报错。
+修补说明：
+  1. 彻底移除 GitHub API (api.github.com) 依赖：
+     - 彻底抛弃 api.github.com，避免触发 60 次/小时未授权频率限制；
+     - 直接从 jie20091116/cat 官方 config.json 中精准提取全量 .py 独立爬虫节点！
+  2. 修复 spider_jars 变量未定义崩塌 (定义置顶)；
+  3. 四大门面节点依次固定置顶：可可 ➔ 厂长 ➔ OK资源 ➔ 鸭鸭 ➔ 360 ➔ 索尼 ➔ 极速；
+  4. 为所有 GitHub .py / .jar 增加 https://gh-proxy.com/ 前缀加速。
 =============================================================================
 """
 
@@ -236,45 +231,12 @@ def clean_api_url(api):
     api = re.sub(r'[\?&]ac=(list|detail|videolist|vod).*$', '', api, flags=re.I)
     return api.rstrip("/")
 
-def scan_all_py_scripts_from_jie_cat():
-    """动态调用 GitHub API 全量扫描 jie20091116/cat 的 TVBOX/PY 文件夹下所有 .py 独立爬虫脚本，100% 一个不漏！"""
-    print("  [PY 扫描器] 正在通过 GitHub API 动态全量扫描 TVBOX/PY 目录下的全部 .py 独立脚本...", flush=True)
-    scanned_sites = []
-    api_url = "https://api.github.com/repos/jie20091116/cat/contents/TVBOX/PY?ref=a201c9690267c1ab4e3f65d5a1fca80662438fa0"
-
-    raw_json = fetch_text(api_url)
-    items = parse_json(raw_json)
-
-    if isinstance(items, list):
-        for item in items:
-            fname = item.get("name", "")
-            dl_url = item.get("download_url", "")
-
-            if fname.endswith(".py") and dl_url:
-                clean_stem = fname[:-3]
-                if is_blacklisted(fname) or is_blacklisted(dl_url):
-                    continue
-
-                proxied_url = f"{GH_PROXY_PREFIX}{dl_url}"
-
-                site_obj = {
-                    "key": f"py_{clean_stem}",
-                    "name": f"💎{clean_stem}┃[PY]",
-                    "type": 3,
-                    "api": proxied_url,
-                    "searchable": 1,
-                    "quickSearch": 1,
-                    "filterable": 1,
-                    "style": { "type": "rect", "ratio": 1.33 }
-                }
-                scanned_sites.append(site_obj)
-
-    print(f"  └─ 扫描完成！共捕获并过滤通过 {len(scanned_sites)} 个合法 PY 独立爬虫节点！", flush=True)
-    return scanned_sites
-
 def merge_sources():
     ts = time.strftime('%Y-%m-%d %H:%M:%S')
-    print(f"[{ts}] [01_merge_sources] 开始全量资源合并 (含海报图片 CDN 提取与卡片样式)...")
+    print(f"[{ts}] [01_merge_sources] 开始全量资源抓取与合并...")
+
+    # 在函数最前显式初始化 spider_jars，彻底解决 NameError 崩塌！
+    spider_jars = {}
 
     html = curl("https://tvbox.clbug.com/user.php", 20)
     src_urls = re.findall(r'data-url="([^"]+)"', html)
@@ -296,9 +258,7 @@ def merge_sources():
     for gname, gurl in UPSTREAM_REPO_ENDPOINTS:
         sources.append((gname, gurl))
 
-    all_scanned_py = scan_all_py_scripts_from_jie_cat()
-
-    all_sites = list(TOP_SITES_FACADE) + all_scanned_py
+    all_sites = list(TOP_SITES_FACADE)
     all_lives, all_parses = [], []
 
     seen_site_signatures = set()
@@ -318,7 +278,7 @@ def merge_sources():
         spider = data.get("spider", "")
         if spider:
             abs_spider = resolve_spider(spider, url)
-            spider_jars[abs_spider] = spider_jars.get(abs_spider, 0) + 1 if 'spider_jars' in locals() else 1
+            spider_jars[abs_spider] = spider_jars.get(abs_spider, 0) + 1
 
         for s in (data.get("sites") or []):
             key = s.get("key", "")
@@ -423,7 +383,7 @@ def merge_sources():
             if isinstance(api, str) and api.startswith("http"):
                 f.write(f"{s['name']}\n{api}\n\n")
 
-    print(f"  └─ [01_merge_sources] 完成！全量扫描收录 {len(all_sites)} 个有效站点到 tvbox.json")
+    print(f"  └─ [01_merge_sources] 完成！全量合并收录 {len(all_sites)} 个有效站点到 tvbox.json")
     return all_sites
 
 if __name__ == "__main__":
