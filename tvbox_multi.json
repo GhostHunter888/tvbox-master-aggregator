@@ -535,6 +535,14 @@
     {
       "name": "jingyi251",
       "url": "https://raw.githubusercontent.com/jingyi251/a/main/a.json"
+    },
+    {
+      "name": "jie20091116",
+      "url": "https://raw.githubusercontent.com/jie20091116/cat/a201c9690267c1ab4e3f65d5a1fca80662438fa0/TVBOX/config.json"
+    },
+    {
+      "name": "laoma2053",
+      "url": "https://raw.githubusercontent.com/laoma2053/awesome-zhuiju-free/main/resources/resources.json"
     }
   ],
   "stores": [
@@ -1073,6 +1081,14 @@
     {
       "sourceName": "jingyi251",
       "sourceUrl": "https://raw.githubusercontent.com/jingyi251/a/main/a.json"
+    },
+    {
+      "sourceName": "jie20091116",
+      "sourceUrl": "https://raw.githubusercontent.com/jie20091116/cat/a201c9690267c1ab4e3f65d5a1fca80662438fa0/TVBOX/config.json"
+    },
+    {
+      "sourceName": "laoma2053",
+      "sourceUrl": "https://raw.githubusercontent.com/laoma2053/awesome-zhuiju-free/main/resources/resources.json"
     }
   ],
   "storeHouse": [
@@ -1611,6 +1627,14 @@
     {
       "sourceName": "jingyi251",
       "sourceUrl": "https://raw.githubusercontent.com/jingyi251/a/main/a.json"
+    },
+    {
+      "sourceName": "jie20091116",
+      "sourceUrl": "https://raw.githubusercontent.com/jie20091116/cat/a201c9690267c1ab4e3f65d5a1fca80662438fa0/TVBOX/config.json"
+    },
+    {
+      "sourceName": "laoma2053",
+      "sourceUrl": "https://raw.githubusercontent.com/laoma2053/awesome-zhuiju-free/main/resources/resources.json"
     }
   ]
 }

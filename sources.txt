@@ -1,4 +1,7 @@
-# 2026-09-28 05:27:41
+# 2026-09-28 09:58:09
+
+💎可可影视┃4K高清
+https://raw.githubusercontent.com/jie20091116/cat/a201c9690267c1ab4e3f65d5a1fca80662438fa0/TVBOX/PY/kkys.py
 
 🔥OK-资源
 http://api.okzyw.net/api.php/provide/vod/from/okm3u8/at/xml
@@ -8,6 +11,24 @@ https://cj.yayazy.net/api.php/provide/vod/from/yym3u8/at/xml
 
 🦚360┃采集
 https://360zy.com/api.php/provide/vod?
+
+🐉索尼┃高清4K
+https://suoniapi.com/api.php/provide/vod/?ac=list
+
+⚡极速┃云播
+https://jszyapi.com/api.php/provide/vod/
+
+💎云端影视┃[PY]
+https://raw.githubusercontent.com/jie20091116/cat/a201c9690267c1ab4e3f65d5a1fca80662438fa0/TVBOX/%E4%BA%91%E7%AB%AF%E5%BD%B1%E8%A7%86.py
+
+💎云速影视┃[PY]
+https://raw.githubusercontent.com/jie20091116/cat/a201c9690267c1ab4e3f65d5a1fca80662438fa0/TVBOX/%E4%BA%91%E9%80%9F%E5%BD%B1%E8%A7%86.py
+
+💎悠悠影视┃[PY]
+https://raw.githubusercontent.com/jie20091116/cat/a201c9690267c1ab4e3f65d5a1fca80662438fa0/TVBOX/%E6%82%A0%E6%82%A0APP.py
+
+💎浴火社┃[PY]
+https://raw.githubusercontent.com/jie20091116/cat/a201c9690267c1ab4e3f65d5a1fca80662438fa0/TVBOX/%E6%B5%B4%E7%81%AB%E7%A4%BEAPP.py
 
 [俊哥接口] 低端影视(DRPY)
 http://home.jundie.top:666/JS/dr_py/libs/drpy.min.js
