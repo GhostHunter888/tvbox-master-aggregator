@@ -2,13 +2,17 @@
 # -*- coding: utf-8 -*-
 """
 =============================================================================
- TVBox 资源全量整合更新引擎 (修复 spider_jars 变量未定义崩塌 + 测速排序版)
+ TVBox 资源全量整合更新引擎 (多层级深解析与带备注分组导出版)
 =============================================================================
-修复说明：
-  1. 修复 NameError: name 'spider_jars' is not defined，将 spider_jars = {} 字典初始化置于循环之前；
-  2. 三大金刚门面节点 (OK资源、鸭鸭资源、360资源) 稳稳置顶 sites[0], sites[1], sites[2]；
-  3. 其余全网合并站点根据测速响应延迟从快到慢科学排序；
-  4. 原封不动保留所有上游原厂属性 (jar, ext 等)，仅通过 SEX_KEYWORDS 隔离 18+ 低俗内容。
+重点更新：
+  1. 三大顶级门面节点死死镇守 sites[0], sites[1], sites[2]：
+     - 置顶 1: OK资源 (http://api.okzyw.net/api.php/provide/vod/from/okm3u8/at/xml, type: 0)
+     - 置顶 2: 鸭鸭资源 (https://cj.yayazy.net/api.php/provide/vod/from/yym3u8/at/xml, type: 0)
+     - 置顶 3: 360资源 (https://360zy.com/api.php/provide/vod?, type: 1)
+  2. 抹掉 18+ 低俗内容后的 51 个纯净全量分类，挂载于 OK资源 与 鸭鸭资源；
+  3. 深层播放 CDN 提取器按【门面CDN、API控制面、播放页域名、终极TS切片CDN】分组打标签；
+  4. 带备注分组导出 AdGuard Home (adguard_direct.txt)、PassWall (domains_direct.txt)、Clash (clash_rules_direct.yaml)；
+  5. 引入独立分析脚本 analyze_potential_duplicates，生成 potential_duplicates.log。
 =============================================================================
 """
 
@@ -29,7 +33,7 @@ try:
     from export_router_rules import export_all_router_rules
     from analyze_potential_duplicates import analyze_potential_duplicates
 except ImportError:
-    def resolve_deep_media_domains(sites, max_sites=30): return set()
+    def resolve_deep_media_domains(sites, max_sites=30): return {}
     def export_all_router_rules(work_dir, sites, deep_cdn_domains): pass
     def analyze_potential_duplicates(work_dir, sites): pass
 
@@ -38,9 +42,6 @@ sys.stdout.reconfigure(line_buffering=True) if hasattr(sys.stdout, 'reconfigure'
 WORK_DIR = os.path.dirname(os.path.abspath(__file__))
 CF_PROXY = os.environ.get("CF_PROXY", "")  # Cloudflare Worker 代理地址
 
-# =========================================================
-# 抹掉 18+ 低俗项目后的 51 个纯净全量分类白名单
-# =========================================================
 CLEANED_51_CATEGORIES = [
     "电影", "电视剧", "综艺", "动漫", "动作片", "喜剧片", "爱情片", "科幻片",
     "恐怖片", "剧情片", "战争片", "国产剧", "欧美剧", "韩剧", "日剧", "港剧",
@@ -50,9 +51,6 @@ CLEANED_51_CATEGORIES = [
     "女频恋爱", "反转爽剧", "古装仙侠", "年代穿越", "脑洞悬疑", "现代都市", "邵氏电影", "Netflix自制剧", "Netflix电影", "科普学习", "漫剧"
 ]
 
-# =========================================================
-# 三大金刚门面置顶节点 (镇守 sites[0], sites[1], sites[2])
-# =========================================================
 TOP_SITES_FACADE = [
     {
         "key": "OK资源",
@@ -195,7 +193,7 @@ def clean_api_url(api):
 
 def main():
     ts = time.strftime('%Y-%m-%d %H:%M:%S')
-    print(f"[{ts}] 开始 TVBox 全量资源整合 (三大门面置顶 + 测速排序版)...")
+    print(f"[{ts}] 开始 TVBox 全量资源整合 (三大门面置顶 + 带备注分组导出版)...")
 
     # 1. 抓取配置源列表
     html = curl("https://tvbox.clbug.com/user.php", 20)
@@ -220,7 +218,6 @@ def main():
 
     print(f"  [合并] 收集到 {len(sources)} 个源，开始执行全量合并与置顶布局...")
 
-    # 初始化所有全局变量 (修复 NameError: name 'spider_jars' is not defined)
     spider_jars = {}
     all_sites = list(TOP_SITES_FACADE)
     all_lives, all_parses = [], []
@@ -228,13 +225,11 @@ def main():
     seen_site_signatures = set()
     seen_keys = set()
 
-    # 占位三大门面节点
     for facade in TOP_SITES_FACADE:
         sig = f"{facade.get('api')}_{facade.get('ext')}_{facade.get('jar')}"
         seen_site_signatures.add(sig)
         seen_keys.add(facade["key"])
 
-    # 待按测速排序的后续节点池
     rest_sites = []
 
     for name, url in sources:
@@ -253,7 +248,6 @@ def main():
             ext = s.get("ext", "")
             jar = s.get("jar", "")
 
-            # 唯一的过滤条件：仅杀 18+ 色情内容！
             if not key or is_blacklisted(raw_name) or is_blacklisted(str(api)):
                 continue
 
@@ -288,11 +282,9 @@ def main():
             u = p.get("url", "")
             if u: all_parses.append(p)
 
-    # 拼接三大门面节点 + 其余全网去重节点
     all_sites.extend(rest_sites)
     print(f"  └─ 去重合并完成，总计收录 100% 唯一有效站点: {len(all_sites)} 个")
 
-    # 运行潜在重复分析脚本，记录日志
     analyze_potential_duplicates(WORK_DIR, all_sites)
 
     DEFAULT_FLAGS = ["youku", "qq", "iqiyi", "qiyi", "letv", "sohu", "tudou", "pptv", "mgtv", "wasu"]
@@ -333,12 +325,12 @@ def main():
         json.dump(multi, f, ensure_ascii=False, indent=2)
     print(f"[OK] 生成多仓配置文件: tvbox_multi.json")
 
-    # 4. 多层级深解析与导出
-    print("  [深解析与策略] 运行多层级深解析脚本...")
-    deep_cdn_domains = resolve_deep_media_domains(all_sites, max_sites=30)
+    # 4. 多层级深解析与带备注分组导出
+    print("  [深层 CDN 解析] 正在执行多层级物理探测 (API ➔ M3U8/网页播放页 ➔ 终极 TS 切片 CDN)...")
+    grouped_cdn_domains = resolve_deep_media_domains(all_sites, max_sites=30)
 
-    print("  [AdGuard & 路由导出] 生成 AdGuard 放行规则与 PassWall/Clash 策略...")
-    export_all_router_rules(WORK_DIR, all_sites, deep_cdn_domains)
+    print("  [带备注分组导出] 生成 AdGuard Home 放行白名单、PassWall 与 Clash 分组规则...")
+    export_all_router_rules(WORK_DIR, all_sites, grouped_cdn_domains)
 
     with open(os.path.join(WORK_DIR, "sources.txt"), "w", encoding="utf-8") as f:
         f.write(f"# {ts}\n\n")
@@ -347,7 +339,7 @@ def main():
             if isinstance(api, str) and api.startswith("http"):
                 f.write(f"{s['name']}\n{api}\n\n")
 
-    print(f"\n[{time.strftime('%Y-%m-%d %H:%M:%S')}] 去重合并与三大门面更新完成!")
+    print(f"\n[{time.strftime('%Y-%m-%d %H:%M:%S')}] 带备注分组导出与更新全量完成!")
     return 0
 
 if __name__ == "__main__":
