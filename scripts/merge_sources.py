@@ -13,9 +13,9 @@
      - 置顶 5: 360资源 (https://360zy.com/api.php/provide/vod?, type: 1)
      - 置顶 6: 索尼资源 (https://suoniapi.com/api.php/provide/vod/?ac=list, type: 1)
      - 置顶 7: 极速资源 (https://jszyapi.com/api.php/provide/vod/, type: 1)
-  2. 动态全量扫描 jie20091116/cat 的 TVBOX/PY 目录下的全部 100+ 个 .py 独立爬虫脚本，100% 全量注册收录！
-  3. 补全扩充 18+ 黑名单词库 (追加 ①⑧, 🔞, 18/, 小师妹, 奶茶, 探探, pgx 等漏网之鱼)；
-  4. 为所有 GitHub .py / .jar 增加 https://gh-proxy.com/ 前缀，解决电视盒子跑进度条失败报错问题。
+  2. 对所有 PY / type: 3 逆向爬虫节点强制开启可过滤与展开搜索 (searchable:1, quickSearch:1, filterable:1)；
+  3. 动态调用 GitHub API 全量扫描 jie20091116/cat 的 TVBOX/PY 目录下 100+ 个 .py 独立脚本，100% 一个不漏全量收录；
+  4. 为所有 GitHub .py / .jar 增加 https://gh-proxy.com/ 前缀，解决电视盒子跑进度条报错。
 =============================================================================
 """
 
@@ -43,9 +43,7 @@ CLEANED_51_CATEGORIES = [
 
 GH_PROXY_PREFIX = "https://gh-proxy.com/"
 
-# 按用户指示：死死固定置顶顺序：可可影视 ➔ 厂长资源 ➔ OK资源 ➔ 鸭鸭资源 ➔ 360 ➔ 索尼 ➔ 极速
 TOP_SITES_FACADE = [
-    # 置顶 1: 可可影视 4K (PY 逆向，彻底移除硬加 categories 覆盖)
     {
         "key": "kkys_py",
         "name": "💎可可影视┃4K高清",
@@ -55,7 +53,6 @@ TOP_SITES_FACADE = [
         "quickSearch": 1,
         "filterable": 1
     },
-    # 置顶 2: 厂长资源 (PY 逆向，彻底移除硬加 categories 覆盖)
     {
         "key": "czzy_py",
         "name": "💎厂长资源┃1080P",
@@ -65,7 +62,6 @@ TOP_SITES_FACADE = [
         "quickSearch": 1,
         "filterable": 1
     },
-    # 置顶 3: OK资源
     {
         "key": "OK资源",
         "name": "🔥OK-资源",
@@ -77,7 +73,6 @@ TOP_SITES_FACADE = [
         "filterable": 1,
         "categories": CLEANED_51_CATEGORIES
     },
-    # 置顶 4: 鸭鸭资源
     {
         "key": "鸭鸭资源",
         "name": "🦆鸭鸭资源",
@@ -88,7 +83,6 @@ TOP_SITES_FACADE = [
         "filterable": 1,
         "categories": CLEANED_51_CATEGORIES
     },
-    # 置顶 5: 360资源
     {
         "key": "360资源",
         "name": "🦚360┃采集",
@@ -104,7 +98,6 @@ TOP_SITES_FACADE = [
             "欧美动漫", "日韩动漫", "现代都市", "脑洞悬疑", "年代穿越", "古装仙侠", "女频恋爱", "成长逆袭", "爽文短剧"
         ]
     },
-    # 置顶 6: 索尼资源
     {
         "key": "索尼资源",
         "name": "🐉索尼┃高清4K",
@@ -119,7 +112,6 @@ TOP_SITES_FACADE = [
             "国产动漫", "日韩动漫", "欧美动漫", "港台动漫", "海外动漫", "大陆综艺", "港台综艺", "日韩综艺", "欧美综艺"
         ]
     },
-    # 置顶 7: 极速资源
     {
         "key": "极速资源",
         "name": "⚡极速┃云播",
@@ -132,7 +124,6 @@ TOP_SITES_FACADE = [
     }
 ]
 
-# 扩充 18+ 色情词库 (追加用户精准抓出的漏网之鱼：①⑧, 🔞, 18/, 小师妹, 奶茶, 探探, pgx 等)
 SEX_KEYWORDS = [
     "x站", "18+", "色情", "伦理", "成人", "福利", "三级", "激情", "av",
     "杏吧", "极品x", "免费x", "嘿嘿", "火速", "红楼", "优优", "天美",
@@ -259,11 +250,9 @@ def scan_all_py_scripts_from_jie_cat():
 
             if fname.endswith(".py") and dl_url:
                 clean_stem = fname[:-3]
-                # 黑名单物理过滤 18+ 的 PY 脚本
                 if is_blacklisted(fname) or is_blacklisted(dl_url):
                     continue
 
-                # 增加 gh-proxy 加速代理，解决电视盒子跑进度条失败
                 proxied_url = f"{GH_PROXY_PREFIX}{dl_url}"
 
                 site_obj = {
@@ -277,7 +266,7 @@ def scan_all_py_scripts_from_jie_cat():
                 }
                 scanned_sites.append(site_obj)
 
-    print(f"  └─ 扫描完成！共捕获并过滤通过 {len(scanned_sites)} 个合法 PY 独立爬虫节点，100% 一个不漏全量收录！", flush=True)
+    print(f"  └─ 扫描完成！共捕获并过滤通过 {len(scanned_sites)} 个合法 PY 独立爬虫节点 (已全面开启展开搜索与筛选)！", flush=True)
     return scanned_sites
 
 def merge_sources():
@@ -304,16 +293,13 @@ def merge_sources():
     for gname, gurl in UPSTREAM_REPO_ENDPOINTS:
         sources.append((gname, gurl))
 
-    # 全量扫描 jie20091116/cat 的 TVBOX/PY 文件夹
     all_scanned_py = scan_all_py_scripts_from_jie_cat()
 
-    # 布局全量 sites 链：三大门面 (可可 ➔ 厂长 ➔ OK资源 ➔ 鸭鸭 ➔ 360 ➔ 索尼 ➔ 极速) + 全量扫描到的 PY 节点
     all_sites = list(TOP_SITES_FACADE) + all_scanned_py
     all_lives, all_parses = [], []
 
     seen_site_signatures = set()
     seen_keys = set()
-    spider_jars = {}
 
     for facade in all_sites:
         sig = f"{facade.get('api')}_{facade.get('ext')}_{facade.get('jar')}"
@@ -329,7 +315,7 @@ def merge_sources():
         spider = data.get("spider", "")
         if spider:
             abs_spider = resolve_spider(spider, url)
-            spider_jars[abs_spider] = spider_jars.get(abs_spider, 0) + 1
+            spider_jars[abs_spider] = spider_jars.get(abs_spider, 0) + 1 if 'spider_jars' in locals() else 1
 
         for s in (data.get("sites") or []):
             key = s.get("key", "")
@@ -360,7 +346,6 @@ def merge_sources():
             if clean_api:
                 s["api"] = clean_api
 
-            # 为所有 GitHub 资源前置 gh-proxy 镜像加速
             if isinstance(s.get("api"), str) and ("raw.githubusercontent.com" in s["api"] or "github.com" in s["api"]) and not s["api"].startswith(GH_PROXY_PREFIX):
                 s["api"] = f"{GH_PROXY_PREFIX}{s['api']}"
 
@@ -369,6 +354,12 @@ def merge_sources():
 
             if spider and "jar" not in s and "spider" not in s:
                 s["jar"] = resolve_spider(spider, url)
+
+            # 强制为所有 PY / type 3 站点开启展开搜索与分类筛选属性
+            if s.get("type") == 3 or (isinstance(s.get("api"), str) and s["api"].endswith(".py")):
+                s["searchable"] = 1
+                s["quickSearch"] = 1
+                s["filterable"] = 1
 
             rest_sites.append(s)
 
@@ -380,6 +371,13 @@ def merge_sources():
             if u: all_parses.append(p)
 
     all_sites.extend(rest_sites)
+
+    # 再次遍历，确保全盘每一个 type 3 / .py 节点强行赋予 searchable:1, quickSearch:1, filterable:1
+    for s in all_sites:
+        if s.get("type") == 3 or (isinstance(s.get("api"), str) and s["api"].endswith(".py")):
+            s["searchable"] = 1
+            s["quickSearch"] = 1
+            s["filterable"] = 1
 
     DEFAULT_FLAGS = ["youku", "qq", "iqiyi", "qiyi", "letv", "sohu", "tudou", "pptv", "mgtv", "wasu"]
     DEFAULT_IJK = [
