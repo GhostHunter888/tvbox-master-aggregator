@@ -4,13 +4,14 @@
 =============================================================================
  TVBox 主任务入口管道 (Pipeline Orchestrator)
 =============================================================================
-按顺序串联 6 个独立的单职责 Python 任务脚本：
+按顺序串联 7 个独立的单职责 Python 任务脚本：
   01. scripts/merge_sources.py                   : 资源抓取与合并
   02. scripts/analyze_potential_duplicates.py     : 潜在重复资源日志分析
-  03. scripts/resolve_deep_cdn.py                 : 多层级 Stage 5 物理播放域名探测
-  04. scripts/extract_image_domains.py            : 动态海报图片 CDN 域名扒取
-  05. scripts/export_router_rules.py              : 路由器与 AdGuard 放行规则导出
-  06. scripts/merge_iptv_split_18.py              : 美英学英语 IPTV 整合与 not_suitable/ 隔离
+  03. scripts/resolve_deep_cdn.py                 : 多层级 Stage 5 物理播放域名探测 (专干域名)
+  04. scripts/extract_ip_addresses.py            : 纯 IPv4 提取与 DNS 实时解析 (专干 IP)
+  05. scripts/extract_image_domains.py            : 动态海报图片 CDN 域名扒取 (专干图片)
+  06. scripts/export_router_rules.py              : 路由器与 AdGuard 放行规则导出
+  07. scripts/merge_iptv_split_18.py              : 美英学英语 IPTV 整合与 not_suitable/ 隔离
 =============================================================================
 """
 
@@ -23,9 +24,10 @@ sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), "script
 from scripts import merge_sources as step1
 from scripts import analyze_potential_duplicates as step2
 from scripts import resolve_deep_cdn as step3
-from scripts import extract_image_domains as step4
-from scripts import export_router_rules as step5
-from scripts import merge_iptv_split_18 as step6
+from scripts import extract_ip_addresses as step4
+from scripts import extract_image_domains as step5
+from scripts import export_router_rules as step6
+from scripts import merge_iptv_split_18 as step7
 
 def main():
     ts = time.strftime('%Y-%m-%d %H:%M:%S')
@@ -38,17 +40,20 @@ def main():
     work_dir = os.path.dirname(os.path.abspath(__file__))
     step2.analyze_potential_duplicates(work_dir, sites)
 
-    # 3. 运行独立任务三：多层级深解析播放域名
+    # 3. 运行独立任务三：多层级深解析播放域名 (专干域名)
     grouped_cdn_domains = step3.resolve_deep_media_domains(sites, max_sites=len(sites))
 
-    # 4. 运行独立任务四：动态海报图片 CDN 扒取
-    dynamic_image_domains = step4.extract_all_poster_image_domains(sites, max_sites=len(sites))
+    # 4. 运行独立任务四：纯 IPv4 提取与 DNS 实时反向解析 (专干 IP)
+    extracted_ips = step4.extract_ip_addresses_and_dns(sites, grouped_cdn_domains)
 
-    # 5. 运行独立任务五：策略导出 (AdGuard / PassWall / Clash)
-    step5.export_all_router_rules(work_dir, sites, grouped_cdn_domains, dynamic_image_domains)
+    # 5. 运行独立任务五：动态海报图片 CDN 扒取 (专干图片)
+    dynamic_image_domains = step5.extract_all_poster_image_domains(sites, max_sites=len(sites))
 
-    # 6. 运行独立任务六：美英学英语 IPTV 整合与 not_suitable/ 隔离导出
-    step6.process_iptv_and_split_18()
+    # 6. 运行独立任务六：策略导出 (AdGuard / PassWall / Clash)
+    step6.export_all_router_rules(work_dir, sites, grouped_cdn_domains, dynamic_image_domains, extracted_ips)
+
+    # 7. 运行独立任务七：美英学英语 IPTV 整合与 not_suitable/ 隔离导出
+    step7.process_iptv_and_split_18()
 
     print(f"\n[{time.strftime('%Y-%m-%d %H:%M:%S')}] ===== TVBox 模块化管道更新全部成功完成! =====")
 
