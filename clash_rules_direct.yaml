@@ -406,17 +406,17 @@ payload:
   - DOMAIN-SUFFIX,avnyg.com
   - DOMAIN-SUFFIX,baidu.com
   - DOMAIN-SUFFIX,balecao.com
+  - DOMAIN-SUFFIX,bfeng11.com
   - DOMAIN-SUFFIX,bfikuncdn.com
   - DOMAIN-SUFFIX,bfvvs.com
   - DOMAIN-SUFFIX,cdn-fileserver.com
   - DOMAIN-SUFFIX,dbzy5.com
+  - DOMAIN-SUFFIX,dytt-cinema.com
   - DOMAIN-SUFFIX,dytt-tupian.com
-  - DOMAIN-SUFFIX,dytt-tvs.com
-  - DOMAIN-SUFFIX,fengbao12.com
-  - DOMAIN-SUFFIX,fengbao13.com
+  - DOMAIN-SUFFIX,feifei-play.com
   - DOMAIN-SUFFIX,fffgood.com
-  - DOMAIN-SUFFIX,ffzy-bofang.com
-  - DOMAIN-SUFFIX,ffzy-play10.com
+  - DOMAIN-SUFFIX,ffzy-online6.com
+  - DOMAIN-SUFFIX,ffzy-play6.com
   - DOMAIN-SUFFIX,gghijk.com
   - DOMAIN-SUFFIX,gsuus.com
   - DOMAIN-SUFFIX,guangsuimage.com
@@ -424,12 +424,13 @@ payload:
   - DOMAIN-SUFFIX,hhuus.com
   - DOMAIN-SUFFIX,hongniuzyimage.com
   - DOMAIN-SUFFIX,huyajs.com
+  - DOMAIN-SUFFIX,ikisfyigdaisasdad.com
   - DOMAIN-SUFFIX,jinyingimage.com
   - DOMAIN-SUFFIX,jisuimage.com
   - DOMAIN-SUFFIX,jisuzyv.com
   - DOMAIN-SUFFIX,kuktxu.com
+  - DOMAIN-SUFFIX,lfthirtytwo.com
   - DOMAIN-SUFFIX,lzipic.com
-  - DOMAIN-SUFFIX,lzv34.com
   - DOMAIN-SUFFIX,mgzyz1.com
   - DOMAIN-SUFFIX,msn01.com
   - DOMAIN-SUFFIX,msn17.com
@@ -442,7 +443,7 @@ payload:
   - DOMAIN-SUFFIX,rstu6.com
   - DOMAIN-SUFFIX,rstuuv.com
   - DOMAIN-SUFFIX,ry-pic.com
-  - DOMAIN-SUFFIX,ryiplay18.com
+  - DOMAIN-SUFFIX,ryplay11.com
   - DOMAIN-SUFFIX,seaige.com
   - DOMAIN-SUFFIX,search-nowglobal.com
   - DOMAIN-SUFFIX,shandianpic.vip
@@ -452,8 +453,9 @@ payload:
   - DOMAIN-SUFFIX,tyyszy.com
   - DOMAIN-SUFFIX,tyyszyapi.com
   - DOMAIN-SUFFIX,tyyszywvod2.com
+  - DOMAIN-SUFFIX,ukuapi.com
   - DOMAIN-SUFFIX,ukuapi88.com
-  - DOMAIN-SUFFIX,ukubf3.com
+  - DOMAIN-SUFFIX,ukubf8.com
   - DOMAIN-SUFFIX,uvjtih.cn
   - DOMAIN-SUFFIX,xltupian.com
   - DOMAIN-SUFFIX,xluuss.com
@@ -461,7 +463,6 @@ payload:
   - DOMAIN-SUFFIX,xsmzy2.com
   - DOMAIN-SUFFIX,yaaabc.com
   - DOMAIN-SUFFIX,yayazy.info
-  - DOMAIN-SUFFIX,ynztctv.com
   - DOMAIN-SUFFIX,ysj77.com
   # ===== 分组: 04_三级_深层TS视频切片边缘服务器 =====
   - DOMAIN-SUFFIX,061899.xyz
@@ -721,7 +722,6 @@ payload:
   - DOMAIN-SUFFIX,dyrs3.vip
   - DOMAIN-SUFFIX,dyrshd.net
   - DOMAIN-SUFFIX,dys18.com
-  - DOMAIN-SUFFIX,dytt-tvs.com
   - DOMAIN-SUFFIX,dyttzyapi.com
   - DOMAIN-SUFFIX,dyx00.com
   - DOMAIN-SUFFIX,dzebypd.xyz
@@ -744,9 +744,7 @@ payload:
   - DOMAIN-SUFFIX,fantuansjz.com
   - DOMAIN-SUFFIX,fe-spark.cn
   - DOMAIN-SUFFIX,feikuai.in
-  - DOMAIN-SUFFIX,fengbao13.com
   - DOMAIN-SUFFIX,fesall.net
-  - DOMAIN-SUFFIX,ffzy-bofang.com
   - DOMAIN-SUFFIX,ffzyapi.com
   - DOMAIN-SUFFIX,fhapi9.com
   - DOMAIN-SUFFIX,flixflop.com
@@ -989,7 +987,6 @@ payload:
   - DOMAIN-SUFFIX,lz15uu.com
   - DOMAIN-SUFFIX,lziapi.com
   - DOMAIN-SUFFIX,lzlukvca.cc
-  - DOMAIN-SUFFIX,lzv34.com
   - DOMAIN-SUFFIX,lzytv.cfd
   - DOMAIN-SUFFIX,lzzyimg.com
   - DOMAIN-SUFFIX,lzzypic.com
@@ -1164,7 +1161,7 @@ payload:
   - DOMAIN-SUFFIX,rqtq.mom
   - DOMAIN-SUFFIX,ryapi.sbs
   - DOMAIN-SUFFIX,rycjapi.com
-  - DOMAIN-SUFFIX,ryiplay18.com
+  - DOMAIN-SUFFIX,ryplay11.com
   - DOMAIN-SUFFIX,rysp.tv
   - DOMAIN-SUFFIX,s2ykfzb.cn
   - DOMAIN-SUFFIX,sacfedge.com
@@ -1417,7 +1414,6 @@ payload:
   - DOMAIN-SUFFIX,{hm.group
   # ===== 分组: 05_海报图片_CDN放行域名 =====
   - DOMAIN-SUFFIX,dbzy5.com
-  - DOMAIN-SUFFIX,doubanio.com
   - DOMAIN-SUFFIX,dytt-tupian.com
   - DOMAIN-SUFFIX,fffgood.com
   - DOMAIN-SUFFIX,guangsuimage.com
@@ -1428,6 +1424,7 @@ payload:
   - DOMAIN-SUFFIX,jinyingimage.com
   - DOMAIN-SUFFIX,jisuimage.com
   - DOMAIN-SUFFIX,lzipic.com
+  - DOMAIN-SUFFIX,lzzyimg.com
   - DOMAIN-SUFFIX,msn01.com
   - DOMAIN-SUFFIX,mtzy2.com
   - DOMAIN-SUFFIX,niuniuzy.info
@@ -1439,6 +1436,7 @@ payload:
   - DOMAIN-SUFFIX,snzypic.vip
   - DOMAIN-SUFFIX,tyyswimg2.com
   - DOMAIN-SUFFIX,tyyszy.com
+  - DOMAIN-SUFFIX,ukuapi.com
   - DOMAIN-SUFFIX,ukuapi88.com
   - DOMAIN-SUFFIX,xltupian.com
   - DOMAIN-SUFFIX,xne03.com

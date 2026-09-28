@@ -408,17 +408,17 @@ ajupf.com
 avnyg.com
 baidu.com
 balecao.com
+bfeng11.com
 bfikuncdn.com
 bfvvs.com
 cdn-fileserver.com
 dbzy5.com
+dytt-cinema.com
 dytt-tupian.com
-dytt-tvs.com
-fengbao12.com
-fengbao13.com
+feifei-play.com
 fffgood.com
-ffzy-bofang.com
-ffzy-play10.com
+ffzy-online6.com
+ffzy-play6.com
 gghijk.com
 gsuus.com
 guangsuimage.com
@@ -426,12 +426,13 @@ hhmage.com
 hhuus.com
 hongniuzyimage.com
 huyajs.com
+ikisfyigdaisasdad.com
 jinyingimage.com
 jisuimage.com
 jisuzyv.com
 kuktxu.com
+lfthirtytwo.com
 lzipic.com
-lzv34.com
 mgzyz1.com
 msn01.com
 msn17.com
@@ -444,7 +445,7 @@ qqqrst.com
 rstu6.com
 rstuuv.com
 ry-pic.com
-ryiplay18.com
+ryplay11.com
 seaige.com
 search-nowglobal.com
 shandianpic.vip
@@ -454,8 +455,9 @@ tyyswimg2.com
 tyyszy.com
 tyyszyapi.com
 tyyszywvod2.com
+ukuapi.com
 ukuapi88.com
-ukubf3.com
+ukubf8.com
 uvjtih.cn
 xltupian.com
 xluuss.com
@@ -463,7 +465,6 @@ xne03.com
 xsmzy2.com
 yaaabc.com
 yayazy.info
-ynztctv.com
 ysj77.com
 
 # ===== 分组: 04_三级_深层TS视频切片边缘服务器 =====
@@ -724,7 +725,6 @@ dyrs.net
 dyrs3.vip
 dyrshd.net
 dys18.com
-dytt-tvs.com
 dyttzyapi.com
 dyx00.com
 dzebypd.xyz
@@ -747,9 +747,7 @@ fansg.cc
 fantuansjz.com
 fe-spark.cn
 feikuai.in
-fengbao13.com
 fesall.net
-ffzy-bofang.com
 ffzyapi.com
 fhapi9.com
 flixflop.com
@@ -992,7 +990,6 @@ lyyytv.cn
 lz15uu.com
 lziapi.com
 lzlukvca.cc
-lzv34.com
 lzytv.cfd
 lzzyimg.com
 lzzypic.com
@@ -1167,7 +1164,7 @@ rouva8.xyz
 rqtq.mom
 ryapi.sbs
 rycjapi.com
-ryiplay18.com
+ryplay11.com
 rysp.tv
 s2ykfzb.cn
 sacfedge.com
@@ -1421,7 +1418,6 @@ zzztool.com
 
 # ===== 分组: 05_海报图片_CDN放行域名 =====
 dbzy5.com
-doubanio.com
 dytt-tupian.com
 fffgood.com
 guangsuimage.com
@@ -1432,6 +1428,7 @@ ikisfyigdaisasdad.com
 jinyingimage.com
 jisuimage.com
 lzipic.com
+lzzyimg.com
 msn01.com
 mtzy2.com
 niuniuzy.info
@@ -1443,6 +1440,7 @@ shandianpic.vip
 snzypic.vip
 tyyswimg2.com
 tyyszy.com
+ukuapi.com
 ukuapi88.com
 xltupian.com
 xne03.com
