@@ -1,8 +1,8 @@
-name: 01_快速 JSON 资源抓取与合并同步
+name: 01_定时快速 JSON 资源同步 (静默定时)
 
 on:
   schedule:
-    - cron: '0 */3 * * *'  # 每 3 小时自动快速同步一次 JSON 订阅
+    - cron: '0 */3 * * *'  # 每 3 小时自动快速静默同步一次 JSON 订阅
   workflow_dispatch:       # 支持手动一键触发
 
 permissions:
@@ -19,7 +19,7 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: 深度克隆上游参考仓库至本地 repos/ 目录
+      - name: 深度克隆上游参考仓库至本地 repos/ 磁盘目录
         run: |
           mkdir -p repos
           git clone --depth 1 https://github.com/jie20091116/cat.git repos/cat || true

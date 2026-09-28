@@ -1,12 +1,8 @@
-name: 02_深层播放域名探测与 Stage5 追踪
+name: 02_定时深层播放域名与海报图片 CDN 扒取 (静默定时)
 
 on:
-  workflow_run:
-    workflows: ["01_快速 JSON 资源抓取与合并同步"]
-    types:
-      - completed
   schedule:
-    - cron: '0 0 */3 * *'  # 每 3 天物理深度探测一次 M3U8/TS/302 播放域名
+    - cron: '0 0 */3 * *'  # 每 3 天物理深度探测一次 M3U8/TS/302 播放域名与海报图片 CDN
   workflow_dispatch:       # 支持手动随时触发
 
 permissions:
@@ -14,13 +10,6 @@ permissions:
 
 jobs:
   resolve_domains:
-    # 核心 AND 逻辑条件：
-    # 1. 必须 01号工作流运行结论为 success (成功)；
-    # 2. AND 01号工作流必须是由【代码库 push 提交】引发的（排除掉 3 小时的定时事件）！
-    if: >
-      (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'push') ||
-      github.event_name == 'schedule' ||
-      github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -42,18 +31,19 @@ jobs:
           git clone --depth 1 https://github.com/gaotianliuyun/gao.git repos/gaotianliuyun || true
           git clone --depth 1 https://github.com/laoma2053/awesome-zhuiju-free.git repos/laoma2053 || true
 
-      - name: 运行 resolve_deep_cdn 独立深解析任务 (Stage 5 302 追踪)
+      - name: 运行 02 号深解析与海报图片 CDN 扒取任务
         env:
           PYTHONUNBUFFERED: "1"
           FORCE_CDN_RESOLVE: "1"
-        run: python3 -c "import sys, os; sys.path.append('scripts'); from scripts.merge_sources import merge_sources; from scripts.resolve_deep_cdn import resolve_deep_media_domains; sites = merge_sources(); g_doms = resolve_deep_media_domains(sites, max_sites=len(sites)); import json; open('grouped_cdn_domains.json', 'w').write(json.dumps(g_doms, default=list, ensure_ascii=False, indent=2))"
+        run: |
+          python3 -c "import sys, os, json; sys.path.append('scripts'); from scripts.merge_sources import merge_sources; from scripts.resolve_deep_cdn import resolve_deep_media_domains; from scripts.extract_image_domains import extract_all_poster_image_domains; sites = merge_sources(); g_doms = resolve_deep_media_domains(sites, max_sites=len(sites)); img_doms = extract_all_poster_image_domains(sites, max_sites=len(sites)); open('grouped_cdn_domains.json', 'w').write(json.dumps(g_doms, default=list, ensure_ascii=False, indent=2)); open('dynamic_image_domains.json', 'w').write(json.dumps(img_doms, ensure_ascii=False, indent=2))"
 
-      - name: 自动 Push 深解析出来的 CDN 域名缓存
+      - name: 自动 Push 深解析出来的 CDN 与海报放行规则
         run: |
           git config user.email "actions@github.com"
           git config user.name "GitHub Actions"
-          git add grouped_cdn_domains.json || true
+          git add grouped_cdn_domains.json dynamic_image_domains.json || true
           git diff --cached --quiet && echo "域名缓存无变更，跳过提交" && exit 0
-          git commit -m "auto: 深度探测播放域名 [$(date -u '+%Y-%m-%d %H:%M:%S')]"
+          git commit -m "auto: 深度探测播放域名与海报图片 CDN [$(date -u '+%Y-%m-%d %H:%M:%S')]"
           git pull --rebase origin main || true
           git push origin HEAD:main --force
