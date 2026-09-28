@@ -51,7 +51,8 @@ TOP_SITES_FACADE = [
         "api": "https://gh-proxy.com/https://raw.githubusercontent.com/jie20091116/cat/a201c9690267c1ab4e3f65d5a1fca80662438fa0/TVBOX/PY/kkys.py",
         "searchable": 1,
         "quickSearch": 1,
-        "filterable": 1
+        "filterable": 1,
+        "style": { "type": "rect", "ratio": 1.33 }
     },
     {
         "key": "czzy_py",
@@ -60,7 +61,8 @@ TOP_SITES_FACADE = [
         "api": "https://gh-proxy.com/https://raw.githubusercontent.com/jie20091116/cat/a201c9690267c1ab4e3f65d5a1fca80662438fa0/TVBOX/PY/czzy.py",
         "searchable": 1,
         "quickSearch": 1,
-        "filterable": 1
+        "filterable": 1,
+        "style": { "type": "rect", "ratio": 1.33 }
     },
     {
         "key": "OK资源",
@@ -262,16 +264,17 @@ def scan_all_py_scripts_from_jie_cat():
                     "api": proxied_url,
                     "searchable": 1,
                     "quickSearch": 1,
-                    "filterable": 1
+                    "filterable": 1,
+                    "style": { "type": "rect", "ratio": 1.33 }
                 }
                 scanned_sites.append(site_obj)
 
-    print(f"  └─ 扫描完成！共捕获并过滤通过 {len(scanned_sites)} 个合法 PY 独立爬虫节点 (已全面开启展开搜索与筛选)！", flush=True)
+    print(f"  └─ 扫描完成！共捕获并过滤通过 {len(scanned_sites)} 个合法 PY 独立爬虫节点！", flush=True)
     return scanned_sites
 
 def merge_sources():
     ts = time.strftime('%Y-%m-%d %H:%M:%S')
-    print(f"[{ts}] [01_merge_sources] 开始全量资源合并 (含全量 PY 动态扫描与精准置顶)...")
+    print(f"[{ts}] [01_merge_sources] 开始全量资源合并 (含海报图片 CDN 提取与卡片样式)...")
 
     html = curl("https://tvbox.clbug.com/user.php", 20)
     src_urls = re.findall(r'data-url="([^"]+)"', html)
@@ -355,7 +358,6 @@ def merge_sources():
             if spider and "jar" not in s and "spider" not in s:
                 s["jar"] = resolve_spider(spider, url)
 
-            # 强制为所有 PY / type 3 站点开启展开搜索与分类筛选属性
             if s.get("type") == 3 or (isinstance(s.get("api"), str) and s["api"].endswith(".py")):
                 s["searchable"] = 1
                 s["quickSearch"] = 1
@@ -372,7 +374,6 @@ def merge_sources():
 
     all_sites.extend(rest_sites)
 
-    # 再次遍历，确保全盘每一个 type 3 / .py 节点强行赋予 searchable:1, quickSearch:1, filterable:1
     for s in all_sites:
         if s.get("type") == 3 or (isinstance(s.get("api"), str) and s["api"].endswith(".py")):
             s["searchable"] = 1
