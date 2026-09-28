@@ -9,7 +9,6 @@ permissions:
   contents: write
 
 jobs:
-  # Task 1: 第一步同步 JSON
   task1_sync_json:
     runs-on: ubuntu-latest
     steps:
@@ -33,17 +32,21 @@ jobs:
           PYTHONUNBUFFERED: "1"
         run: python3 scripts/merge_sources.py
 
-      - name: 自动 Push 更新后的 JSON 订阅文件
+      - name: 运行 06_merge_iptv 独立任务 (美英学英语与 not_suitable 隔离)
+        env:
+          PYTHONUNBUFFERED: "1"
+        run: python3 scripts/merge_iptv_split_18.py || true
+
+      - name: 自动 Push 更新后的 JSON 订阅文件与隔离目录
         run: |
           git config user.email "actions@github.com"
           git config user.name "GitHub Actions"
-          git add tvbox.json tvbox_full.json tvbox_multi.json sources.txt
+          git add tvbox.json tvbox_full.json tvbox_multi.json sources.txt live.txt not_suitable/ || true
           git diff --cached --quiet && echo "JSON 无变更，跳过提交" && exit 0
           git commit -m "auto: 00任务链-第一步JSON同步完成 [$(date -u '+%Y-%m-%d %H:%M:%S')]"
           git pull --rebase origin main || true
           git push origin HEAD:main --force
 
-  # Task 2: 第二步深解析 (死死锁定 needs: task1_sync_json，必等 1 号成功后开始！)
   task2_resolve_domains:
     needs: task1_sync_json
     if: ${{ always() && needs.task1_sync_json.result == 'success' }}
@@ -85,7 +88,6 @@ jobs:
           git pull --rebase origin main || true
           git push origin HEAD:main --force
 
-  # Task 3: 第三步导出 AdGuard 与软路由放行规则 (死死锁定 needs: task2_resolve_domains，必等 2 号成功后开始！)
   task3_export_rules:
     needs: task2_resolve_domains
     if: ${{ always() && needs.task2_resolve_domains.result == 'success' }}
