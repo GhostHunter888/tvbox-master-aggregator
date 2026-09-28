@@ -1,0 +1,2 @@
+tldextract>=5.0.0
+urllib3>=2.0.0

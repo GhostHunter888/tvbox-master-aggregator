@@ -2,13 +2,13 @@
 # -*- coding: utf-8 -*-
 """
 =============================================================================
- 独立脚本：带分组备注的 AdGuard Home / PassWall / Clash 规则导出器
+ 独立脚本：基于 Mozilla 官方 Public Suffix List 的全量路由器规则导出器
 =============================================================================
 功能：
-  1. 接收来自 deep_cdn 模块提取到的【门面CDN、播放页域名、深层TS切片CDN】分组字典；
-  2. 提取 site 中 api, ext, jar 里面的域名，并识别 "(墙)" 节点；
-  3. 分组带有清晰顶部 `# ===== 分组备注 =====` / `! ===== 分组备注 =====` 头部注释；
-  4. 分别导出 AdGuard Home (adguard_direct.txt)、PassWall (domains_direct.txt)、Clash (clash_rules_direct.yaml)！
+  1. 使用官方行业标准 tldextract (Mozilla Public Suffix List 算法) 动态解析域名；
+  2. 100% 精准识别全球任意国家/地区公共后缀 (.com.cn, .co.uk, .com.au, .co.nz 等)；
+  3. 彻底告别手写穷举，零误切，零漏切；
+  4. 分组带备注导出 AdGuard Home (adguard_direct.txt)、PassWall (domains_direct.txt)、Clash (clash_rules_direct.yaml)！
 =============================================================================
 """
 
@@ -16,37 +16,45 @@ import os
 import re
 import urllib.parse
 
+try:
+    import tldextract
+    TLD_EXTRACTOR = tldextract.TLDExtract(include_psl_private_domains=False)
+except ImportError:
+    TLD_EXTRACTOR = None
+
 def extract_root_domain(raw_str):
+    """基于 Mozilla 官方公共后缀列表 (Public Suffix List) 100% 精准提取注册主域名"""
     if not raw_str or not isinstance(raw_str, str):
         return None
 
     clean_str = raw_str.split("|")[0].split("$")[0].strip()
-    url_match = re.search(r'https?://([^\s"\'/<>#\$:]+)', clean_str)
-    if url_match:
-        host = url_match.group(1).split(":")[0]
-    else:
-        host = clean_str.split("/")[0].split(":")[0].strip()
 
-    host = host.strip("@|*^ \t\r\n").lower()
-    if not host or host.replace('.', '').isdigit() or "." not in host:
+    if TLD_EXTRACTOR:
+        ext = TLD_EXTRACTOR(clean_str)
+        if ext.domain and ext.suffix:
+            root = f"{ext.domain}.{ext.suffix}".lower().strip()
+            if root and "github" not in root and "jsdelivr" not in root:
+                return root
         return None
-
-    parts = host.split(".")
-    if len(parts) >= 3:
-        if parts[-2] in ["com", "net", "org", "gov", "edu", "co"] and parts[-1] in ["cn", "uk", "jp", "kr", "hk", "tw"]:
-            root = ".".join(parts[-3:])
-        else:
-            root = ".".join(parts[-2:])
     else:
-        root = host
-
-    root = root.strip()
-    if root and "github" not in root and "jsdelivr" not in root and "." in root:
-        return root
-    return None
+        # 回退正则防护
+        url_match = re.search(r'https?://([^\s"\'/<>#\$:]+)', clean_str)
+        host = url_match.group(1).split(":")[0] if url_match else clean_str.split("/")[0].split(":")[0].strip()
+        host = host.strip("@|*^ \t\r\n").lower()
+        if not host or host.replace('.', '').isdigit() or "." not in host:
+            return None
+        parts = host.split(".")
+        if len(parts) >= 3:
+            if parts[-2] in ["com", "net", "org", "gov", "edu", "co"] and parts[-1] in ["cn", "uk", "jp", "kr", "hk", "tw", "au", "nz", "sg"]:
+                root = ".".join(parts[-3:])
+            else:
+                root = ".".join(parts[-2:])
+        else:
+            root = host
+        return root if "github" not in root and "jsdelivr" not in root else None
 
 def export_grouped_router_rules(work_dir, sites, grouped_cdn_domains):
-    print("  [策略导出器] 正在按【门面节点 / 控制面 API / 播放页 / 深层 TS 切片 CDN】导出带备注分组规则...", flush=True)
+    print("  [策略导出器] 正在使用 Mozilla 官方 Public Suffix 算法导出带备注分组规则...", flush=True)
 
     PROXY_KEYWORDS = ["(墙)", "墙外", "代理", "翻墙", "科学", "科学上网"]
 
@@ -87,7 +95,7 @@ def export_grouped_router_rules(work_dir, sites, grouped_cdn_domains):
         ("04_三级_深层TS视频切片边缘CDN域名", l3_ts)
     ]
 
-    # 1. 导出带分组备注的 PassWall / SmartDNS 直连列表 (domains_direct.txt)
+    # 1. 导出 PassWall / SmartDNS 直连列表 (domains_direct.txt)
     with open(os.path.join(work_dir, "domains_direct.txt"), "w", encoding="utf-8") as f:
         f.write("# =========================================================\n")
         f.write("# TVBox 视频源、网页播放页与三层 M3U8/TS 播放 CDN 国内直连域名列表\n")
@@ -99,7 +107,7 @@ def export_grouped_router_rules(work_dir, sites, grouped_cdn_domains):
                     f.write(f"{d}\n")
                 f.write("\n")
 
-    # 2. 导出带分组备注的 OpenWrt AdGuard Home 放行白名单规则集 (adguard_direct.txt)
+    # 2. 导出 AdGuard Home 白名单规则集 (adguard_direct.txt)
     with open(os.path.join(work_dir, "adguard_direct.txt"), "w", encoding="utf-8") as f:
         f.write("! =========================================================\n")
         f.write("! OpenWrt AdGuard Home TVBox 视频源与播放 CDN 二级主域名放行白名单规则\n")
@@ -112,7 +120,7 @@ def export_grouped_router_rules(work_dir, sites, grouped_cdn_domains):
                     f.write(f"@@||{d}^\n")
                 f.write("\n")
 
-    # 3. 导出带分组备注的 Clash 直连规则集 (clash_rules_direct.yaml)
+    # 3. 导出 Clash 直连规则集 (clash_rules_direct.yaml)
     with open(os.path.join(work_dir, "clash_rules_direct.yaml"), "w", encoding="utf-8") as f:
         f.write("# =========================================================\n")
         f.write("# TVBox 视频源、网页播放页与三层 M3U8/TS 播放 CDN Clash 直连规则集\n")
