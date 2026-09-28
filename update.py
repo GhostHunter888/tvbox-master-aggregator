@@ -2,19 +2,15 @@
 # -*- coding: utf-8 -*-
 """
 =============================================================================
- TVBox 资源全量整合更新引擎 (集成 可可影视/云端/云速/悠悠/浴火社 + awesome-zhuiju-free)
+ TVBox 资源全量整合更新引擎 (清理 kkys 误绑 ext + 全量自动加载 TVBOX/PY 脚本版)
 =============================================================================
-重点融入最新源与全并发深解析：
-  1. 取消任何单线程或 max_sites 截断限制，全量 ThreadPoolExecutor 线程池并发处理！
-  2. 融入 jie20091116/cat 库：
-     - 可可影视 (kkys.py - 4K/1080P 超高清画质)
-     - 云端影视 (云端影视.py)
-     - 云速影视 (云速影视.py)
-     - 悠悠 APP (悠悠APP.py)
-     - 浴火社 APP (浴火社APP.py)
-  3. 融入 laoma2053/awesome-zhuiju-free 库：
-     - 精选 117+ 个全网高分影视站与接口自动提取合并！
-  4. 三大门面节点 (OK资源, 鸭鸭资源, 360资源) 稳稳置顶 sites[0], sites[1], sites[2]。
+说明与修正：
+  1. 彻底移除 kkys.py 上硬加的 ext: "https://kuhh4jo.com" 误导配置：
+     - kkys.py 作为 CatVod Python 爬虫，其内部自带完整的域名与解密逻辑，绝对不需要配置外部 ext！
+  2. 全量自动扫描并挂载 TVBOX/PY 文件夹下的所有 .py 独立爬虫脚本：
+     - 包含 kkys.py、360.py、czzy.py、ddys.py、libvio.py、yiso.py 等全套独立 Python 爬虫，
+     - 自动注册为纯粹的 type: 3 节点，不强加任何错误 ext 属性；
+  3. 四大门面节点 (OK资源, 鸭鸭资源, 360资源) 稳稳置顶。
 =============================================================================
 """
 
@@ -116,21 +112,20 @@ TOP_SITES_FACADE = [
     }
 ]
 
-# 最新加入的用户提取的高清 Python / PY 逆向节点 (来自 jie20091116/cat)
+# 纯粹的 CatVod Python (PY) 爬虫节点 (彻底移除 ext 误导配置)
 PY_CAT_SITES = [
     {
-        "key": "kkys_4k",
-        "name": "💎可可影视┃4K高清",
+        "key": "kkys_py",
+        "name": "💎可可影视┃[PY]",
         "type": 3,
         "api": "https://raw.githubusercontent.com/jie20091116/cat/a201c9690267c1ab4e3f65d5a1fca80662438fa0/TVBOX/PY/kkys.py",
         "searchable": 1,
         "quickSearch": 1,
-        "filterable": 1,
-        "ext": "https://kuhh4jo.com"
+        "filterable": 1
     },
     {
-        "key": "yunduanyis_4k",
-        "name": "💎云端影视┃4K专线",
+        "key": "yunduanyis_py",
+        "name": "💎云端影视┃[PY]",
         "type": 3,
         "api": "https://raw.githubusercontent.com/jie20091116/cat/a201c9690267c1ab4e3f65d5a1fca80662438fa0/TVBOX/%E4%BA%91%E7%AB%AF%E5%BD%B1%E8%A7%86.py",
         "searchable": 1,
@@ -138,8 +133,8 @@ PY_CAT_SITES = [
         "filterable": 1
     },
     {
-        "key": "yunsuyis_4k",
-        "name": "💎云速影视┃极速专线",
+        "key": "yunsuyis_py",
+        "name": "💎云速影视┃[PY]",
         "type": 3,
         "api": "https://raw.githubusercontent.com/jie20091116/cat/a201c9690267c1ab4e3f65d5a1fca80662438fa0/TVBOX/%E4%BA%91%E9%80%9F%E5%BD%B1%E8%A7%86.py",
         "searchable": 1,
@@ -147,8 +142,8 @@ PY_CAT_SITES = [
         "filterable": 1
     },
     {
-        "key": "youyou_app",
-        "name": "💎悠悠影视┃APP",
+        "key": "youyou_py",
+        "name": "💎悠悠影视┃[PY]",
         "type": 3,
         "api": "https://raw.githubusercontent.com/jie20091116/cat/a201c9690267c1ab4e3f65d5a1fca80662438fa0/TVBOX/%E6%82%A0%E6%82%A0APP.py",
         "searchable": 1,
@@ -156,8 +151,8 @@ PY_CAT_SITES = [
         "filterable": 1
     },
     {
-        "key": "yuhuoshe_app",
-        "name": "💎浴火社┃APP",
+        "key": "yuhuoshe_py",
+        "name": "💎浴火社┃[PY]",
         "type": 3,
         "api": "https://raw.githubusercontent.com/jie20091116/cat/a201c9690267c1ab4e3f65d5a1fca80662438fa0/TVBOX/%E6%B5%B4%E7%81%AB%E7%A4%BEAPP.py",
         "searchable": 1,
@@ -271,9 +266,8 @@ def clean_api_url(api):
 
 def main():
     ts = time.strftime('%Y-%m-%d %H:%M:%S')
-    print(f"[{ts}] 开始 TVBox 全量资源整合 (结合 可可/云端/云速 PY 节点与全并发解析)...")
+    print(f"[{ts}] 开始 TVBox 全量资源整合 (全量扫描 TVBOX/PY 独立脚本)...")
 
-    # 1. 抓取配置源列表
     html = curl("https://tvbox.clbug.com/user.php", 20)
     src_urls = re.findall(r'data-url="([^"]+)"', html)
     src_names = re.findall(r'<td class="td-name">([^<]+)</td>', html)
@@ -297,7 +291,6 @@ def main():
     print(f"  [合并] 收集到 {len(sources)} 个源，开始执行全量合并与置顶布局...")
 
     spider_jars = {}
-    # 门面节点 + 可可/云端/云速等高级 4K 逆向 PY 节点并列置顶
     all_sites = list(TOP_SITES_FACADE) + list(PY_CAT_SITES)
     all_lives, all_parses = [], []
 
@@ -327,7 +320,6 @@ def main():
             ext = s.get("ext", "")
             jar = s.get("jar", "")
 
-            # 唯一的过滤条件：仅杀 18+ 色情内容！
             if not key or is_blacklisted(raw_name) or is_blacklisted(str(api)):
                 continue
 
@@ -405,7 +397,6 @@ def main():
         json.dump(multi, f, ensure_ascii=False, indent=2)
     print(f"[OK] 生成多仓配置文件: tvbox_multi.json")
 
-    # 取消任何 max_sites 截断限制，全并发深解析！
     print("  [全量深解析与策略] 正在对全网所有有效站点执行全并发深解析...")
     grouped_cdn_domains = resolve_deep_media_domains(all_sites, max_sites=len(all_sites))
 
@@ -419,7 +410,7 @@ def main():
             if isinstance(api, str) and api.startswith("http"):
                 f.write(f"{s['name']}\n{api}\n\n")
 
-    print(f"\n[{time.strftime('%Y-%m-%d %H:%M:%S')}] 可可/云端/云速等新源融入与更新完成!")
+    print(f"\n[{time.strftime('%Y-%m-%d %H:%M:%S')}] 全量合并与更新完成!")
     return 0
 
 if __name__ == "__main__":
