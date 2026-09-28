@@ -34,6 +34,14 @@ jobs:
       - name: 安装依赖 (含 tldextract)
         run: pip install -r requirements.txt
 
+      - name: 深度克隆上游参考仓库至本地 repos/ 磁盘目录
+        run: |
+          mkdir -p repos
+          git clone --depth 1 https://github.com/jie20091116/cat.git repos/cat || true
+          git clone --depth 1 https://github.com/FongMi/CatVodSpider.git repos/CatVodSpider || true
+          git clone --depth 1 https://github.com/gaotianliuyun/gao.git repos/gaotianliuyun || true
+          git clone --depth 1 https://github.com/laoma2053/awesome-zhuiju-free.git repos/laoma2053 || true
+
       - name: 运行 resolve_deep_cdn 独立深解析任务 (Stage 5 302 追踪)
         env:
           PYTHONUNBUFFERED: "1"
