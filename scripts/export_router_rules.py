@@ -2,12 +2,13 @@
 # -*- coding: utf-8 -*-
 """
 =============================================================================
- 独立脚本：基于 Mozilla PSL 算法的全量路由器规则导出器 (结合 域名 + 纯 IP)
+ 独立脚本：基于 Mozilla PSL 与中文 Punycode IDNA 的路由器规则导出器
 =============================================================================
 功能：
-  1. 同时读取 resolve_deep_cdn (域名) + extract_ip_addresses (纯 IP) + extract_image_domains (海报)；
-  2. 生成 Clash 统一规则 clash_rules_direct.yaml (含 DOMAIN-SUFFIX 域名与 IP-CIDR 纯 IP)；
-  3. 生成 PassWall (domains_direct.txt) 与 AdGuard Home (adguard_direct.txt) 统一放行规则。
+  1. 完美支持中文域名 (如 摸鱼儿.top -> xn--9kqr9lk79c.top) 的 Punycode 双向转换；
+  2. 在 Clash/PassWall/AdGuard 规则中同时输出中文原文与国际标准 Punycode 编码；
+  3. 融合域名、海报 CDN 与提取到的纯 IPv4 CIDR 地址；
+  4. 生成 Clash 统一规则 clash_rules_direct.yaml 与 PassWall/AdGuard 白名单。
 =============================================================================
 """
 
@@ -19,6 +20,15 @@ try:
     TLD_EXTRACTOR = tldextract.TLDExtract(include_psl_private_domains=False)
 except ImportError:
     TLD_EXTRACTOR = None
+
+def to_punycode_domain(dom_str):
+    """将中文域名自动转码为标准的 Punycode (IDNA) 格式"""
+    if not dom_str or not isinstance(dom_str, str):
+        return None
+    try:
+        return dom_str.encode("idna").decode("ascii")
+    except Exception:
+        return dom_str
 
 def extract_root_domain(raw_str):
     if not raw_str or not isinstance(raw_str, str): return None
@@ -47,7 +57,7 @@ def extract_root_domain(raw_str):
         return root if "github" not in root and "jsdelivr" not in root else None
 
 def export_grouped_router_rules(work_dir, sites, grouped_cdn_domains, dynamic_image_domains=None, extracted_ips=None):
-    print("  [策略导出器] 正在将域名与纯 IP 合并导出为统一 Clash / PassWall / AdGuard 规则...", flush=True)
+    print("  [策略导出器] 正在导出包含中文 Punycode 与纯 IP 的全量规则...", flush=True)
 
     PROXY_KEYWORDS = ["(墙)", "墙外", "代理", "翻墙", "科学", "科学上网"]
 
@@ -73,11 +83,23 @@ def export_grouped_router_rules(work_dir, sites, grouped_cdn_domains, dynamic_im
                 else:
                     api_direct_domains.add(r_dom)
 
-    top_cdn = sorted(list(grouped_cdn_domains.get("top_facade_domains", set()) if isinstance(grouped_cdn_domains, dict) else set()))
-    l2_play = sorted(list(grouped_cdn_domains.get("media_player_domains", set()) if isinstance(grouped_cdn_domains, dict) else set()))
-    l3_ts = sorted(list(grouped_cdn_domains.get("deep_stream_domains", set()) if isinstance(grouped_cdn_domains, dict) else set()))
-    api_doms = sorted(list(api_direct_domains))
-    img_doms = sorted(list(set(dynamic_image_domains or [])))
+    # 包含中文域名的双向转码处理 (中文原文 + Punycode 编码)
+    def expand_punycode_list(raw_list):
+        expanded = set()
+        for dom in (raw_list or []):
+            if dom:
+                expanded.add(dom)
+                # 如果包含非 ASCII 字符，添加对应的 Punycode 转码
+                puny = to_punycode_domain(dom)
+                if puny and puny != dom:
+                    expanded.add(puny)
+        return sorted(list(expanded))
+
+    top_cdn = expand_punycode_list(grouped_cdn_domains.get("top_facade_domains", set()) if isinstance(grouped_cdn_domains, dict) else set())
+    l2_play = expand_punycode_list(grouped_cdn_domains.get("media_player_domains", set()) if isinstance(grouped_cdn_domains, dict) else set())
+    l3_ts = expand_punycode_list(grouped_cdn_domains.get("deep_stream_domains", set()) if isinstance(grouped_cdn_domains, dict) else set())
+    api_doms = expand_punycode_list(api_direct_domains)
+    img_doms = expand_punycode_list(set(dynamic_image_domains or []))
     pure_ips = sorted(list(set(extracted_ips or [])))
 
     groups = [
@@ -91,7 +113,7 @@ def export_grouped_router_rules(work_dir, sites, grouped_cdn_domains, dynamic_im
     # 1. 导出 PassWall / SmartDNS 直连列表 (domains_direct.txt)
     with open(os.path.join(work_dir, "domains_direct.txt"), "w", encoding="utf-8") as f:
         f.write("# =========================================================\n")
-        f.write("# TVBox 视频源、海报图片 CDN 与三层 M3U8/TS 播放 CDN/纯IP 国内直连列表\n")
+        f.write("# TVBox 视频源、海报图片 CDN、中文 Punycode 与纯IP 国内直连列表\n")
         f.write("# =========================================================\n\n")
         for g_title, dom_list in groups:
             if dom_list:
@@ -106,7 +128,7 @@ def export_grouped_router_rules(work_dir, sites, grouped_cdn_domains, dynamic_im
     # 2. 导出 AdGuard Home 放行白名单 (adguard_direct.txt)
     with open(os.path.join(work_dir, "adguard_direct.txt"), "w", encoding="utf-8") as f:
         f.write("! =========================================================\n")
-        f.write("! OpenWrt AdGuard Home TVBox 视频源、海报图片与播放 CDN/纯IP 放行白名单规则\n")
+        f.write("! OpenWrt AdGuard Home TVBox 视频源、中文 Punycode 与纯IP 放行白名单规则\n")
         f.write("! =========================================================\n\n")
         for g_title, dom_list in groups:
             if dom_list:
@@ -118,10 +140,10 @@ def export_grouped_router_rules(work_dir, sites, grouped_cdn_domains, dynamic_im
             for ip in pure_ips: f.write(f"@@||{ip}^\n")
             f.write("\n")
 
-    # 3. 导出 Clash 规则集 (clash_rules_direct.yaml - 完美融合 DOMAIN-SUFFIX 与 IP-CIDR)
+    # 3. 导出 Clash 规则集 (clash_rules_direct.yaml)
     with open(os.path.join(work_dir, "clash_rules_direct.yaml"), "w", encoding="utf-8") as f:
         f.write("# =========================================================\n")
-        f.write("# TVBox 视频源、海报图片 CDN 与三层 M3U8/TS 播放 CDN/纯IP Clash 直连规则集\n")
+        f.write("# TVBox 视频源、中文 Punycode 域名与纯 IP Clash 直连规则集\n")
         f.write("# =========================================================\n")
         f.write("payload:\n")
         for g_title, dom_list in groups:
@@ -135,7 +157,7 @@ def export_grouped_router_rules(work_dir, sites, grouped_cdn_domains, dynamic_im
                 f.write(f"  - IP-CIDR,{ip}/32\n")
 
     # 4. 导出强制代理规则列表
-    sorted_proxy = sorted(list(proxy_domains))
+    sorted_proxy = expand_punycode_list(proxy_domains)
     with open(os.path.join(work_dir, "domains_proxy.txt"), "w", encoding="utf-8") as f:
         f.write("# TVBox 强制代理域名列表\n")
         for d in sorted_proxy: f.write(f"{d}\n")
@@ -148,9 +170,9 @@ def export_grouped_router_rules(work_dir, sites, grouped_cdn_domains, dynamic_im
         f.write("# TVBox 强制代理 Clash 规则集\npayload:\n")
         for d in sorted_proxy: f.write(f"  - DOMAIN-SUFFIX,{d}\n")
 
-    print(f"  ├─ 成功导出 PassWall 直连列表 (含域名 + 纯IP): domains_direct.txt")
+    print(f"  ├─ 成功导出 PassWall 直连列表 (含中文 Punycode 与纯IP): domains_direct.txt")
     print(f"  ├─ 成功导出 AdGuard Home 放行白名单: adguard_direct.txt")
-    print(f"  └─ 成功导出 Clash 规则集 (完美支持 DOMAIN-SUFFIX 与 {len(pure_ips)}条 IP-CIDR): clash_rules_direct.yaml")
+    print(f"  └─ 成功导出 Clash 规则集 (支持 DOMAIN-SUFFIX, Punycode 与 IP-CIDR): clash_rules_direct.yaml")
 
 def export_all_router_rules(work_dir, sites, deep_cdn_domains, dynamic_image_domains=None, extracted_ips=None):
     return export_grouped_router_rules(work_dir, sites, deep_cdn_domains, dynamic_image_domains, extracted_ips)
