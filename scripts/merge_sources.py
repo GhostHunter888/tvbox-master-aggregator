@@ -6,8 +6,8 @@
 =============================================================================
 重点更新：
   1. 置顶 1: 可可影视 4K 完美重构版 (kkys_master.py - 支持 5 维筛选与防盗链海报卡片)；
-  2. 彻底扩充 18+ 黑名单词库：追加 色, 色播, 成人, 阴, 撸, 少女, 侄女, 妻, 草榴, 萝莉, av, 色情, 鉴黄, 黄色, 香肠, 香蕉 等；
-  3. 磁盘全量 os.listdir 扫描 repos/cat/TVBOX/PY/，0.001 秒完成，100% 离线零报错。
+  2. 彻底扩充 18+ 黑名单词库；
+  3. 在 tvbox.json 中嵌入 live.txt 直播源链接，实现点播+直播完美融合！
 =============================================================================
 """
 
@@ -122,7 +122,6 @@ TOP_SITES_FACADE = [
     }
 ]
 
-# 全量扩充 18+ 物理清洗词库 (包含用户下达的所有敏感字词)
 SEX_KEYWORDS = [
     "x站", "18+", "色情", "伦理", "成人", "福利", "三级", "激情", "av",
     "杏吧", "极品x", "免费x", "嘿嘿", "火速", "红楼", "优优", "天美",
@@ -386,16 +385,25 @@ def merge_sources():
         "mimg.0c1q0l.cn", "www.googletagmanager.com", "www.google-analytics.com", "mc.usihnbcq.cn", "mg.g1mm3d.cn", "mscs.svaeuzh.cn", "cnzz.hhttm.top", "tp.vinuxhome.com", "cnzz.mmstat.com", "www.baihuillq.com", "s23.cnzz.com", "z3.cnzz.com", "c.cnzz.com", "stj.v1vo.top", "z12.cnzz.com", "img.mosflower.cn", "tips.gamevvip.com", "ehwe.yhdtns.com", "xdn.cqqc3.com", "www.jixunkyy.cn", "sp.chemacid.cn", "hm.baidu.com", "s9.cnzz.com", "z6.cnzz.com", "um.cavuc.com", "mav.mavuz.com", "wofwk.aoidf3.com", "z5.cnzz.com", "xc.hubeijieshikj.cn", "tj.tianwenhu.com", "xg.gars57.cn", "k.jinxiuzhilv.com", "cdn.bootcss.com", "ppl.xunzhuo123.com", "xomk.jiangjunmh.top", "img.xunzhuo123.com", "z1.cnzz.com", "s13.cnzz.com", "xg.huataisangao.cn", "z7.cnzz.com", "xg.huataisangao.cn", "z2.cnzz.com", "s96.cnzz.com", "q11.cnzz.com", "thy.dacedsfa.cn", "xg.whsbpw.cn", "s19.cnzz.com", "z8.cnzz.com", "s4.cnzz.com", "f5w.as12df.top", "ae01.alicdn.com", "www.92424.cn", "k.wudejia.com", "vivovip.mmszxc.top", "qiu.xixiqiu.com", "cdnjs.hnfenxun.com", "cms.qdwght.com"
     ]
 
+    # 点播+直播完美融合：在 tvbox.json 中无缝植入 live.txt 链接！
+    master_lives = [
+        {
+            "name": "🔥TVBox 高清央视/卫视/美英直播源",
+            "type": 0,
+            "url": "https://gh-proxy.com/https://raw.githubusercontent.com/haygcao/tvbox-master-aggregator/main/live.txt"
+        }
+    ]
+
     master_config = {
         "spider": "",
         "wallpaper": "https://bing.img.run/1920x1080.php",
         "sites": all_sites,
-        "lives": all_lives[:20],
+        "lives": master_lives,
         "parses": all_parses[:20],
         "flags": DEFAULT_FLAGS,
         "ijk": DEFAULT_IJK,
         "ads": DEFAULT_ADS,
-        "note": "本配置由 TVBox 资源全量去重合并引擎生成。"
+        "note": "本配置由 TVBox 资源全量去重合并引擎生成 (已嵌入全量纯净直播源)。"
     }
 
     with open(os.path.join(WORK_DIR, "tvbox.json"), "w", encoding="utf-8") as f:
@@ -420,7 +428,7 @@ def merge_sources():
             if isinstance(api, str) and api.startswith("http"):
                 f.write(f"{s['name']}\n{api}\n\n")
 
-    print(f"  └─ [01_merge_sources] 完成！全量扫描收录 {len(all_sites)} 个有效站点到 tvbox.json")
+    print(f"  └─ [01_merge_sources] 完成！全量合并收录 {len(all_sites)} 个有效站点到 tvbox.json (已完美植入直播源)")
     return all_sites
 
 if __name__ == "__main__":
