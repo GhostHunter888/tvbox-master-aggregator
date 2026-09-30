@@ -2,12 +2,14 @@
 # -*- coding: utf-8 -*-
 """
 =============================================================================
- 独立脚本三：多层级深解析播放域名提取器 (专干域名，单一职责)
+ 独立脚本三：多层级深解析播放域名提取器 (Cloudflare 403 屏蔽判定 + 全线路全量扫描)
 =============================================================================
-功能：
-  1. 专门提取播放页域名、M3U8 域名与 TS 切片域名，绝不掺杂 IP 逻辑；
-  2. 结合本地 repos/cat/TVBOX/PY/ 下的 .py 源码做静态域名提取；
-  3. 输出纯域名缓存 grouped_cdn_domains.json。
+重点更新：
+  1. Cloudflare 403 / 1020 "Geo-blocked / 屏蔽境外 IP" 判定：
+     - 当 HTTP 请求收到 403 / 1020 时，说明对方禁止境外 IP 访问；
+     - 此类站点必须走国内直连 (direct list)，立刻强行计入国内直连域名！
+  2. 彻底取消 [:6] 截断，对 vod_play_url 里的所有播放线路与资源全量展开扫描；
+  3. 结合本地 repos/cat/TVBOX/PY/ 下的 .py 源码做静态域名提取。
 =============================================================================
 """
 
@@ -83,7 +85,7 @@ def extract_domains_from_local_py_code():
     return extracted
 
 def resolve_deep_media_domains(sites, max_sites=200):
-    """只抓域名（50 线程极速并发）"""
+    """只抓域名（50 线程极速并发 + Cloudflare 403 强行归入国内直连）"""
     grouped_play_domains = {
         "top_facade_domains": set(),
         "media_player_domains": set(),
@@ -99,18 +101,23 @@ def resolve_deep_media_domains(sites, max_sites=200):
         api = site.get("api", "")
         is_top_facade = (site.get("key") == "OK资源")
 
+        # 将站点自身的 API 域名直接加入直连
+        self_dom = extract_root_domain(api)
+        l2_found = {self_dom} if self_dom else set()
+        l3_found = set()
+
         base_api = re.sub(r'[\?&]ac=(list|detail|videolist|vod).*$', '', api, flags=re.I).rstrip("/")
         detail_url = base_api + ("&ac=detail" if "?" in base_api else "?ac=detail")
 
-        l2_found, l3_found = set(), set()
         try:
             req = urllib.request.Request(detail_url, headers=HEADERS)
-            with urllib.request.urlopen(req, timeout=2.5, context=SSL_CTX) as resp:
+            with urllib.request.urlopen(req, timeout=3.0, context=SSL_CTX) as resp:
                 if resp.status == 200:
                     raw = resp.read().decode("utf-8", errors="ignore")
+                    # 取消 [:6] 限制，全量扫描页面里的所有视频/切片 URL
                     play_urls = re.findall(r'(https?://[^\s"\'<>#\$\[\]]+)', raw)
 
-                    for pu in play_urls[:6]:
+                    for pu in play_urls:
                         if any(ext in pu.lower() for ext in ['.jpg', '.png', '.css', '.js', '.gif', '.ico']): continue
                         dom_l2 = extract_root_domain(pu)
                         if dom_l2: l2_found.add(dom_l2)
@@ -118,15 +125,24 @@ def resolve_deep_media_domains(sites, max_sites=200):
                         if any(kw in pu.lower() for kw in ['.m3u8', '/share/', '/play/']):
                             try:
                                 req_play = urllib.request.Request(pu, headers=HEADERS)
-                                with urllib.request.urlopen(req_play, timeout=2.5, context=SSL_CTX) as play_resp:
+                                with urllib.request.urlopen(req_play, timeout=3.0, context=SSL_CTX) as play_resp:
                                     dom_redirect = extract_root_domain(play_resp.geturl())
                                     if dom_redirect: l3_found.add(dom_redirect)
+                            except urllib.error.HTTPError as e:
+                                # 核心：捕获 Cloudflare 403 / 1020 屏蔽境外 IP，强行计入国内直连 (direct list)！
+                                if e.code in [403, 1020, 451]:
+                                    blocked_dom = extract_root_domain(pu)
+                                    if blocked_dom: l2_found.add(blocked_dom)
                             except Exception: pass
+        except urllib.error.HTTPError as e:
+            # 捕获主 API 的 Cloudflare 403 屏蔽，归入国内直连
+            if e.code in [403, 1020, 451] and self_dom:
+                l2_found.add(self_dom)
         except Exception: pass
 
         return ("top" if is_top_facade else "normal"), l2_found, l3_found
 
-    print(f"  [专干域名] 正在对 {len(maccms_sites)} 个真实 MacCMS 站点进行域名抓取...", flush=True)
+    print(f"  [专干域名 & 403屏蔽判定] 正在对 {len(maccms_sites)} 个真实 MacCMS 站点进行域名抓取...", flush=True)
     with ThreadPoolExecutor(max_workers=50) as executor:
         futures = [executor.submit(deep_resolve_single_site, site) for site in maccms_sites]
         for f in as_completed(futures):

@@ -4,13 +4,11 @@
 =============================================================================
  独立任务六：美英学英语 IPTV 直播源整合与 not_suitable/ 18+ 隔离导出器
 =============================================================================
-功能：
-  1. 整合国内央视/卫视/地方台 + iptv-org 美/英/加/澳等国际英语学习频道；
-  2. 彻底清洗直播源中的 18+ 成人频道，输出 100% 纯净的根目录 live.txt；
-  3. 创建隐藏中性隔离目录 not_suitable/：
-     - not_suitable/live.txt    (独立收录 18+ 成人直播频道)
-     - not_suitable/tvbox.json   (独立收录 18+ 成人点播源)
-  4. 根目录 (/) 保持 100% 彻底纯净透明，零合规风险。
+重点更新：
+  1. 遍历克隆在 repos/ 下的所有参考仓库中的 .m3u, .txt 直播源文件；
+  2. 提取国内央视/卫视/地方台 + iptv-org 美/英/加/澳等国际英语学习频道；
+  3. 彻底扩充 18+ 敏感词库 (含 色, 色播, 成人, 阴, 撸, 少女, 侄女, 妻, 草榴, 萝莉, av, 色情, 鉴黄, 黄色, 香肠, 香蕉)；
+  4. 根目录 live.txt 100% 纯净，隔离目录 not_suitable/live.txt 独立收录 18+ 频道。
 =============================================================================
 """
 
@@ -41,7 +39,8 @@ SEX_KEYWORDS = [
     "①⑧", "🔞", "18/", "小师妹", "奶茶", "探探", "pgx", "小师妹资源", "奶茶资源", "探探资源", "pgx资源",
     "18av", "4kav", "18jtv", "2048", "777wuye", "8x8x", "91porn", "91crdj", "asmrhoney", "adult",
     "mamazipai", "missav", "mitaoav", "nanrenbense", "owoav", "seba", "sebo", "shaofu", "sinparty",
-    "xhamster", "yiqicao", "youav", "zhengmeiav", "色播", "风欲", "萝莉av", "xxx", "nsfw"
+    "xhamster", "yiqicao", "youav", "zhengmeiav", "色播", "风欲", "萝莉av", "xxx", "nsfw",
+    "色", "阴", "撸", "少女", "侄女", "妻", "草榴", "萝莉", "鉴黄", "黄色", "香肠"
 ]
 
 def fetch_text(url, timeout=12):
@@ -100,6 +99,39 @@ def process_iptv_and_split_18():
         ("18+ 成人精选 02", "http://127.0.0.1/live/18_02.m3u8")
     ]
 
+    # 1. 从磁盘 repos/ 目录下克隆的所有仓库中，深度遍历盘点直播源文件 (.m3u, .txt)
+    repos_dir = os.path.join(WORK_DIR, "repos")
+    if os.path.exists(repos_dir):
+        for root, _, files in os.walk(repos_dir):
+            for fname in files:
+                if fname.endswith(".m3u") or fname.endswith(".m3u8") or fname.endswith(".txt"):
+                    fpath = os.path.join(root, fname)
+                    try:
+                        with open(fpath, "r", encoding="utf-8", errors="ignore") as f:
+                            text = f.read()
+                            lines = text.splitlines()
+                            curr_name = ""
+                            for line in lines:
+                                line = line.strip()
+                                if line.startswith("#EXTINF"):
+                                    m_name = re.search(r',([^,]+)$', line)
+                                    if m_name: curr_name = m_name.group(1).strip()
+                                elif line.startswith("http") and curr_name:
+                                    if is_blacklisted(curr_name) or is_blacklisted(line):
+                                        adult_live_channels.append((curr_name, line))
+                                    else:
+                                        if any(tag in curr_name.upper() for tag in ["US", "UK", "BBC", "CNN", "CBS", "ABC", "FOX", "DISCOVERY", "NATIONAL"]):
+                                            if len(clean_live_groups["英语学习/美英频道"]) < 40:
+                                                clean_live_groups["英语学习/美英频道"].append((curr_name, line))
+                                    curr_name = ""
+                                elif "," in line and line.startswith("http"):
+                                    parts = line.split(",")
+                                    cname, url = parts[0].strip(), parts[1].strip()
+                                    if is_blacklisted(cname) or is_blacklisted(url):
+                                        adult_live_channels.append((cname, url))
+                    except Exception: pass
+
+    # 2. 从 iptv-org 在线库抓取补全
     iptv_m3u_raw = fetch_text("https://iptv-org.github.io/iptv/index.m3u")
     if iptv_m3u_raw:
         lines = iptv_m3u_raw.split("\n")
@@ -120,10 +152,11 @@ def process_iptv_and_split_18():
                     if any(tag in curr_name.upper() for tag in ["US", "UK", "BBC", "CNN", "CBS", "ABC", "FOX", "DISCOVERY", "NATIONAL GEOGRAPHIC", "BLOOMBERG"]):
                         clean_cname = re.sub(r'[\r\n\t]', '', curr_name)
                         clean_cname = re.sub(r'^\s*,\s*', '', clean_cname)
-                        if len(clean_live_groups["英语学习/美英频道"]) < 30:
+                        if len(clean_live_groups["英语学习/美英频道"]) < 40:
                             clean_live_groups["英语学习/美英频道"].append((f"US/UK - {clean_cname}", url))
                 curr_name = ""
 
+    # 3. 输出 100% 纯净的根目录 live.txt
     with open(os.path.join(WORK_DIR, "live.txt"), "w", encoding="utf-8") as f:
         for g_title, ch_list in clean_live_groups.items():
             f.write(f"{g_title},#genre#\n")
@@ -136,6 +169,7 @@ def process_iptv_and_split_18():
 
     print(f"  ├─ 成功生成 100% 纯净根目录直播源: live.txt (含美英学英语频道)")
 
+    # 4. 输出隔离目录 not_suitable/live.txt
     with open(os.path.join(ns_dir, "live.txt"), "w", encoding="utf-8") as f:
         f.write("特定需求频道,#genre#\n")
         seen_u = set()
@@ -146,6 +180,7 @@ def process_iptv_and_split_18():
 
     print(f"  ├─ 成功生成隔离目录直播源: not_suitable/live.txt")
 
+    # 5. 生成隔离目录 not_suitable/tvbox.json
     tvbox_path = os.path.join(WORK_DIR, "tvbox.json")
     if os.path.exists(tvbox_path):
         try:

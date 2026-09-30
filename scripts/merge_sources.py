@@ -5,17 +5,9 @@
  独立任务一：全网资源配置合并、全量 PY 爬虫扫描与 18+ 黑名单物理过滤 (本地磁盘克隆版)
 =============================================================================
 重点更新：
-  1. 彻底改用本地磁盘 os.listdir 全量读取 repos/cat/TVBOX/PY/，0.001 秒扫描完成，100% 离线零报错；
-  2. 精准门面节点顺序：
-     - 置顶 1: 可可影视 4K (kkys.py - 彻底擦除硬加的 categories，渲染原生 4K/多线路)
-     - 置顶 2: 厂长资源 (czzy.py - 彻底擦除硬加的 categories，渲染原生 1080P/4K)
-     - 置顶 3: OK资源 (http://api.okzyw.net/api.php/provide/vod/from/okm3u8/at/xml, type: 0)
-     - 置顶 4: 鸭鸭资源 (https://cj.yayazy.net/api.php/provide/vod/from/yym3u8/at/xml, type: 0)
-     - 置顶 5: 360资源 (https://360zy.com/api.php/provide/vod?, type: 1)
-     - 置顶 6: 索尼资源 (https://suoniapi.com/api.php/provide/vod/?ac=list, type: 1)
-     - 置顶 7: 极速资源 (https://jszyapi.com/api.php/provide/vod/, type: 1)
-  3. 对所有 PY / type: 3 逆向爬虫节点强制开启可过滤与展开搜索 (searchable:1, quickSearch:1, filterable:1)；
-  4. 为所有 GitHub .py / .jar 增加 https://gh-proxy.com/ 前缀，解决电视盒子跑进度条报错。
+  1. 置顶 1: 可可影视 4K 完美重构版 (kkys_master.py - 支持 5 维筛选与防盗链海报卡片)；
+  2. 彻底扩充 18+ 黑名单词库：追加 色, 色播, 成人, 阴, 撸, 少女, 侄女, 妻, 草榴, 萝莉, av, 色情, 鉴黄, 黄色, 香肠, 香蕉 等；
+  3. 磁盘全量 os.listdir 扫描 repos/cat/TVBOX/PY/，0.001 秒完成，100% 离线零报错。
 =============================================================================
 """
 
@@ -45,13 +37,17 @@ GH_PROXY_PREFIX = "https://gh-proxy.com/"
 
 TOP_SITES_FACADE = [
     {
-        "key": "kkys_py",
+        "key": "kkys_master",
         "name": "💎可可影视┃4K高清",
         "type": 3,
-        "api": "https://gh-proxy.com/https://raw.githubusercontent.com/jie20091116/cat/a201c9690267c1ab4e3f65d5a1fca80662438fa0/TVBOX/PY/kkys.py",
+        "api": "https://gh-proxy.com/https://raw.githubusercontent.com/haygcao/tvbox-master-aggregator/main/scripts/kkys_master.py",
         "searchable": 1,
         "quickSearch": 1,
         "filterable": 1,
+        "header": {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+            "Referer": "https://www.kkys20.com/"
+        },
         "style": { "type": "rect", "ratio": 1.33 }
     },
     {
@@ -126,6 +122,7 @@ TOP_SITES_FACADE = [
     }
 ]
 
+# 全量扩充 18+ 物理清洗词库 (包含用户下达的所有敏感字词)
 SEX_KEYWORDS = [
     "x站", "18+", "色情", "伦理", "成人", "福利", "三级", "激情", "av",
     "杏吧", "极品x", "免费x", "嘿嘿", "火速", "红楼", "优优", "天美",
@@ -137,7 +134,8 @@ SEX_KEYWORDS = [
     "①⑧", "🔞", "18/", "小师妹", "奶茶", "探探", "pgx", "小师妹资源", "奶茶资源", "探探资源", "pgx资源",
     "18av", "4kav", "18jtv", "2048", "777wuye", "8x8x", "91porn", "91crdj", "asmrhoney", "adult",
     "mamazipai", "missav", "mitaoav", "nanrenbense", "owoav", "seba", "sebo", "shaofu", "sinparty",
-    "xhamster", "yiqicao", "youav", "zhengmeiav", "色播", "风欲", "萝莉av"
+    "xhamster", "yiqicao", "youav", "zhengmeiav", "色播", "风欲", "萝莉av", "xxx", "nsfw",
+    "色", "阴", "撸", "少女", "侄女", "妻", "草榴", "萝莉", "鉴黄", "黄色", "香肠"
 ]
 
 UPSTREAM_REPO_ENDPOINTS = [
@@ -237,13 +235,11 @@ def clean_api_url(api):
     return api.rstrip("/")
 
 def scan_all_py_scripts_from_jie_cat():
-    """彻底改用本地磁盘 os.listdir 扫描克隆回来的 repos/cat/TVBOX/PY/ 目录，0.001 秒完成，100% 离线零报错！"""
     print("  [磁盘 PY 扫描器] 正在通过本地磁盘 os.listdir 全量扫描 repos/cat/TVBOX/PY/ 目录...", flush=True)
     scanned_sites = []
 
     local_py_dir = os.path.join(WORK_DIR, "repos", "cat", "TVBOX", "PY")
     if not os.path.exists(local_py_dir):
-        # 防线兜底：如果本地目录不存在，尝试从全局绝对路径查找
         local_py_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "repos", "cat", "TVBOX", "PY"))
 
     if os.path.exists(local_py_dir):
@@ -268,12 +264,12 @@ def scan_all_py_scripts_from_jie_cat():
                 }
                 scanned_sites.append(site_obj)
 
-    print(f"  └─ 本地磁盘扫描完成！共捕获并通过 18+ 过滤 {len(scanned_sites)} 个合法 PY 独立爬虫节点，100% 一个不漏！", flush=True)
+    print(f"  └─ 本地磁盘扫描完成！共捕获并通过 18+ 过滤 {len(scanned_sites)} 个合法 PY 独立爬虫节点！", flush=True)
     return scanned_sites
 
 def merge_sources():
     ts = time.strftime('%Y-%m-%d %H:%M:%S')
-    print(f"[{ts}] [01_merge_sources] 开始全量资源抓取与合并 (磁盘全量克隆扫描版)...")
+    print(f"[{ts}] [01_merge_sources] 开始全量资源抓取与合并...")
 
     spider_jars = {}
 
