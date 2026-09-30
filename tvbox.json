@@ -25337,7 +25337,7 @@
       "name": "[接口] Cookie设置",
       "type": 3,
       "api": "csp_Introduce",
-      "jar": "https://android.lushunming.qzz.io/jar/custom_spider.jar;md5;060e4699f167f5bb0d4ff8a172e5bc22",
+      "jar": "https://android.lushunming.qzz.io/jar/custom_spider.jar;md5;4b49092b8e94e5df409f3c759d7ae496",
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 1
@@ -25349,20 +25349,45 @@
       "api": "csp_Wogg",
       "searchable": 1,
       "changeable": 1,
-      "ext": "{\"site\": [\"https://wogg.xxooo.cf/\"]}",
-      "jar": "https://android.lushunming.qzz.io/jar/custom_spider.jar;md5;060e4699f167f5bb0d4ff8a172e5bc22",
+      "ext": {
+        "site": [
+          "https://woggpan.888484.xyz",
+          "https://www.wogg.net",
+          "https://www.wogg.live",
+          "https://woggpan.xxooo.cf",
+          "https://wogg.xxooo.cf"
+        ]
+      },
+      "jar": "https://android.lushunming.qzz.io/jar/custom_spider.jar;md5;4b49092b8e94e5df409f3c759d7ae496",
       "quickSearch": 1,
       "filterable": 1
     },
     {
-      "key": "SeedHub_1902",
+      "key": "Mogg",
+      "name": "[接口] 木偶哥哥",
+      "type": 3,
+      "api": "csp_Mogg",
+      "searchable": 1,
+      "changeable": 1,
+      "ext": {
+        "site": [
+          "https://woog.nxog.eu.org/",
+          "https://ogkk.nxog.eu.org/"
+        ]
+      },
+      "jar": "https://android.lushunming.qzz.io/jar/custom_spider.jar;md5;4b49092b8e94e5df409f3c759d7ae496",
+      "quickSearch": 1,
+      "filterable": 1
+    },
+    {
+      "key": "SeedHub_1903",
       "name": "[接口] SeedHub",
       "type": 3,
       "api": "csp_SeedHub",
       "searchable": 1,
       "changeable": 1,
       "ext": {},
-      "jar": "https://android.lushunming.qzz.io/jar/custom_spider.jar;md5;060e4699f167f5bb0d4ff8a172e5bc22",
+      "jar": "https://android.lushunming.qzz.io/jar/custom_spider.jar;md5;4b49092b8e94e5df409f3c759d7ae496",
       "quickSearch": 1,
       "filterable": 1
     },
@@ -25374,7 +25399,7 @@
       "searchable": 1,
       "changeable": 1,
       "ext": {},
-      "jar": "https://android.lushunming.qzz.io/jar/custom_spider.jar;md5;060e4699f167f5bb0d4ff8a172e5bc22",
+      "jar": "https://android.lushunming.qzz.io/jar/custom_spider.jar;md5;4b49092b8e94e5df409f3c759d7ae496",
       "quickSearch": 1,
       "filterable": 1
     },
@@ -25386,7 +25411,7 @@
       "searchable": 1,
       "changeable": 1,
       "ext": {},
-      "jar": "https://android.lushunming.qzz.io/jar/custom_spider.jar;md5;060e4699f167f5bb0d4ff8a172e5bc22",
+      "jar": "https://android.lushunming.qzz.io/jar/custom_spider.jar;md5;4b49092b8e94e5df409f3c759d7ae496",
       "quickSearch": 1,
       "filterable": 1
     },
@@ -25398,7 +25423,7 @@
       "searchable": 1,
       "changeable": 1,
       "ext": {},
-      "jar": "https://android.lushunming.qzz.io/jar/custom_spider.jar;md5;060e4699f167f5bb0d4ff8a172e5bc22",
+      "jar": "https://android.lushunming.qzz.io/jar/custom_spider.jar;md5;4b49092b8e94e5df409f3c759d7ae496",
       "quickSearch": 1,
       "filterable": 1
     },
@@ -25410,7 +25435,7 @@
       "searchable": 1,
       "changeable": 1,
       "ext": {},
-      "jar": "https://android.lushunming.qzz.io/jar/custom_spider.jar;md5;060e4699f167f5bb0d4ff8a172e5bc22",
+      "jar": "https://android.lushunming.qzz.io/jar/custom_spider.jar;md5;4b49092b8e94e5df409f3c759d7ae496",
       "quickSearch": 1,
       "filterable": 1
     },
@@ -25431,7 +25456,7 @@
           "夸克"
         ]
       },
-      "jar": "https://android.lushunming.qzz.io/jar/custom_spider.jar;md5;060e4699f167f5bb0d4ff8a172e5bc22",
+      "jar": "https://android.lushunming.qzz.io/jar/custom_spider.jar;md5;4b49092b8e94e5df409f3c759d7ae496",
       "quickSearch": 1
     },
     {
@@ -25451,7 +25476,7 @@
           "百度"
         ]
       },
-      "jar": "https://android.lushunming.qzz.io/jar/custom_spider.jar;md5;060e4699f167f5bb0d4ff8a172e5bc22",
+      "jar": "https://android.lushunming.qzz.io/jar/custom_spider.jar;md5;4b49092b8e94e5df409f3c759d7ae496",
       "quickSearch": 1
     },
     {
@@ -25471,7 +25496,7 @@
           "123盘"
         ]
       },
-      "jar": "https://android.lushunming.qzz.io/jar/custom_spider.jar;md5;060e4699f167f5bb0d4ff8a172e5bc22",
+      "jar": "https://android.lushunming.qzz.io/jar/custom_spider.jar;md5;4b49092b8e94e5df409f3c759d7ae496",
       "quickSearch": 1
     },
     {
@@ -25491,7 +25516,7 @@
           "天翼"
         ]
       },
-      "jar": "https://android.lushunming.qzz.io/jar/custom_spider.jar;md5;060e4699f167f5bb0d4ff8a172e5bc22",
+      "jar": "https://android.lushunming.qzz.io/jar/custom_spider.jar;md5;4b49092b8e94e5df409f3c759d7ae496",
       "quickSearch": 1
     },
     {
@@ -25511,7 +25536,7 @@
           "移动"
         ]
       },
-      "jar": "https://android.lushunming.qzz.io/jar/custom_spider.jar;md5;060e4699f167f5bb0d4ff8a172e5bc22",
+      "jar": "https://android.lushunming.qzz.io/jar/custom_spider.jar;md5;4b49092b8e94e5df409f3c759d7ae496",
       "quickSearch": 1
     },
     {
@@ -25531,7 +25556,7 @@
           "磁力"
         ]
       },
-      "jar": "https://android.lushunming.qzz.io/jar/custom_spider.jar;md5;060e4699f167f5bb0d4ff8a172e5bc22",
+      "jar": "https://android.lushunming.qzz.io/jar/custom_spider.jar;md5;4b49092b8e94e5df409f3c759d7ae496",
       "quickSearch": 1
     },
     {
@@ -25542,7 +25567,7 @@
       "searchable": 1,
       "changeable": 1,
       "ext": {},
-      "jar": "https://android.lushunming.qzz.io/jar/custom_spider.jar;md5;060e4699f167f5bb0d4ff8a172e5bc22",
+      "jar": "https://android.lushunming.qzz.io/jar/custom_spider.jar;md5;4b49092b8e94e5df409f3c759d7ae496",
       "quickSearch": 1,
       "filterable": 1
     },
@@ -25554,7 +25579,7 @@
       "searchable": 1,
       "changeable": 1,
       "ext": {},
-      "jar": "https://android.lushunming.qzz.io/jar/custom_spider.jar;md5;060e4699f167f5bb0d4ff8a172e5bc22",
+      "jar": "https://android.lushunming.qzz.io/jar/custom_spider.jar;md5;4b49092b8e94e5df409f3c759d7ae496",
       "quickSearch": 1,
       "filterable": 1
     },
@@ -25566,7 +25591,7 @@
       "searchable": 1,
       "changeable": 1,
       "ext": {},
-      "jar": "https://android.lushunming.qzz.io/jar/custom_spider.jar;md5;060e4699f167f5bb0d4ff8a172e5bc22",
+      "jar": "https://android.lushunming.qzz.io/jar/custom_spider.jar;md5;4b49092b8e94e5df409f3c759d7ae496",
       "quickSearch": 1,
       "filterable": 1
     },
@@ -25578,7 +25603,7 @@
       "searchable": 1,
       "changeable": 1,
       "ext": {},
-      "jar": "https://android.lushunming.qzz.io/jar/custom_spider.jar;md5;060e4699f167f5bb0d4ff8a172e5bc22",
+      "jar": "https://android.lushunming.qzz.io/jar/custom_spider.jar;md5;4b49092b8e94e5df409f3c759d7ae496",
       "quickSearch": 1,
       "filterable": 1
     },
@@ -25590,7 +25615,7 @@
       "searchable": 1,
       "changeable": 1,
       "ext": {},
-      "jar": "https://android.lushunming.qzz.io/jar/custom_spider.jar;md5;060e4699f167f5bb0d4ff8a172e5bc22",
+      "jar": "https://android.lushunming.qzz.io/jar/custom_spider.jar;md5;4b49092b8e94e5df409f3c759d7ae496",
       "quickSearch": 1,
       "filterable": 1
     },
@@ -25601,7 +25626,7 @@
       "api": "csp_NCat",
       "searchable": 1,
       "filterable": 1,
-      "jar": "https://android.lushunming.qzz.io/jar/custom_spider.jar;md5;060e4699f167f5bb0d4ff8a172e5bc22",
+      "jar": "https://android.lushunming.qzz.io/jar/custom_spider.jar;md5;4b49092b8e94e5df409f3c759d7ae496",
       "quickSearch": 1
     },
     {
@@ -25613,7 +25638,7 @@
       "filterable": 1,
       "changeable": 0,
       "ext": "https://www.czzy.site/",
-      "jar": "https://android.lushunming.qzz.io/jar/custom_spider.jar;md5;060e4699f167f5bb0d4ff8a172e5bc22",
+      "jar": "https://android.lushunming.qzz.io/jar/custom_spider.jar;md5;4b49092b8e94e5df409f3c759d7ae496",
       "quickSearch": 1
     },
     {
@@ -25625,7 +25650,7 @@
       "filterable": 1,
       "changeable": 0,
       "ext": {},
-      "jar": "https://android.lushunming.qzz.io/jar/custom_spider.jar;md5;060e4699f167f5bb0d4ff8a172e5bc22",
+      "jar": "https://android.lushunming.qzz.io/jar/custom_spider.jar;md5;4b49092b8e94e5df409f3c759d7ae496",
       "quickSearch": 1
     },
     {
@@ -25635,7 +25660,7 @@
       "api": "csp_TvDy",
       "searchable": 1,
       "filterable": 1,
-      "jar": "https://android.lushunming.qzz.io/jar/custom_spider.jar;md5;060e4699f167f5bb0d4ff8a172e5bc22",
+      "jar": "https://android.lushunming.qzz.io/jar/custom_spider.jar;md5;4b49092b8e94e5df409f3c759d7ae496",
       "quickSearch": 1
     },
     {
@@ -25646,7 +25671,7 @@
       "searchable": 1,
       "filterable": 1,
       "ext": "https://w55xy.com/",
-      "jar": "https://android.lushunming.qzz.io/jar/custom_spider.jar;md5;060e4699f167f5bb0d4ff8a172e5bc22",
+      "jar": "https://android.lushunming.qzz.io/jar/custom_spider.jar;md5;4b49092b8e94e5df409f3c759d7ae496",
       "quickSearch": 1
     },
     {
@@ -25656,7 +25681,7 @@
       "api": "csp_DaGongRen",
       "searchable": 1,
       "filterable": 1,
-      "jar": "https://android.lushunming.qzz.io/jar/custom_spider.jar;md5;060e4699f167f5bb0d4ff8a172e5bc22",
+      "jar": "https://android.lushunming.qzz.io/jar/custom_spider.jar;md5;4b49092b8e94e5df409f3c759d7ae496",
       "quickSearch": 1
     },
     {
@@ -25667,7 +25692,7 @@
       "searchable": 1,
       "filterable": 1,
       "ext": "http://www.hktvyb.vip/",
-      "jar": "https://android.lushunming.qzz.io/jar/custom_spider.jar;md5;060e4699f167f5bb0d4ff8a172e5bc22",
+      "jar": "https://android.lushunming.qzz.io/jar/custom_spider.jar;md5;4b49092b8e94e5df409f3c759d7ae496",
       "quickSearch": 1
     },
     {
@@ -25678,7 +25703,7 @@
       "searchable": 1,
       "filterable": 1,
       "ext": {},
-      "jar": "https://android.lushunming.qzz.io/jar/custom_spider.jar;md5;060e4699f167f5bb0d4ff8a172e5bc22",
+      "jar": "https://android.lushunming.qzz.io/jar/custom_spider.jar;md5;4b49092b8e94e5df409f3c759d7ae496",
       "quickSearch": 1
     },
     {
@@ -25688,7 +25713,7 @@
       "api": "csp_JustLive",
       "searchable": 1,
       "filterable": 1,
-      "jar": "https://android.lushunming.qzz.io/jar/custom_spider.jar;md5;060e4699f167f5bb0d4ff8a172e5bc22",
+      "jar": "https://android.lushunming.qzz.io/jar/custom_spider.jar;md5;4b49092b8e94e5df409f3c759d7ae496",
       "quickSearch": 1
     },
     {
@@ -25698,7 +25723,7 @@
       "api": "csp_Xb6v",
       "searchable": 1,
       "filterable": 1,
-      "jar": "https://android.lushunming.qzz.io/jar/custom_spider.jar;md5;060e4699f167f5bb0d4ff8a172e5bc22",
+      "jar": "https://android.lushunming.qzz.io/jar/custom_spider.jar;md5;4b49092b8e94e5df409f3c759d7ae496",
       "quickSearch": 1
     },
     {
@@ -25709,18 +25734,18 @@
       "searchable": 1,
       "filterable": 1,
       "ext": "{\"box\": \"TVBox\", \"danmu\": false}",
-      "jar": "https://android.lushunming.qzz.io/jar/custom_spider.jar;md5;060e4699f167f5bb0d4ff8a172e5bc22",
+      "jar": "https://android.lushunming.qzz.io/jar/custom_spider.jar;md5;4b49092b8e94e5df409f3c759d7ae496",
       "quickSearch": 1
     },
     {
-      "key": "Libvio_1929",
+      "key": "Libvio_1930",
       "name": "[接口] 立播影视",
       "type": 3,
       "api": "csp_Libvio",
       "searchable": 1,
       "filterable": 1,
       "ext": "{        \"site\": \"https://www.libvio.app\"      }",
-      "jar": "https://android.lushunming.qzz.io/jar/custom_spider.jar;md5;060e4699f167f5bb0d4ff8a172e5bc22",
+      "jar": "https://android.lushunming.qzz.io/jar/custom_spider.jar;md5;4b49092b8e94e5df409f3c759d7ae496",
       "quickSearch": 1
     },
     {
@@ -25731,7 +25756,7 @@
       "searchable": 1,
       "filterable": 1,
       "ext": " {\"site\":\"https://ddys.info/\"}",
-      "jar": "https://android.lushunming.qzz.io/jar/custom_spider.jar;md5;060e4699f167f5bb0d4ff8a172e5bc22",
+      "jar": "https://android.lushunming.qzz.io/jar/custom_spider.jar;md5;4b49092b8e94e5df409f3c759d7ae496",
       "quickSearch": 1
     },
     {
@@ -25742,7 +25767,7 @@
       "searchable": 1,
       "changeable": 0,
       "ext": {},
-      "jar": "https://android.lushunming.qzz.io/jar/custom_spider.jar;md5;060e4699f167f5bb0d4ff8a172e5bc22",
+      "jar": "https://android.lushunming.qzz.io/jar/custom_spider.jar;md5;4b49092b8e94e5df409f3c759d7ae496",
       "quickSearch": 1,
       "filterable": 1
     },
@@ -25754,7 +25779,7 @@
       "searchable": 1,
       "changeable": 0,
       "ext": {},
-      "jar": "https://android.lushunming.qzz.io/jar/custom_spider.jar;md5;060e4699f167f5bb0d4ff8a172e5bc22",
+      "jar": "https://android.lushunming.qzz.io/jar/custom_spider.jar;md5;4b49092b8e94e5df409f3c759d7ae496",
       "quickSearch": 1,
       "filterable": 1
     },
@@ -25765,7 +25790,7 @@
       "api": "csp_YunPanBa",
       "searchable": 1,
       "timeout": 30,
-      "jar": "https://android.lushunming.qzz.io/jar/custom_spider.jar;md5;060e4699f167f5bb0d4ff8a172e5bc22",
+      "jar": "https://android.lushunming.qzz.io/jar/custom_spider.jar;md5;4b49092b8e94e5df409f3c759d7ae496",
       "quickSearch": 1,
       "filterable": 1
     },
@@ -25776,18 +25801,18 @@
       "api": "csp_QiLeSo",
       "searchable": 1,
       "timeout": 30,
-      "jar": "https://android.lushunming.qzz.io/jar/custom_spider.jar;md5;060e4699f167f5bb0d4ff8a172e5bc22",
+      "jar": "https://android.lushunming.qzz.io/jar/custom_spider.jar;md5;4b49092b8e94e5df409f3c759d7ae496",
       "quickSearch": 1,
       "filterable": 1
     },
     {
-      "key": "PanSearch_1935",
+      "key": "PanSearch_1936",
       "name": "[接口] 盘搜┃搜索",
       "type": 3,
       "api": "csp_PanSearch",
       "searchable": 1,
       "timeout": 30,
-      "jar": "https://android.lushunming.qzz.io/jar/custom_spider.jar;md5;060e4699f167f5bb0d4ff8a172e5bc22",
+      "jar": "https://android.lushunming.qzz.io/jar/custom_spider.jar;md5;4b49092b8e94e5df409f3c759d7ae496",
       "quickSearch": 1,
       "filterable": 1
     },
@@ -25799,7 +25824,7 @@
       "searchable": 1,
       "changeable": 0,
       "ext": "./market.json",
-      "jar": "https://android.lushunming.qzz.io/jar/custom_spider.jar;md5;060e4699f167f5bb0d4ff8a172e5bc22",
+      "jar": "https://android.lushunming.qzz.io/jar/custom_spider.jar;md5;4b49092b8e94e5df409f3c759d7ae496",
       "quickSearch": 1,
       "filterable": 1
     },
@@ -25823,7 +25848,7 @@
       "filterable": 1
     },
     {
-      "key": "py_lsys111_1939",
+      "key": "py_lsys111_1940",
       "name": "[https://clun.top/fun.json] 恋丝影视[py]",
       "type": 3,
       "api": "./js/ss/lsys111.py",
@@ -25834,7 +25859,7 @@
       "filterable": 1
     },
     {
-      "key": "py_rolizxwnoble_1940",
+      "key": "py_rolizxwnoble_1941",
       "name": "[https://clun.top/fun.json] 乱伦仓库[py]",
       "type": 3,
       "api": "./js/ss/rolizxwnoble.py",
@@ -25867,7 +25892,7 @@
       "filterable": 1
     },
     {
-      "key": "py_51吃瓜_1943",
+      "key": "py_51吃瓜_1944",
       "name": "[https://clun.top/fun.json] 51吃瓜[py]",
       "type": 3,
       "api": "./js/ss/xigua51.py",
@@ -25878,7 +25903,7 @@
       "filterable": 1
     },
     {
-      "key": "py_51短剧_1944",
+      "key": "py_51短剧_1945",
       "name": "[https://clun.top/fun.json] 51短剧[py]",
       "type": 3,
       "api": "./js/ss/51短剧.py",
@@ -26036,7 +26061,7 @@
       "quickSearch": 1
     },
     {
-      "key": "玩偶_1954",
+      "key": "玩偶_1955",
       "name": "[https://clun.top/fun.json] 玩偶姐姐",
       "type": 3,
       "api": "csp_Doll",
@@ -26156,7 +26181,7 @@
       "jar": "https://clun.top/pg.jar"
     },
     {
-      "key": "drpy_js_豆瓣_1964",
+      "key": "drpy_js_豆瓣_1965",
       "name": "[4k] 🔥聚玩盒子4K",
       "type": 3,
       "api": "https://jihulab.com/yydfys/yydf/-/raw/main/yydf/lib/drpy2.min.js",
@@ -26196,7 +26221,7 @@
       "jar": "https://agit.ai/guot54/ygbh/raw/branch/master/JAR/83.jar"
     },
     {
-      "key": "csp_SixV_1968",
+      "key": "csp_SixV_1969",
       "name": "[4k] 💕┃磁力┃4K",
       "type": 3,
       "api": "csp_SixV",
@@ -26234,7 +26259,7 @@
       "filterable": 1
     },
     {
-      "key": "cctv_1971",
+      "key": "cctv_1972",
       "name": "[4k] 📺┃央视┃大全",
       "type": 3,
       "api": "csp_CCTV",
@@ -26256,7 +26281,7 @@
       "jar": "http://rihou.vip:88/hccx/HeChengChaXiu.jar"
     },
     {
-      "key": "央视经典_1973",
+      "key": "央视经典_1974",
       "name": "[4k] 📺┃央视┃经典",
       "type": 3,
       "api": "csp_Bili",
@@ -26267,7 +26292,7 @@
       "jar": "http://rihou.vip:88/hccx/HeChengChaXiu.jar"
     },
     {
-      "key": "drpy_js_360影视_1974",
+      "key": "drpy_js_360影视_1975",
       "name": "[4k] 🧡┃360┃官源",
       "type": 3,
       "api": "https://jihulab.com/yw88075/tvbox/-/raw/main/dr/lib/drpy2.min.js",
@@ -26334,7 +26359,7 @@
       "filterable": 1
     },
     {
-      "key": "耐看_1979",
+      "key": "耐看_1980",
       "name": "[4k] 🕶┃耐看┃影视",
       "type": 3,
       "api": "csp_XBPQ",
@@ -26345,7 +26370,7 @@
       "filterable": 1
     },
     {
-      "key": "萌米_1980",
+      "key": "萌米_1981",
       "name": "[4k] 👀┃萌米┃App",
       "type": 3,
       "api": "csp_AppMao",
@@ -26357,7 +26382,7 @@
       "filterable": 1
     },
     {
-      "key": "csp_Nmys_1981",
+      "key": "csp_Nmys_1982",
       "name": "[4k] 🌾┃农民┃直连",
       "type": 3,
       "api": "csp_Nmys",
@@ -26369,7 +26394,7 @@
       "filterable": 1
     },
     {
-      "key": "荐片_1982",
+      "key": "荐片_1983",
       "name": "[4k] 🧲┃荐片┃磁力",
       "type": 3,
       "api": "http://rihou.vip:55/lib/drpy2.min.js",
@@ -26391,7 +26416,7 @@
       "filterable": 1
     },
     {
-      "key": "奈飞中文_1984",
+      "key": "奈飞中文_1985",
       "name": "[4k] 🎗┃奈飞┃秒播",
       "type": 3,
       "api": "csp_XYQHiker",
@@ -26421,7 +26446,7 @@
       "jar": "https://tvbox.cainisi.cf/jar/fty0101.jar;md5;fd784008ab71d81a178564841059756d"
     },
     {
-      "key": "天天_1987",
+      "key": "天天_1988",
       "name": "[4k] 💡┃天天┃影视",
       "type": 3,
       "api": "csp_TTian",
@@ -26433,7 +26458,7 @@
       "filterable": 1
     },
     {
-      "key": "Bili_1988",
+      "key": "Bili_1989",
       "name": "[4k] 🅱┃哔哔┃合集",
       "type": 3,
       "api": "csp_Bili",
@@ -26455,7 +26480,7 @@
       "filterable": 1
     },
     {
-      "key": "drpy_js_310直播_1990",
+      "key": "drpy_js_310直播_1991",
       "name": "[4k] ⚽310直播",
       "type": 3,
       "api": "https://gh-proxy.com/https://github.moeyy.xyz/raw.githubusercontent.com/gaotianliuyun/gao/master/lib/drpy2.min.js",
@@ -26487,7 +26512,7 @@
       "filterable": 1
     },
     {
-      "key": "相声小品_1992",
+      "key": "相声小品_1993",
       "name": "[4k] 😍┃相声┃小品",
       "type": 3,
       "api": "csp_Bili",
@@ -26498,7 +26523,7 @@
       "filterable": 1
     },
     {
-      "key": "戏 曲_1993",
+      "key": "戏 曲_1994",
       "name": "[4k] 👵┃老年┃戏曲",
       "type": 3,
       "api": "csp_Bili",
@@ -26531,7 +26556,7 @@
       "filterable": 1
     },
     {
-      "key": "csp_WoGG_1996",
+      "key": "csp_WoGG_1997",
       "name": "[4k] 👽┃玩偶┃4K①",
       "type": 3,
       "api": "csp_WoGG",
@@ -26599,7 +26624,7 @@
       "jar": "http://tv.nxog.top/m/jar.php?id=ou;md5;34c50af4380beab4dbfeae6c9b41939b"
     },
     {
-      "key": "push_agent_2002",
+      "key": "push_agent_2003",
       "name": "[4k] 📽推送",
       "type": 3,
       "api": "csp_PushAgent",
@@ -26718,7 +26743,7 @@
       "filterable": 1
     },
     {
-      "key": "py_douban_2010",
+      "key": "py_douban_2011",
       "name": "[ouge] 📢接口软件永远免费",
       "type": 3,
       "api": "https://cdn.jsdmirror.com/gh/ouhaibo1980/tvbox@main/py/py_douban.py",
@@ -26753,7 +26778,7 @@
       "jar": "https://raw.githubusercontent.com/jar/pg.jar;md5;dffec63fb83a2b31b8606bd4bf6bead9"
     },
     {
-      "key": "drpy_js_荐片_2013",
+      "key": "drpy_js_荐片_2014",
       "name": "[gaotianliuyun] 影视 | 荐片[js]",
       "type": 3,
       "api": "./lib/drpy2.min.js",
@@ -26778,7 +26803,7 @@
       "jar": "https://raw.githubusercontent.com/jar/pg.jar;md5;dffec63fb83a2b31b8606bd4bf6bead9"
     },
     {
-      "key": "豆瓣_2015",
+      "key": "豆瓣_2016",
       "name": "[gaotianliuyun] 搜索 | 豆瓣[jar]",
       "type": 3,
       "api": "csp_Douban",
@@ -26827,7 +26852,7 @@
       "filterable": 1
     },
     {
-      "key": "配置中心_2018",
+      "key": "配置中心_2019",
       "name": "[gaotianliuyun] 配置 | 中心[jar]",
       "type": 3,
       "api": "csp_Config",
@@ -26843,7 +26868,7 @@
       "filterable": 1
     },
     {
-      "key": "酷狗_2019",
+      "key": "酷狗_2020",
       "name": "[gaotianliuyun] 音频 | 酷狗[jar]",
       "type": 3,
       "api": "csp_Kugou",
@@ -26854,7 +26879,7 @@
       "filterable": 1
     },
     {
-      "key": "Iktv_2020",
+      "key": "Iktv_2021",
       "name": "[gaotianliuyun] MV | KTV[jar]",
       "type": 3,
       "api": "csp_Iktv",
@@ -26916,7 +26941,7 @@
       "jar": "https://raw.githubusercontent.com/jar/pg.jar;md5;dffec63fb83a2b31b8606bd4bf6bead9"
     },
     {
-      "key": "天天_2025",
+      "key": "天天_2026",
       "name": "[gaotianliuyun] 弹幕 | 天天[jar]",
       "type": 3,
       "api": "csp_TTian",
@@ -26928,7 +26953,7 @@
       "filterable": 1
     },
     {
-      "key": "追剧_2026",
+      "key": "追剧_2027",
       "name": "[gaotianliuyun] 弹幕 | 追剧[jar]",
       "type": 3,
       "api": "csp_TTian",
@@ -27067,7 +27092,7 @@
       "jar": "https://raw.githubusercontent.com/jar/pg.jar;md5;dffec63fb83a2b31b8606bd4bf6bead9"
     },
     {
-      "key": "Wogg_2036",
+      "key": "Wogg_2037",
       "name": "[gaotianliuyun] 弹幕 | 玩偶[jar]",
       "type": 3,
       "api": "csp_Wogg",
@@ -27119,7 +27144,7 @@
       "searchable": 1
     },
     {
-      "key": "Mogg",
+      "key": "Mogg_2041",
       "name": "[gaotianliuyun] 网盘 | 木偶哥哥[jar]",
       "type": 3,
       "api": "csp_Wobg",
@@ -27210,7 +27235,7 @@
       "searchable": 1
     },
     {
-      "key": "美剧迷_2047",
+      "key": "美剧迷_2048",
       "name": "[gaotianliuyun] 弹幕 | 美剧迷[jar]",
       "type": 3,
       "api": "csp_Meijumi",
@@ -27236,7 +27261,7 @@
       "searchable": 1
     },
     {
-      "key": "新6V_2049",
+      "key": "新6V_2050",
       "name": "[gaotianliuyun] 弹幕 | 新6V[jar]",
       "type": 3,
       "api": "csp_Xb6v",
@@ -27464,7 +27489,7 @@
       "filterable": 1
     },
     {
-      "key": "Libvio_2067",
+      "key": "Libvio_2068",
       "name": "[gaotianliuyun] 网盘 | LIBVIO[jar]",
       "type": 3,
       "api": "csp_Libvio",
@@ -27529,7 +27554,7 @@
       "searchable": 1
     },
     {
-      "key": "Gitcafe_2072",
+      "key": "Gitcafe_2073",
       "name": "[gaotianliuyun] 阿里 | 纸条[jar]",
       "type": 3,
       "api": "csp_Gitcafe",
@@ -27553,7 +27578,7 @@
       "jar": "https://raw.githubusercontent.com/jar/pg.jar;md5;dffec63fb83a2b31b8606bd4bf6bead9"
     },
     {
-      "key": "七夜_2074",
+      "key": "七夜_2075",
       "name": "[gaotianliuyun] 阿里 | 七夜[jar]",
       "type": 3,
       "api": "csp_Dovx",
@@ -27604,7 +27629,7 @@
       "filterable": 1
     },
     {
-      "key": "盘搜_2078",
+      "key": "盘搜_2079",
       "name": "[gaotianliuyun] 阿里 | 盘搜[jar]",
       "type": 3,
       "api": "csp_PanSou",
@@ -28619,7 +28644,7 @@
       "filterable": 1
     },
     {
-      "key": "drpy_js_ddys_2168",
+      "key": "drpy_js_ddys_2169",
       "name": "[gaotianliuyun] 影视 | 低端影视[js]",
       "type": 3,
       "api": "./lib/drpy2.min.js",
@@ -28788,7 +28813,7 @@
       "filterable": 1
     },
     {
-      "key": "push_agent_2181",
+      "key": "push_agent_2182",
       "name": "[gaotianliuyun] 手机 | 推送[jar]",
       "type": 3,
       "api": "csp_Push",
@@ -28827,7 +28852,7 @@
       "filterable": 1
     },
     {
-      "key": "drpy_js_有声绘本网_2184",
+      "key": "drpy_js_有声绘本网_2185",
       "name": "[gaotianliuyun] 少儿 | 有声绘本[js]",
       "type": 3,
       "api": "./lib/drpy2.min.js",
@@ -28939,7 +28964,7 @@
       "filterable": 1
     },
     {
-      "key": "drpy_js_88看球_2191",
+      "key": "drpy_js_88看球_2192",
       "name": "[gaotianliuyun] 体育 | 88看球[js]",
       "type": 3,
       "api": "./lib/drpy2.min.js",
@@ -28955,7 +28980,7 @@
       "filterable": 1
     },
     {
-      "key": "drpy_js_JRKAN直播_2192",
+      "key": "drpy_js_JRKAN直播_2193",
       "name": "[gaotianliuyun] 体育 | JRKAN直播[js]",
       "type": 3,
       "api": "./lib/drpy.min.js",
@@ -28971,7 +28996,7 @@
       "filterable": 1
     },
     {
-      "key": "drpy_js_抓饭体育_2193",
+      "key": "drpy_js_抓饭体育_2194",
       "name": "[gaotianliuyun] 体育 | 抓饭体育[js]",
       "type": 3,
       "api": "./lib/drpy.min.js",
@@ -29952,7 +29977,7 @@
     },
     {
       "name": "[xiaolong69] 豪堪短剧",
-      "key": "HHkk_2278",
+      "key": "HHkk_2279",
       "type": 3,
       "api": "csp_HHkkAmns",
       "searchable": 1,
@@ -29964,7 +29989,7 @@
     },
     {
       "name": "[xiaolong69] 盒马短剧",
-      "key": "Hema_2279",
+      "key": "Hema_2280",
       "type": 3,
       "api": "csp_HemaAmns",
       "searchable": 1,
@@ -29976,7 +30001,7 @@
     },
     {
       "name": "[xiaolong69] 拜拜短剧",
-      "key": "Bddj_2280",
+      "key": "Bddj_2281",
       "type": 3,
       "api": "csp_BddjAmns",
       "searchable": 1,
@@ -29988,7 +30013,7 @@
     },
     {
       "name": "[xiaolong69] 围观短剧",
-      "key": "Wgdj_2281",
+      "key": "Wgdj_2282",
       "type": 3,
       "api": "csp_WgdjAmns",
       "searchable": 1,
@@ -30000,7 +30025,7 @@
     },
     {
       "name": "[xiaolong69] 喵喵短剧",
-      "key": "Qmdj_2282",
+      "key": "Qmdj_2283",
       "type": 3,
       "api": "csp_QmdjAmns",
       "searchable": 1,
@@ -30012,7 +30037,7 @@
     },
     {
       "name": "[xiaolong69] 星星短剧",
-      "key": "Xydj_2283",
+      "key": "Xydj_2284",
       "type": 3,
       "api": "csp_XydjAmns",
       "searchable": 1,
@@ -30023,7 +30048,7 @@
       "filterable": 1
     },
     {
-      "key": "YpanSo_2284",
+      "key": "YpanSo_2285",
       "name": "[xiaolong69] 盘她夸父",
       "type": 3,
       "api": "csp_YpanSoGuard",
@@ -30054,7 +30079,7 @@
       "filterable": 1
     },
     {
-      "key": "斗鱼js_2286",
+      "key": "斗鱼js_2287",
       "name": "[xiaolong69] 斗鱼直播",
       "type": 3,
       "api": "https://gh-proxy.com/https://raw.githubusercontent.com/xiaolong69/tv/main/spider/19/js/drpy2.min.js",
@@ -30071,7 +30096,7 @@
       "filterable": 1
     },
     {
-      "key": "dr_兔小贝_2287",
+      "key": "dr_兔小贝_2288",
       "name": "[xiaolong69] 儿童启蒙",
       "type": 3,
       "api": "https://gh-proxy.com/https://raw.githubusercontent.com/xiaolong69/tv/main/spider/19/js/drpy2.min.js",
@@ -30087,7 +30112,7 @@
       "filterable": 1
     },
     {
-      "key": "push_agent_2288",
+      "key": "push_agent_2289",
       "name": "[xiaolong69] 推送",
       "type": 3,
       "api": "csp_Push",
@@ -30101,7 +30126,7 @@
       "filterable": 1
     },
     {
-      "key": "drpy_js_豆瓣_2289",
+      "key": "drpy_js_豆瓣_2290",
       "name": "[okay] 🔥量子🔥",
       "type": 0,
       "api": "https://cj.lziapi.com/api.php/provide/vod/from/liangzi/at/xml",
@@ -30211,143 +30236,9 @@
   ],
   "lives": [
     {
-      "name": "Kimentanm",
+      "name": "🔥TVBox 高清央视/卫视/美英直播源",
       "type": 0,
-      "url": "https://down.nigx.cn/raw.githubusercontent.com/Kimentanm/aptv/master/m3u/iptv.m3u",
-      "playerType": 2
-    },
-    {
-      "name": "综合直播",
-      "type": 0,
-      "playerType": 2,
-      "url": "http://193.123.86.190:14888/TV/iptv.php",
-      "ua": "bingcha/1.1 (mianfeifenxiang) "
-    },
-    {
-      "name": "直播",
-      "type": 0,
-      "url": "http://home.jundie.top:81/Cat/tv/live.txt",
-      "epg": "http://epg.51zmt.top:8000/api/diyp/?ch={name}&date={date}"
-    },
-    {
-      "name": "Kimentanm",
-      "type": 0,
-      "url": "https://gh.927223.xyz/https://raw.githubusercontent.com/Kimentanm/aptv/master/m3u/iptv.m3u",
-      "playerType": 2
-    },
-    {
-      "name": "综合直播",
-      "type": 0,
-      "url": "http://193.123.86.190:14888/TV/iptv.php",
-      "ua": "bingcha/1.1 (mianfeifenxiang)",
-      "playerType": 2
-    },
-    {
-      "name": "范明明（需开启V6网络）",
-      "type": 0,
-      "url": "https://nos.netease.com/ysf/3d75a78a0fc7ede372c03598d6d10367.m3u",
-      "playerType": 2
-    },
-    {
-      "name": "虎牙一起看",
-      "type": 0,
-      "url": "https://sub.ottiptv.cc/huyayqk.m3u",
-      "playerType": 2,
-      "timeout": 10,
-      "ua": "okHttp/Mod-1.5.0.0"
-    },
-    {
-      "name": "斗鱼一起看",
-      "type": 0,
-      "url": "https://sub.ottiptv.cc/douyuyqk.m3u",
-      "playerType": 2,
-      "timeout": 10,
-      "ua": "okHttp/Mod-1.5.0.0"
-    },
-    {
-      "name": "YY轮播",
-      "type": 0,
-      "url": "https://sub.ottiptv.cc/yylunbo.m3u",
-      "playerType": 2,
-      "timeout": 10,
-      "ua": "okHttp/Mod-1.5.0.0"
-    },
-    {
-      "name": "Kimentanm",
-      "type": 0,
-      "url": "https://gh.927223.xyz/https://raw.githubusercontent.com/Kimentanm/aptv/master/m3u/iptv.m3u",
-      "playerType": 2
-    },
-    {
-      "name": "范明明（需开启V6网络）",
-      "type": 0,
-      "url": "https://nos.netease.com/ysf/3d75a78a0fc7ede372c03598d6d10367.m3u",
-      "playerType": 2
-    },
-    {
-      "name": "虎牙一起看",
-      "type": 0,
-      "url": "https://file.icve.com.cn/file_doc/946/41/ECB0A5FBED1D8C4D4E049E95DB9F756F.m3u",
-      "playerType": 2,
-      "timeout": 10,
-      "ua": "okHttp/Mod-1.5.0.0"
-    },
-    {
-      "name": "斗鱼一起看",
-      "type": 0,
-      "url": "https://file.icve.com.cn/file_doc/254/346/3FB56B2C49DF92B3252352FBE5CD00F1.m3u",
-      "playerType": 2,
-      "timeout": 10,
-      "ua": "okHttp/Mod-1.5.0.0"
-    },
-    {
-      "name": "B站直播",
-      "type": 0,
-      "url": "https://file.icve.com.cn/file_doc/220/1003/370FAE41BD301F89BA1FCD6FDB8D5BD6.m3u",
-      "playerType": 2,
-      "timeout": 10,
-      "ua": "okHttp/Mod-1.5.0.0"
-    },
-    {
-      "name": "YY轮播",
-      "type": 0,
-      "url": "https://file.icve.com.cn/file_doc/178/700/2C9AF1F98DBC1523826C0CD4DA8D8947.m3u",
-      "playerType": 2,
-      "timeout": 10,
-      "ua": "okHttp/Mod-1.5.0.0"
-    },
-    {
-      "name": "Kimentanm",
-      "type": 0,
-      "url": "https://down.nigx.cn/raw.githubusercontent.com/Kimentanm/aptv/master/m3u/iptv.m3u",
-      "playerType": 2
-    },
-    {
-      "name": "综合直播",
-      "type": 0,
-      "playerType": 2,
-      "url": "http://193.123.86.190:14888/TV/iptv.php",
-      "ua": "bingcha/1.1 (mianfeifenxiang) "
-    },
-    {
-      "name": "24live",
-      "type": 0,
-      "url": "https://urlzf.zone.id/iptv-api/output/user_result.m3u",
-      "playerType": 2,
-      "epg": "http://epg.112114.xyz/?ch={name}&date={date}",
-      "logo": "https://live.fanmingming.com/tv/{name}.png"
-    },
-    {
-      "name": "极直播电视(php)",
-      "url": "http://php.cqshushu.ggff.net/jzb.php?公众号【医工学习日志】",
-      "epg": "https://epg.112114.xyz/?ch={name}&date={date}",
-      "logo": "https://epg.112114.xyz/logo/{name}.png"
-    },
-    {
-      "name": "88KQ",
-      "url": "http://php.cqshushu.ggff.net/kqt.php?公众号【医工学习日志】",
-      "epg": "https://epg.112114.xyz/?ch={name}&date={date}",
-      "logo": "https://epg.112114.xyz/logo/{name}.png"
+      "url": "https://gh-proxy.com/https://raw.githubusercontent.com/haygcao/tvbox-master-aggregator/main/live.txt"
     }
   ],
   "parses": [
@@ -30847,5 +30738,5 @@
     "cdnjs.hnfenxun.com",
     "cms.qdwght.com"
   ],
-  "note": "本配置由 TVBox 资源全量去重合并引擎生成。"
+  "note": "本配置由 TVBox 资源全量去重合并引擎生成 (已嵌入全量纯净直播源)。"
 }
