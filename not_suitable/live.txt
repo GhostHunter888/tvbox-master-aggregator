@@ -8523,6 +8523,7 @@ Heaven Bound TV (480p) [Not 24/7],https://goliveafrica.media:9998/live/62580b337
 Highway to Heaven,https://jmp2.uk/plu-68bff9a63efb41cd97562e46.m3u8
 Hillsborough TV (360p),https://cdn3.wowza.com/5/M0lyamVmM2JWcjhQ/hillsboroughcounty/G2155_002/playlist.m3u8
 History (Bulgaria),http://213.91.179.28:8000/play/a0c1
+History TV18 (576p),http://51.75.127.199:3141/historytv18/index.m3u8
 Hit Mix Music,http://213.91.179.28:8000/play/a0cl
 HLAT-DTV (1080p) [Not 24/7],https://5c3639aa99149.streamlock.net/live_TV/tv/playlist.m3u8
 HLDE-DTV (540p),http://203.251.91.122:1935/on-air-Backup/tv/playlist.m3u8
@@ -8805,7 +8806,6 @@ RDX Goa (720p) [Geo-blocked],https://g5nl6xoalpq6-hls-live.5centscdn.com/rdxgoa/
 Re TV (1080p),https://retv2132.cloudycdn.services/slive/_definst_/retv_retv_channel_5k7_42787_default_891_hls.smil/playlist.m3u8
 Real America's Voice (1080p),https://stream.weathernationtv.com/RAVStirr_poekxujeisurekugzezyg/O1/playlistSCTE35.m3u8
 Real America's Voice KPVM-LD,https://2-fss-2.streamhoster.com/pl_118/206858-4404454-1/playlist.m3u8
-Real News Kerala (1080p) [Not 24/7],https://bk7l298nyx53-hls-live.5centscdn.com/realnews/e7dee419f91aa9e65939d3677fb9c4f5.sdp/playlist.m3u8
 Record RS (720p) [Geo-blocked],https://playpluspoa-lh.akamaihd.net/i/pp_poa@377864/index_720_av-p.m3u8
 RecordTV Belem (720p) [Geo-blocked],https://playpluspa-lh.akamaihd.net/i/pp_pa@377468/index_720_av-p.m3u8
 RecordTV Brasilia (720p) [Geo-blocked],https://playplusbsa-lh.akamaihd.net/i/pp_bsa@377860/index_720_av-p.m3u8
@@ -8854,6 +8854,7 @@ Shandong TV (1080p),http://39.134.115.163:8080/PLTV/88888910/224/3221225697/inde
 Sharq Radio TV (1080p),https://59nyqa5elwap-hls-live.5centscdn.com/Sharq/eec89088ee408b80387155272b113256.sdp/playlist.m3u8
 Shubh TV (1080p),https://d2g1vdc6ozl2o8.cloudfront.net/out/v1/0a0dc7d7911b4fddbb4dfc963fdd4b9e/index.m3u8
 Sichuan Satellite TV (576p),http://39.134.115.163:8080/PLTV/88888910/224/3221225733/index.m3u8
+Sidharth Utsav (576p),http://51.75.127.199:3141/sidharthbhakti/index.m3u8
 Simavision Canal 18 (720p),https://soportedvb.click:3668/live/simavisiontvlive.m3u8
 Sky News Extra 3 (1080p),https://skynewsau-live.akamaized.net/hls/live/2002691/skynewsau-extra3/master.m3u8
 Sol TV (Bolivia) (720p),http://190.211.140.91:8081/SVTranscoder/SOLTVabr.stream/playlist.m3u8
@@ -8868,7 +8869,10 @@ Sport 1 (Ukraine) (576p),http://stream.mcquack.net/391/index.m3u8
 Sport 3 (Israel) (1080p),http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/BWGFFCU59AE6AEV3KF3FXTBA/12251/index.m3u8
 Sport 4 (Israel) (1080p),http://sewv654wfcsdwfi87fwvgbngh.siauliairsavlt.pw/iptv/BWGFFCU59AE6AEV3KF3FXTBA/2389/index.m3u8
 SRC TV (720p),http://highvolume155.streampartner.nl/adminsrc/adminsrc/playlist.m3u8
+Star Pravah (576p),http://51.75.127.199:3141/starpravah/index.m3u8
 Star Pravah HD (720p),https://da86m1sqpm3o0.cloudfront.net/28072023/smil:starpravah.smil/chunklist_b1928000.m3u8
+Star Utsav (576p),http://51.75.127.199:3141/starutsav/index.m3u8
+Star Utsav Movies (576p),http://51.75.127.199:3141/starutsavmovies/index.m3u8
 Stingray Greatest Holiday Hits,https://d39g1vxj2ef6in.cloudfront.net/v1/manifest/3fec3e5cac39a52b2132f9c66c83dae043dc17d4/prod-rakuten-stitched/54947915-6504-4548-aaef-eabd451f8607/1.m3u8
 Stingray Holiday Hits (1080p),https://lotus.stingray.com/manifest/ose-155ads-montreal/samsungtvplus/master.m3u8
 Stingray Pop Adult (1080p),https://lotus.stingray.com/manifest/ose-104ads-montreal/samsungtvplus/master.m3u8
@@ -8929,6 +8933,7 @@ TRT (Greece) (720p),https://av.hellasnet.tv/rst/trt/main_stream.m3u8
 TRT Avaz (720p),https://tv-trtavaz.medya.trt.com.tr/master.m3u8
 True Crime by Pluto TV,https://jmp2.uk/plu-5f914f4b36d67d0007a91a04.m3u8
 Tsargrad TV (1080p) [Geo-blocked],https://bl.rutube.ru/livestream/91815da4edb167b5bd617bae490e57da/index.m3u8?e=2070278263&s=is_mLq_kjPYLsOJ4qj85tw&scheme=https
+Tulja Bhavani (576p),http://51.75.127.199:3141/tuljabhavani/index.m3u8
 Turbo TV (1080p),https://dash3.antik.sk/live/turbo_tv_avc_25p/playlist.m3u8
 Turismo RDTV (720p),https://streamunoapp.com:3086/live/telemileniolive.m3u8
 Turismo Travel TV,https://stmv3.voxtvhd.com.br/turismotraveltv/turismotraveltv/playlist.m3u8

@@ -2,14 +2,14 @@
 # -*- coding: utf-8 -*-
 """
 =============================================================================
- 独立脚本：基于 Mozilla PSL 算法的全量路由器规则导出器 (历史增量累加版)
+ 独立脚本：基于 Mozilla PSL 算法的全量路由器规则导出器 (全字段融合版)
 =============================================================================
-重点更新：
-  1. 历史增量累加 (Incremental Accumulation)：
-     - 提取到的新域名/IP 与磁盘上现有的 domains_direct.txt、adguard_direct.txt 进行求并集 (set.union) 累加；
-     - 绝不上演覆盖清除，确保偶发网络波动的域名 100% 长期保留！
-  2. 结合中文 Punycode 与纯 IPv4 CIDR 支持；
-  3. 分组带备注导出 AdGuard Home、PassWall 与 Clash 直连规则集。
+功能：
+  1. 融合 .py 源码域名 (extract_py_code_domains)；
+  2. 融合通用发布页域名 (extract_release_page_domains)；
+  3. 融合中文 Punycode (IDNA) 与纯 IPv4 CIDR；
+  4. 执行历史增量累加 (Incremental Accumulation)；
+  5. 生成 Clash 统一规则 clash_rules_direct.yaml 与 PassWall/AdGuard 白名单。
 =============================================================================
 """
 
@@ -22,6 +22,18 @@ try:
 except ImportError:
     TLD_EXTRACTOR = None
 
+GLOBAL_PROXY_DOMAINS = [
+    "google.com", "googlesyndication.com", "googletagmanager.com",
+    "google-analytics.com", "googleapis.com", "gstatic.com", "doubleclick.net",
+    "youtube.com", "ytimg.com", "ggpht.com", "github.com", "githubusercontent.com",
+    "jsdelivr.net", "tmdb.org", "themoviedb.org", "t.me", "telegram.org",
+    "twitter.com", "x.com", "facebook.com", "instagram.com"
+]
+
+INVALID_FILE_EXTENSIONS = [
+    "json", "txt", "m3u8", "ts", "js", "css", "html", "htm", "png", "jpg", "jpeg", "webp", "php"
+]
+
 def to_punycode_domain(dom_str):
     if not dom_str or not isinstance(dom_str, str): return None
     try: return dom_str.encode("idna").decode("ascii")
@@ -29,19 +41,24 @@ def to_punycode_domain(dom_str):
 
 def extract_root_domain(raw_str):
     if not raw_str or not isinstance(raw_str, str): return None
-    clean_str = raw_str.split("|")[0].split("$")[0].strip()
+    clean_str = str(raw_str).replace('\\/', '/').replace('\\', '').split("|")[0].split("$")[0].strip()
+    if clean_str.startswith("//"): clean_str = "https:" + clean_str
+
+    if clean_str.lower() in INVALID_FILE_EXTENSIONS:
+        return None
+
     if TLD_EXTRACTOR:
         ext = TLD_EXTRACTOR(clean_str)
         if ext.domain and ext.suffix:
             root = f"{ext.domain}.{ext.suffix}".lower().strip()
-            if root and "github" not in root and "jsdelivr" not in root:
+            if root and root not in INVALID_FILE_EXTENSIONS:
                 return root
         return None
     else:
         url_match = re.search(r'https?://([^\s"\'/<>#\$:]+)', clean_str)
         host = url_match.group(1).split(":")[0] if url_match else clean_str.split("/")[0].split(":")[0].strip()
         host = host.strip("@|*^ \t\r\n").lower()
-        if not host or host.replace('.', '').isdigit() or "." not in host:
+        if not host or host.replace('.', '').isdigit() or "." not in host or host.startswith("."):
             return None
         parts = host.split(".")
         if len(parts) >= 3:
@@ -51,10 +68,14 @@ def extract_root_domain(raw_str):
                 root = ".".join(parts[-2:])
         else:
             root = host
-        return root if "github" not in root and "jsdelivr" not in root else None
+        return root if root not in INVALID_FILE_EXTENSIONS else None
+
+def is_global_proxy_domain(dom):
+    if not dom or not isinstance(dom, str): return False
+    dom_l = dom.lower().strip()
+    return any(dom_l == pd or dom_l.endswith("." + pd) for pd in GLOBAL_PROXY_DOMAINS)
 
 def read_existing_historical_rules(file_path):
-    """读取已有文件中的历史域名/IP，用于增量累加求并集"""
     existing = set()
     if os.path.exists(file_path):
         try:
@@ -63,18 +84,22 @@ def read_existing_historical_rules(file_path):
                     line = line.strip()
                     if line and not line.startswith("#") and not line.startswith("!") and not line.startswith("payload:"):
                         clean_item = re.sub(r'^(?:@@\|\||- DOMAIN-SUFFIX,|- IP-CIDR,)\s*', '', line).rstrip("^/32").strip()
-                        if clean_item:
+                        clean_item = clean_item.replace('\\/', '/').replace('\\', '')
+                        if clean_item and clean_item not in INVALID_FILE_EXTENSIONS and not is_global_proxy_domain(clean_item):
                             existing.add(clean_item)
         except Exception: pass
     return existing
 
-def export_grouped_router_rules(work_dir, sites, grouped_cdn_domains, dynamic_image_domains=None, extracted_ips=None):
-    print("  [策略导出器] 正在执行历史增量累加合并与分组规则导出...", flush=True)
+def export_grouped_router_rules(work_dir, sites, grouped_cdn_domains, dynamic_image_domains=None, extracted_ips=None, release_page_domains=None, py_code_domains=None):
+    print("  [策略导出器] 正在融合 .py 源码域名、发布页镜像、海报与纯 IP 导出规则...", flush=True)
 
     PROXY_KEYWORDS = ["(墙)", "墙外", "代理", "翻墙", "科学", "科学上网"]
 
-    api_direct_domains = set()
-    proxy_domains = set()
+    api_direct_domains = set(release_page_domains or [])
+    if py_code_domains:
+        api_direct_domains.update(py_code_domains)
+
+    proxy_domains = set(GLOBAL_PROXY_DOMAINS)
 
     for s in sites:
         name = str(s.get("name", ""))
@@ -90,38 +115,40 @@ def export_grouped_router_rules(work_dir, sites, grouped_cdn_domains, dynamic_im
         for u_str in extracted_urls:
             r_dom = extract_root_domain(u_str)
             if r_dom:
-                if is_proxy_site or "github" in r_dom or "jsdelivr" in r_dom:
+                if is_proxy_site or is_global_proxy_domain(r_dom):
                     proxy_domains.add(r_dom)
                 else:
                     api_direct_domains.add(r_dom)
 
-    def expand_punycode_list(raw_list):
+    def filter_and_expand(raw_list):
         expanded = set()
         for dom in (raw_list or []):
             if dom:
-                expanded.add(dom)
-                puny = to_punycode_domain(dom)
-                if puny and puny != dom: expanded.add(puny)
+                dom_clean = str(dom).replace('\\/', '/').replace('\\', '').strip()
+                if is_global_proxy_domain(dom_clean) or dom_clean.lower() in INVALID_FILE_EXTENSIONS:
+                    proxy_domains.add(dom_clean)
+                    continue
+                expanded.add(dom_clean)
+                puny = to_punycode_domain(dom_clean)
+                if puny and puny != dom_clean: expanded.add(puny)
         return expanded
 
-    top_cdn = expand_punycode_list(grouped_cdn_domains.get("top_facade_domains", set()) if isinstance(grouped_cdn_domains, dict) else set())
-    l2_play = expand_punycode_list(grouped_cdn_domains.get("media_player_domains", set()) if isinstance(grouped_cdn_domains, dict) else set())
-    l3_ts = expand_punycode_list(grouped_cdn_domains.get("deep_stream_domains", set()) if isinstance(grouped_cdn_domains, dict) else set())
-    api_doms = expand_punycode_list(api_direct_domains)
-    img_doms = expand_punycode_list(set(dynamic_image_domains or []))
+    top_cdn = filter_and_expand(grouped_cdn_domains.get("top_facade_domains", set()) if isinstance(grouped_cdn_domains, dict) else set())
+    l2_play = filter_and_expand(grouped_cdn_domains.get("media_player_domains", set()) if isinstance(grouped_cdn_domains, dict) else set())
+    l3_ts = filter_and_expand(grouped_cdn_domains.get("deep_stream_domains", set()) if isinstance(grouped_cdn_domains, dict) else set())
+    api_doms = filter_and_expand(api_direct_domains)
+    img_doms = filter_and_expand(set(dynamic_image_domains or []))
     pure_ips = set(extracted_ips or [])
 
-    # 读取磁盘已有历史规则进行【增量累加 (set.union)】，保证历史有效域名不丢失！
     hist_direct_path = os.path.join(work_dir, "domains_direct.txt")
     historical_items = read_existing_historical_rules(hist_direct_path)
 
-    # 将历史域名融入第 3 级深层播放分组
-    l3_ts.update([h for h in historical_items if not h.replace('.', '').isdigit()])
+    l3_ts.update([h for h in historical_items if not h.replace('.', '').isdigit() and not is_global_proxy_domain(h)])
     pure_ips.update([h for h in historical_items if h.replace('.', '').isdigit()])
 
     groups = [
         ("01_门面节点_OK资源_播放CDN域名", sorted(list(top_cdn))),
-        ("02_控制面_API服务域名", sorted(list(api_doms))),
+        ("02_控制面_API服务_发布页与PY源码域名", sorted(list(api_doms))),
         ("03_二级_播放页与M3U8域名", sorted(list(l2_play))),
         ("04_三级_深层TS视频切片边缘CDN与历史增量域名", sorted(list(l3_ts))),
         ("05_海报图片_CDN放行域名", sorted(list(img_doms)))
@@ -132,7 +159,7 @@ def export_grouped_router_rules(work_dir, sites, grouped_cdn_domains, dynamic_im
     # 1. 导出 PassWall / SmartDNS 直连列表 (domains_direct.txt)
     with open(os.path.join(work_dir, "domains_direct.txt"), "w", encoding="utf-8") as f:
         f.write("# =========================================================\n")
-        f.write("# TVBox 视频源、海报图片 CDN、中文 Punycode 与纯IP 增量直连列表\n")
+        f.write("# TVBox 视频源、.py 源码域名、海报 CDN、中文 Punycode 与纯IP 增量直连列表\n")
         f.write("# =========================================================\n\n")
         for g_title, dom_list in groups:
             if dom_list:
@@ -147,7 +174,7 @@ def export_grouped_router_rules(work_dir, sites, grouped_cdn_domains, dynamic_im
     # 2. 导出 AdGuard Home 放行白名单 (adguard_direct.txt)
     with open(os.path.join(work_dir, "adguard_direct.txt"), "w", encoding="utf-8") as f:
         f.write("! =========================================================\n")
-        f.write("! OpenWrt AdGuard Home TVBox 视频源、中文 Punycode 与纯IP 放行白名单规则\n")
+        f.write("! OpenWrt AdGuard Home TVBox 视频源、.py 源码域名、中文 Punycode 与纯IP 放行白名单\n")
         f.write("! =========================================================\n\n")
         for g_title, dom_list in groups:
             if dom_list:
@@ -162,7 +189,7 @@ def export_grouped_router_rules(work_dir, sites, grouped_cdn_domains, dynamic_im
     # 3. 导出 Clash 规则集 (clash_rules_direct.yaml)
     with open(os.path.join(work_dir, "clash_rules_direct.yaml"), "w", encoding="utf-8") as f:
         f.write("# =========================================================\n")
-        f.write("# TVBox 视频源、中文 Punycode 域名与纯 IP Clash 增量直连规则集\n")
+        f.write("# TVBox 视频源、.py 源码域名、中文 Punycode 域名与纯 IP Clash 增量直连规则集\n")
         f.write("# =========================================================\n")
         f.write("payload:\n")
         for g_title, dom_list in groups:
@@ -189,12 +216,12 @@ def export_grouped_router_rules(work_dir, sites, grouped_cdn_domains, dynamic_im
         f.write("# TVBox 强制代理 Clash 规则集\npayload:\n")
         for d in sorted_proxy: f.write(f"  - DOMAIN-SUFFIX,{d}\n")
 
-    print(f"  ├─ 增量导出 PassWall 直连列表 (含历史增量): domains_direct.txt")
+    print(f"  ├─ 增量导出 PassWall 直连列表 (含 .py 源码域名): domains_direct.txt")
     print(f"  ├─ 增量导出 AdGuard Home 放行白名单: adguard_direct.txt")
-    print(f"  └─ 增量导出 Clash 规则集 (含 DOMAIN-SUFFIX 与 {len(sorted_ips)}条 IP-CIDR): clash_rules_direct.yaml")
+    print(f"  └─ 增量导出 Clash 规则集 (支持 DOMAIN-SUFFIX, Punycode 与 IP-CIDR): clash_rules_direct.yaml")
 
-def export_all_router_rules(work_dir, sites, deep_cdn_domains, dynamic_image_domains=None, extracted_ips=None):
-    return export_grouped_router_rules(work_dir, sites, deep_cdn_domains, dynamic_image_domains, extracted_ips)
+def export_all_router_rules(work_dir, sites, deep_cdn_domains, dynamic_image_domains=None, extracted_ips=None, release_page_domains=None, py_code_domains=None):
+    return export_grouped_router_rules(work_dir, sites, deep_cdn_domains, dynamic_image_domains, extracted_ips, release_page_domains, py_code_domains)
 
 if __name__ == "__main__":
     pass
