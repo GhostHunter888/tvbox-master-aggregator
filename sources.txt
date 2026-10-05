@@ -1,4 +1,4 @@
-# 2026-10-04 04:42:49
+# 2026-10-05 04:30:53
 
 💎可可影视┃4K高清
 https://gh-proxy.com/https://raw.githubusercontent.com/haygcao/tvbox-master-aggregator/main/scripts/kkys_master.py
@@ -269,6 +269,9 @@ https://gh-proxy.com/https://raw.githubusercontent.com/jie20091116/cat/a201c9690
 
 💎baopianku┃[CAT]
 https://gh-proxy.com/https://raw.githubusercontent.com/jie20091116/cat/a201c9690267c1ab4e3f65d5a1fca80662438fa0/TVBOX/PY/baopianku.py
+
+💎新豆┃[CAT]
+https://gh-proxy.com/https://raw.githubusercontent.com/jie20091116/cat/a201c9690267c1ab4e3f65d5a1fca80662438fa0/TVBOX/PY/新豆.py
 
 💎muyechachacha┃[CAT]
 https://gh-proxy.com/https://raw.githubusercontent.com/jie20091116/cat/a201c9690267c1ab4e3f65d5a1fca80662438fa0/TVBOX/PY/muyechachacha.py
@@ -761,6 +764,9 @@ https://gh-proxy.com/https://raw.githubusercontent.com/jie20091116/cat/a201c9690
 
 💎CNFLIX┃[CAT]
 https://gh-proxy.com/https://raw.githubusercontent.com/jie20091116/cat/a201c9690267c1ab4e3f65d5a1fca80662438fa0/TVBOX/PY/CNFLIX.py
+
+💎一起随缘┃[CAT]
+https://gh-proxy.com/https://raw.githubusercontent.com/jie20091116/cat/a201c9690267c1ab4e3f65d5a1fca80662438fa0/TVBOX/PY/一起随缘.py
 
 💎FullHD┃[CAT]
 https://gh-proxy.com/https://raw.githubusercontent.com/jie20091116/cat/a201c9690267c1ab4e3f65d5a1fca80662438fa0/TVBOX/PY/FullHD.py
@@ -1743,6 +1749,9 @@ https://gh-proxy.com/https://raw.githubusercontent.com/jie20091116/cat/a201c9690
 💎秀秀┃[CAT]
 https://gh-proxy.com/https://raw.githubusercontent.com/jie20091116/cat/a201c9690267c1ab4e3f65d5a1fca80662438fa0/TVBOX/PY/秀秀.py
 
+💎土豆┃[CAT]
+https://gh-proxy.com/https://raw.githubusercontent.com/jie20091116/cat/a201c9690267c1ab4e3f65d5a1fca80662438fa0/TVBOX/PY/土豆.py
+
 💎芒果TV┃[CAT]
 https://gh-proxy.com/https://raw.githubusercontent.com/jie20091116/cat/a201c9690267c1ab4e3f65d5a1fca80662438fa0/TVBOX/PY/芒果TV.py
 
@@ -1904,6 +1913,12 @@ https://gh-proxy.com/https://raw.githubusercontent.com/gaotianliuyun/main/json/g
 
 💎publish-typecho┃[LAOMA2053]
 https://gh-proxy.com/https://raw.githubusercontent.com/laoma2053/main/scripts/publish-typecho.py
+
+[二月红接口] 🍀┃非凡┃资源
+http://ffzy5.tv/api.php/provide/vod
+
+[二月红接口] 🍀┃如意┃资源
+https://cj.rycjapi.com/api.php/provide/vod
 
 [俊哥接口] 低端影视(DRPY)
 http://home.jundie.top:666/JS/dr_py/libs/drpy.min.js
@@ -2487,9 +2502,6 @@ http://zuidazy.me/api.php/provide/vod
 [zy] 🍏虎牙
 https://www.huyaapi.com/api.php/provide/vod/from/hym3u8/at/json
 
-[zy] 🍏如意
-https://cj.rycjapi.com/api.php/provide/vod
-
 [zy] 🍏速播
 https://subocaiji.com/api.php/provide/vod
 
@@ -2588,9 +2600,6 @@ https://caiji.dbzy5.com/api.php/provide/vod/at/json
 
 [我的] 非凡资源
 http://api.ffzyapi.com/api.php/provide/vod
-
-[我的] 非凡资源2
-http://ffzy5.tv/api.php/provide/vod
 
 [我的] 极速资源
 https://jszyapi.com/api.php/provide/vod/at/xml
