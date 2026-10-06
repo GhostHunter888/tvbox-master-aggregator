@@ -5,3 +5,4 @@ __pycache__/
 !tvbox.json
 !tvbox_full.json
 !tvbox_multi.json
+!process/*.json

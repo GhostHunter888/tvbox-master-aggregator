@@ -1,4 +1,4 @@
-# 2026-10-05 04:30:53
+# 2026-10-06 05:16:52
 
 💎可可影视┃4K高清
 https://gh-proxy.com/https://raw.githubusercontent.com/haygcao/tvbox-master-aggregator/main/scripts/kkys_master.py
@@ -1911,6 +1911,9 @@ https://gh-proxy.com/https://raw.githubusercontent.com/gaotianliuyun/main/lib/ge
 💎getsearchtxt┃[GAOTIANLIUYUN]
 https://gh-proxy.com/https://raw.githubusercontent.com/gaotianliuyun/main/json/getsearchtxt.py
 
+💎spider┃[CATVODSPIDER]
+https://gh-proxy.com/https://raw.githubusercontent.com/CatVodSpider/main/examples/python/spider.py
+
 💎publish-typecho┃[LAOMA2053]
 https://gh-proxy.com/https://raw.githubusercontent.com/laoma2053/main/scripts/publish-typecho.py
 
@@ -1944,7 +1947,7 @@ https://suoniapi.com/api.php/provide/vod
 [荐片] 🦚360┃采集
 https://360zy.com/api.php/provide/vod?
 
-[my interface] 访问网站【api.starlink.fan】获取最新接口
+[my interface] 微信小程序搜【淘软件】获取最新接口
 http://124.223.214.31:8/api/lib/drpy2.min.js
 
 [软件] 腾腾｜视频
