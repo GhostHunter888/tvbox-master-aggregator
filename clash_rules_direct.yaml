@@ -1368,6 +1368,7 @@ payload:
   - DOMAIN-SUFFIX,wjizxlxa2.com
   - DOMAIN-SUFFIX,wkvip.net
   - DOMAIN-SUFFIX,wlmrpodg.cc
+  - DOMAIN-SUFFIX,wmdb.tv
   - DOMAIN-SUFFIX,wogg.net
   - DOMAIN-SUFFIX,woknyy.cn
   - DOMAIN-SUFFIX,wolongzy.cc
@@ -1959,6 +1960,7 @@ payload:
   - IP-CIDR,23.140.204.25/32
   - IP-CIDR,23.140.204.9/32
   - IP-CIDR,23.145.136.48/32
+  - IP-CIDR,23.145.136.64/32
   - IP-CIDR,23.145.232.146/32
   - IP-CIDR,23.224.132.190/32
   - IP-CIDR,23.224.191.90/32
