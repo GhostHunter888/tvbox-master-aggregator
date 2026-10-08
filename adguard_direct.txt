@@ -256,6 +256,7 @@
 @@||brovod.com^
 @@||bshzjjgq.cc^
 @@||bt.cn^
+@@||bttwo.life^
 @@||bttwoo.com^
 @@||bubutv.top^
 @@||budaichuchen.net^
@@ -286,6 +287,8 @@
 @@||cdn-fileserver.com^
 @@||cdn-xj.cc^
 @@||cdnhop.com^
+@@||cdnlz11.com^
+@@||cdnlz12.com^
 @@||cdnlz13.com^
 @@||cdnlz14.com^
 @@||cdnlz18.com^
@@ -310,8 +313,6 @@
 @@||ckzy1.com^
 @@||clbug.com^
 @@||clewm.net^
-@@||cloudflare-dns.com^
-@@||cloudflare.com^
 @@||cloudflareinsights.com^
 @@||cloudfront.net^
 @@||clun.top^
@@ -393,7 +394,6 @@
 @@||dmhyy.com^
 @@||dmxq39.com^
 @@||dns.com^
-@@||dns.google^
 @@||dns.la^
 @@||dns.watch^
 @@||dnspod.cn^
@@ -724,8 +724,9 @@
 @@||jennyhow.com^
 @@||jgsfnl.com^
 @@||jhs7.makeup^
+@@||jiabaide.cn^
 @@||jiabaide.cn,域名2,域名^
-@@||jiabaide.cn,域名2,域名3^
+@@||jiabaide.xn--cn^
 @@||jiabaide.xn--cn,2,-108hc439eda^
 @@||jiabaide.xn--cn,2,3-5h6jc219fda^
 @@||jianyunys.com^
@@ -1004,6 +1005,7 @@
 @@||ncat1.app^
 @@||ncat25.com^
 @@||ndmt3.life^
+@@||neocities.org^
 @@||netease.com^
 @@||netfapx.net^
 @@||netflixgc.com^
@@ -1126,7 +1128,6 @@
 @@||qq.com^
 @@||qqqrst.com^
 @@||qswyt4444.com^
-@@||quad9.net^
 @@||quankan.app^
 @@||quanmingjiexi.com^
 @@||quark.cn^
@@ -1200,6 +1201,7 @@
 @@||shayuzy5.com^
 @@||shddlcd.cn^
 @@||shdy2.com，请及时收藏网址发布页^
+@@||shdy2.xn--com^
 @@||shdy2.xn--com,-eb1gnb358by5o3xp3xbc48k2jqjjsp53b^
 @@||shdy5.us^
 @@||shenzjd.com^
@@ -1285,6 +1287,7 @@
 @@||tonglicable.com^
 @@||tool.gulu^
 @@||toptv15.cyou^
+@@||toptv925.click^
 @@||toule.top^
 @@||trgfd.cn^
 @@||tupian.click^
@@ -1401,7 +1404,12 @@
 @@||xgitv.com^
 @@||xgzyapi.com^
 @@||xhamster.com^
+@@||xhamster.desi^
+@@||xhamster.one^
 @@||xhamster1.desi^
+@@||xhamster11.com^
+@@||xhamster2.com^
+@@||xhamster26.com^
 @@||xhkan.top^
 @@||xhztv.top^
 @@||xiang.lol^
@@ -1614,7 +1622,6 @@
 @@||1.0.0.3^
 @@||1.0.0.4^
 @@||1.0.4.5^
-@@||1.1.1.1^
 @@||1.2.3.4^
 @@||1.5.0.0^
 @@||103.106.191.84^
@@ -1640,6 +1647,7 @@
 @@||103.99.178.254^
 @@||103.99.179.101^
 @@||104.18.12.30^
+@@||104.18.33.196^
 @@||104.18.40.15^
 @@||104.18.42.16^
 @@||104.18.42.197^
@@ -1916,7 +1924,6 @@
 @@||191.102.39.254^
 @@||192.151.245.34^
 @@||192.157.56.14^
-@@||192.168.1.4^
 @@||193.123.86.190^
 @@||194.147.100.155^
 @@||194.147.100.208^
@@ -1925,7 +1932,6 @@
 @@||195.189.60.25^
 @@||195.189.60.253^
 @@||195.225.24.128^
-@@||198.18.0.0^
 @@||198.27.81.111^
 @@||198.44.248.10^
 @@||198.44.248.101^
@@ -1961,7 +1967,7 @@
 @@||23.140.204.25^
 @@||23.140.204.9^
 @@||23.145.136.48^
-@@||23.145.136.64^
+@@||23.145.136.49^
 @@||23.145.232.146^
 @@||23.224.132.190^
 @@||23.224.191.90^

@@ -25,6 +25,14 @@ except ImportError:
 WORK_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PROCESS_DIR = os.path.join(WORK_DIR, "process")
 
+EXCLUDED_DOMAIN_SUFFIXES = {
+    "dns.google",
+    "cloudflare-dns.com",
+    "cloudflare.com",
+    "quad9.net",
+}
+EXCLUDED_IPS = {"1.1.1.1", "192.168.1.4", "198.18.0.0"}
+
 INVALID_FILE_EXTENSIONS = [
     "json", "txt", "m3u8", "ts", "js", "css", "html", "htm", "png", "jpg", "jpeg", "webp", "php", "mp4", "mkv", "flv"
 ]
@@ -33,6 +41,11 @@ def to_punycode_domain(dom_str):
     if not dom_str or not isinstance(dom_str, str): return None
     try: return dom_str.encode("idna").decode("ascii")
     except Exception: return dom_str
+
+def is_excluded_domain(dom):
+    if not dom or not isinstance(dom, str): return False
+    domain = dom.lower().strip()
+    return any(domain == suffix or domain.endswith("." + suffix) for suffix in EXCLUDED_DOMAIN_SUFFIXES)
 
 def final_clean_before_write(dom):
     """写盘前最后一关：100% 剥离 #, ?, &, %, &amp;, 协议头与无面脏数据"""
@@ -64,6 +77,9 @@ def final_clean_before_write(dom):
     prefix = parts[0].lower()
 
     if tld in INVALID_FILE_EXTENSIONS or prefix in INVALID_FILE_EXTENSIONS:
+        return None
+
+    if is_excluded_domain(clean):
         return None
 
     return clean
@@ -115,9 +131,10 @@ def export_grouped_router_rules(work_dir, sites, grouped_cdn_domains, dynamic_im
             if isinstance(ips, list): extracted_ips = (extracted_ips or []) + ips
         except Exception: pass
 
-    pure_ips = set(extracted_ips or [])
+    pure_ips = {ip for ip in (extracted_ips or []) if ip not in EXCLUDED_IPS}
     for h in historical_items:
-        if h.replace('.', '').isdigit(): pure_ips.add(h)
+        if h.replace('.', '').isdigit():
+            if h not in EXCLUDED_IPS: pure_ips.add(h)
         else:
             final_h = final_clean_before_write(h)
             if final_h: direct_domains.add(final_h)

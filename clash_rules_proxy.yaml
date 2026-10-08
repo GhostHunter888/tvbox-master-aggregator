@@ -14,6 +14,7 @@ payload:
   - DOMAIN-SUFFIX,2ktvb.com
   - DOMAIN-SUFFIX,333232.xyz
   - DOMAIN-SUFFIX,3459381.com
+  - DOMAIN-SUFFIX,360zy.com
   - DOMAIN-SUFFIX,3qu.live{0}
   - DOMAIN-SUFFIX,3vcn.work
   - DOMAIN-SUFFIX,501690658.xyz
@@ -46,6 +47,7 @@ payload:
   - DOMAIN-SUFFIX,apiimg.com
   - DOMAIN-SUFFIX,apilyzy.com
   - DOMAIN-SUFFIX,apiyhzy.com
+  - DOMAIN-SUFFIX,apple.com
   - DOMAIN-SUFFIX,ass6.store
   - DOMAIN-SUFFIX,baofeng9.com
   - DOMAIN-SUFFIX,bcebos.com
@@ -67,10 +69,15 @@ payload:
   - DOMAIN-SUFFIX,ccjxweesh.cc
   - DOMAIN-SUFFIX,cd-zj.com
   - DOMAIN-SUFFIX,cdn-xj.cc
+  - DOMAIN-SUFFIX,cdnlz11.com
+  - DOMAIN-SUFFIX,cdnlz12.com
   - DOMAIN-SUFFIX,cdnlz13.com
+  - DOMAIN-SUFFIX,cdnlz14.com
   - DOMAIN-SUFFIX,cdnlz18.com
   - DOMAIN-SUFFIX,cdnlz21.com
+  - DOMAIN-SUFFIX,cdnlz4.com
   - DOMAIN-SUFFIX,cdnlz7.com
+  - DOMAIN-SUFFIX,cdnlz9.com
   - DOMAIN-SUFFIX,cenguigui.cn
   - DOMAIN-SUFFIX,chimei69.com
   - DOMAIN-SUFFIX,chirmyram.com
@@ -91,9 +98,7 @@ payload:
   - DOMAIN-SUFFIX,dytt-cine.com
   - DOMAIN-SUFFIX,dytt-cinema.com
   - DOMAIN-SUFFIX,dytt-hot.com
-  - DOMAIN-SUFFIX,dytt-kan.com
   - DOMAIN-SUFFIX,dytt-network.com
-  - DOMAIN-SUFFIX,dytt-see.com
   - DOMAIN-SUFFIX,dytt-tupian.com
   - DOMAIN-SUFFIX,dytt-tvs.com
   - DOMAIN-SUFFIX,dyttzyapi.com
@@ -117,10 +122,11 @@ payload:
   - DOMAIN-SUFFIX,ffzy-online3.com
   - DOMAIN-SUFFIX,ffzy-online5.com
   - DOMAIN-SUFFIX,ffzy-online6.com
+  - DOMAIN-SUFFIX,ffzy-play10.com
   - DOMAIN-SUFFIX,ffzy-play5.com
+  - DOMAIN-SUFFIX,ffzy-play6.com
   - DOMAIN-SUFFIX,ffzy-plays.com
   - DOMAIN-SUFFIX,ffzyapi.com
-  - DOMAIN-SUFFIX,ffzyread2.com
   - DOMAIN-SUFFIX,fongmi.cc
   - DOMAIN-SUFFIX,foshanshow.com
   - DOMAIN-SUFFIX,fzms12.cc
@@ -154,6 +160,7 @@ payload:
   - DOMAIN-SUFFIX,hhkan2.com
   - DOMAIN-SUFFIX,hikerfans.com
   - DOMAIN-SUFFIX,hls.one
+  - DOMAIN-SUFFIX,hnsxdnyjyjcyjfkzx.org
   - DOMAIN-SUFFIX,hongjiuchang.com
   - DOMAIN-SUFFIX,huadutx.com
   - DOMAIN-SUFFIX,huaduys.org
@@ -181,6 +188,7 @@ payload:
   - DOMAIN-SUFFIX,jptt.tv{id}
   - DOMAIN-SUFFIX,jptt.tv{tid}
   - DOMAIN-SUFFIX,jptt1.cc
+  - DOMAIN-SUFFIX,jrskbs.com
   - DOMAIN-SUFFIX,jsaa100.vip
   - DOMAIN-SUFFIX,jsdelivr.net
   - DOMAIN-SUFFIX,jvnmtr.cn
@@ -211,6 +219,7 @@ payload:
   - DOMAIN-SUFFIX,lz-cdn11.com
   - DOMAIN-SUFFIX,lz-cdn12.com
   - DOMAIN-SUFFIX,lz-cdn13.com
+  - DOMAIN-SUFFIX,lz-cdn14.com
   - DOMAIN-SUFFIX,lz-cdn5.com
   - DOMAIN-SUFFIX,lz15uu.com
   - DOMAIN-SUFFIX,lzcdn10.com
@@ -230,6 +239,7 @@ payload:
   - DOMAIN-SUFFIX,maozyapi.com
   - DOMAIN-SUFFIX,meijuchong.cc
   - DOMAIN-SUFFIX,meijutt.cc
+  - DOMAIN-SUFFIX,microsoft.com
   - DOMAIN-SUFFIX,mjrlin.cn
   - DOMAIN-SUFFIX,mmyy25.top
   - DOMAIN-SUFFIX,moduapi.cc
@@ -258,7 +268,6 @@ payload:
   - DOMAIN-SUFFIX,pnwkult.com
   - DOMAIN-SUFFIX,pomo.mom
   - DOMAIN-SUFFIX,pppppppp.top
-  - DOMAIN-SUFFIX,ppqrrs.com
   - DOMAIN-SUFFIX,psbolddeltaco.site
   - DOMAIN-SUFFIX,qhimgs1.com
   - DOMAIN-SUFFIX,qingfupo02.xyz
@@ -284,7 +293,9 @@ payload:
   - DOMAIN-SUFFIX,ryplay12.com
   - DOMAIN-SUFFIX,ryplay14.com
   - DOMAIN-SUFFIX,ryplay17.com
+  - DOMAIN-SUFFIX,ryplay4.com
   - DOMAIN-SUFFIX,ryplay7.com
+  - DOMAIN-SUFFIX,sacfedge.com
   - DOMAIN-SUFFIX,sdzhgt.com
   - DOMAIN-SUFFIX,shddlcd.cn
   - DOMAIN-SUFFIX,shdy2.com，请及时收藏网址发布页
@@ -305,7 +316,6 @@ payload:
   - DOMAIN-SUFFIX,themoviedb.org
   - DOMAIN-SUFFIX,ticktockwow.com
   - DOMAIN-SUFFIX,tinise.cn
-  - DOMAIN-SUFFIX,tlkqc.com
   - DOMAIN-SUFFIX,tmdb.org
   - DOMAIN-SUFFIX,token}@{self.registry}
   - DOMAIN-SUFFIX,tupian.click
@@ -327,7 +337,6 @@ payload:
   - DOMAIN-SUFFIX,vumjtkcnc.cc
   - DOMAIN-SUFFIX,vvvvvvvv.top
   - DOMAIN-SUFFIX,w32z7vtd.com
-  - DOMAIN-SUFFIX,waigpt.com
   - DOMAIN-SUFFIX,wanmeikk.film
   - DOMAIN-SUFFIX,wckk799.vip
   - DOMAIN-SUFFIX,wckz813.vip

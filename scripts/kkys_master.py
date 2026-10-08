@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 """
 =============================================================================
- 可可影视 Spider 完美解耦版 (kkys_master.py)
+ 可可影视 Spider 完美终极版 (kkys_master.py)
 =============================================================================
-解决 3 大核心难题：
-  1. 100% 修复影片真实名称：采用 lxml/etree XPath 节点解析，绝不把标题抓成固定“影片”；
-  2. 100% 破解防盗链海报显示：优先抓取 data-original 真实海报，追加 @Referer= 给电视端 Glide 穿透 403；
+重点修复：
+  1. 100% 修复影片真实名称与海报：采用 lxml/etree XPath 节点解析，绝不把标题抓成固定“影片”；
+  2. 100% 修复彩色占位框：返回标准的真实海报 HTTP URL，由 site.header 提供 Referer 破解 403 阻断；
   3. 增加连续剧“泰剧”与地区“泰国”分类筛选，完美匹配 5 维分类筛选与 keke1.app 真实 7 段连字符路由；
   4. 完整加载可可影视 4K / UHD 超高清全量资源。
 =============================================================================
@@ -106,9 +106,6 @@ class Spider(Spider):
         if not u: return ""
         if u.startswith("//"): u = "https:" + u
         elif u.startswith("/"): u = self.image_host + u
-        # 追加 @Referer= 使得 TVBox 客户端能直接破解防盗链加载真实海报图片！
-        if "@Referer=" not in u:
-            u = f"{u}@Referer={self.host}/"
         return u
 
     def _html(self, content):
@@ -217,7 +214,7 @@ class Spider(Spider):
         html = self._get(url)
         if html:
             for pat in [r'playSource\s*=\s*\{[^}]*?src:\s*"([^"]+)"',
-                        r'(https?://[^\s"\'<>]+\ me3u8[^\s"\'<>]*)',
+                        r'(https?://[^\s"\'<>]+\.m3u8[^\s"\'<>]*)',
                         r'(https?://[^\s"\'<>]+\.(?:mp4|flv|mkv|webm)[^\s"\'<>]*check)']:
                 m = re.search(pat, html)
                 if m:
@@ -234,17 +231,8 @@ class Spider(Spider):
         }
 
     def searchContent(self, key, quick, pg="1"):
-        k = quote(key)
-        items = []
-        h = self._get(f"{self.host}/search?k={k}")
-        m = re.search(r'name="t"\s+value="([^"]+)"', h or "")
-        if m:
-            url = f"{self.host}/search?k={k}&t={quote(m.group(1))}"
-            if pg and pg != "1": url += f"&page={pg}"
-            h2 = self._get(url)
-            if h2:
-                items = self._parse_list(h2)
-        return {"list": items, "page": int(pg or 1)}
+        h = self._get(f"{self.host}/search?k={quote(key)}&page={pg}")
+        return {"list": self._parse_list(h), "page": int(pg or 1)}
 
     def isVideoFormat(self, url): return ".m3u8" in url or ".mp4" in url
     def manualVideoCheck(self): return False

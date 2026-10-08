@@ -1,4 +1,4 @@
-# 2026-10-07 00:24:17
+# 2026-10-08 00:44:50
 
 💎可可影视┃4K高清
 https://gh-proxy.com/https://raw.githubusercontent.com/haygcao/tvbox-master-aggregator/main/scripts/kkys_master.py
@@ -1674,6 +1674,9 @@ https://gh-proxy.com/https://raw.githubusercontent.com/jie20091116/cat/a201c9690
 💎聚合直播┃[CAT]
 https://gh-proxy.com/https://raw.githubusercontent.com/jie20091116/cat/a201c9690267c1ab4e3f65d5a1fca80662438fa0/TVBOX/PY/聚合直播.py
 
+💎Xvideos1┃[CAT]
+https://gh-proxy.com/https://raw.githubusercontent.com/jie20091116/cat/a201c9690267c1ab4e3f65d5a1fca80662438fa0/TVBOX/PY/Xvideos1.py
+
 💎aiyifan┃[CAT]
 https://gh-proxy.com/https://raw.githubusercontent.com/jie20091116/cat/a201c9690267c1ab4e3f65d5a1fca80662438fa0/TVBOX/PY/aiyifan.py
 
@@ -1986,6 +1989,63 @@ https://file.zhangyichi.dev/uploads/695cb6347d0b1_1767683636.js
 [软件] 去看吧｜动漫
 https://file.zhangyichi.dev/uploads/695cb6347d0b1_1767683636.js
 
+[金鹰] 🐻黑狐┃影视
+https://catbox.n13.club/t4/heihu.php
+
+[金鹰] 🔰金鹰┃影视
+https://jyzyapi.com/provide/vod
+
+[金鹰] 🔥️火狐┃秒播
+https://hhzyapi.com/api.php/provide/vod
+
+[金鹰] 🍎高清┃2K
+https://api.1080zyku.com/inc/apijson.php
+
+[金鹰] 🐂红牛┃采集
+https://www.hongniuzy2.com/api.php/provide/vod
+
+[金鹰] 🎀极速┃采集
+https://jszyapi.com/api.php/provide/vod
+
+[金鹰] 🍚玛丽┃秒播
+https://360zy.com/api.php/provide/vod
+
+[金鹰] 🥣爱坤┃影视
+https://ikunzyapi.com/api.php/provide/vod/from/ikm3u8/at/json
+
+[金鹰] 🥘微吧┃影视
+https://cjhwba.com/api.php/provide/vod
+
+[金鹰] 🆕非凡┃资源
+http://cj.ffzyapi.com/api.php/provide/vod
+
+[金鹰] 🔃量子┃资源
+http://cj.lziapi.com/api.php/provide/vod
+
+[金鹰] 🎊索尼┃资源
+https://suoniapi.com/api.php/provide/vod/from/snm3u8
+
+[金鹰] 🌈琥珀┃影视
+https://www.huyaapi.com/api.php/provide/vod/from/hym3u8
+
+[金鹰] 🚄快车┃影视
+https://caiji.kczyapi.com/api.php/provide/vod
+
+[金鹰] 🔮星空┃影视
+https://api.tiankongapi.com/api.php/provide/vod
+
+[金鹰] 🇨🇳央视┃节目
+https://catbox.n13.club/t4/cntv.php
+
+[金鹰] 🏧MTV┃大全
+https://catbox.n13.club/t4/bili.php?id=bMTV
+
+[金鹰] 🍬糖豆┃广场舞
+https://catbox.n13.club/t4/tangdou.php
+
+[金鹰] 🐝蜻蜓┃广播
+https://catbox.n13.club/t4/qingting.php
+
 [2] 王林丨免扫
 https://gh-proxy.com/https://raw.githubusercontent.com/tushen6/Tomorrow/refs/heads/master/JS/AppGet.js
 
@@ -2037,9 +2097,6 @@ https://gh-proxy.com/https://gh-proxy.org/https://raw.github.com/tly824/tvbox/ma
 [5] 牛牛影视
 https://api.niuniuzy.me/api.php/provide/vod/from/nnm3u8/at/json
 
-[5] 🚶‍♂️豪华┃影视
-https://hhzyapi.com/api.php/provide/vod
-
 [5] 影视 | 量子[直连]
 https://cj.lziapi.com/api.php/provide/vod
 
@@ -2060,9 +2117,6 @@ https://file.icve.com.cn/file_doc/249/899/3E7E0C8A023B624CEC6BDCC200F06F02.js
 
 [5] 360影视
 https://gh-proxy.com/https://gh-proxy.org/https://raw.github.com/tly824/TvBoxx/master/js/drpy2.min.js
-
-[5] 360┃直连
-https://360zy.com/api.php/provide/vod
 
 [5] 搜狗影视
 https://gh-proxy.com/https://gh-proxy.org/https://raw.github.com/tly824/TvBoxx/master/js/drpy2.min.js
@@ -2180,9 +2234,6 @@ https://wolongzyw.com/api.php/provide/vod
 
 [vv] 影视 • 尤酷[直连]
 https://api.ukuapi.com/api.php/provide/vod
-
-[vv] 影视 • 极速[直连]
-https://jszyapi.com/api.php/provide/vod
 
 [vv] 影视 • 建安
 http://154.219.117.232:9981/jacloudapi.php/provide/vod
@@ -2376,9 +2427,6 @@ https://catbox.n13.club/t9/bili.php?id=球类合集
 [00000] 线路|学习(T4)
 https://catbox.n13.club/t9/xuexi.php
 
-[apple] 🥑量子资源
-http://cj.lziapi.com/api.php/provide/vod
-
 [apple] 新浪资源
 https://api.xinlangapi.com/xinlangapi.php/provide/vod/at/xml
 
@@ -2408,9 +2456,6 @@ https://collect.wolongzy.cc/api.php/provide/vod
 
 [apple] 🎀光速┃采集
 http://api.guangsuapi.com/api.php/provide/vod
-
-[apple] 🎀红牛┃采集
-https://www.hongniuzy2.com/api.php/provide/vod
 
 [apple] 幸资源
 https://xzybb1.com/api.php/provide/vod/at/xml
@@ -2450,9 +2495,6 @@ https://api.xinlangapi.com/xinlangapi.php/provide/vod
 
 [zy] 🍏光速
 https://api.guangsuapi.com/api.php/provide/vod
-
-[zy] 🍏金鹰
-https://jyzyapi.com/provide/vod
 
 [zy] 🍏樱花
 https://m3u8.apiyhzy.com/api.php/provide/vod
@@ -2616,12 +2658,6 @@ https://zjuba.vip/api.php/provide/vod
 [我的] 最大资源
 https://api.zuidapi.com/api.php/provide/vod
 
-[直播] 🐝索尼资源
-https://suoniapi.com/api.php/provide/vod/from/snm3u8
-
-[直播] 🐝非凡资源
-http://cj.ffzyapi.com/api.php/provide/vod
-
 [直播] 星牙┃短剧
 https://gh-proxy.com/https://git.yylx.win/raw.githubusercontent.com/PizazzGY/NewTVBox/main/movie/py/XYDJ.py
 
@@ -2744,9 +2780,6 @@ https://cj.lziapi.com/api.php/provide/vod/from/lzm3u8
 
 [直播] 🌼非凡┃资源🌼
 http://ffzy1.tv/api.php/provide/vod
-
-[直播] 🌼虎牙┃采集🌼
-https://www.huyaapi.com/api.php/provide/vod/from/hym3u8
 
 [直播] 🌼如意┃影视🌼
 http://cj.rycjapi.com/api.php/provide/vod
